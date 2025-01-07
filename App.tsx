@@ -15,9 +15,9 @@ const customTheme = {
   colors: {
     ...DefaultTheme.colors,
     primary: theme.colors.primary, // Change the primary color here
-    accent: theme.colors.greyText, // Change the accent color here
-    primaryContainer: theme.colors.primaryExtraLight,
-    secondaryContainer: theme.colors.extraHard,
+    accent: theme.colors.primary, // Change the accent color here
+    primaryContainer: theme.colors.primary,
+    secondaryContainer: theme.colors.primary,
   },
 };
 
