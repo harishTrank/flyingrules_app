@@ -1,27 +1,22 @@
-import React from "react";
-import { View, StyleSheet, Text } from "react-native";
+import React, { useState } from "react";
+import { View, StyleSheet, ScrollView } from "react-native";
 import HeaderComp from "../../../ReUseComponents/HeaderComp";
-
-const ToggleButton = () => {
-  return (
-    <View>
-      <View>
-        <Text>One Wayeee</Text>
-      </View>
-      <View>
-        <Text>Round Trip</Text>
-      </View>
-    </View>
-  );
-};
+import theme from "../../../../utils/theme";
+import ToggleButton from "./Components/ToggleButton";
+import BookFlightForm from "./Components/BookFlightForm";
 
 const HomeScreen = ({ navigation }: any) => {
+  const [tripType, setTripType]: any = useState("One Way");
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.screenRap}>
       <HeaderComp navigation={navigation} />
-      <View style={styles.mainContainer}>
-        <ToggleButton />
-      </View>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={styles.mainContainer}
+      >
+        <ToggleButton tripType={tripType} setTripType={setTripType} />
+        <BookFlightForm />
+      </ScrollView>
     </View>
   );
 };
@@ -29,6 +24,10 @@ const HomeScreen = ({ navigation }: any) => {
 export default HomeScreen;
 
 const styles = StyleSheet.create({
+  screenRap: {
+    flex: 1,
+    backgroundColor: theme.colors.primaryLight,
+  },
   mainContainer: {
     flex: 1,
     paddingHorizontal: 20,

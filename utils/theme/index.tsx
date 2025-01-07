@@ -3,8 +3,11 @@ import { Platform } from "react-native";
 const theme = {
   colors: {
     primary: "#1B5B93",
+    primaryLight: "#f2f3fe",
     black: "#000",
     white: "#FFF",
+    grey: "#dedede",
+    basicGrey: "#8e8b8b",
   },
   font: {
     fontBold: {
