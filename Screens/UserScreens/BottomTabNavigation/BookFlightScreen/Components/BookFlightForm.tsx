@@ -7,13 +7,22 @@ import DateInputComp from "./DateInputComp";
 import FormBottomOption from "./FormBottomOption";
 import CustomButton from "../../../../ReUseComponents/CustomButton";
 
-const BookFlightForm = ({ tripType }: any) => {
+const BookFlightForm = ({
+  tripType,
+  modalizeRefTravel,
+  modalizeRefClass,
+  classType,
+}: any) => {
   return (
     <View style={styles.mainBox}>
       <FlightSearchInput label={"From"} icon={ImageModule.departIcon} />
       <FlightSearchInput label={"To"} icon={ImageModule.arrivalIcon} />
       <DateInputComp tripType={tripType} />
-      <FormBottomOption />
+      <FormBottomOption
+        modalizeRefTravel={modalizeRefTravel}
+        modalizeRefClass={modalizeRefClass}
+        classType={classType}
+      />
       <CustomButton title={"Search"} onPress={() => console.log("Fuck you")} />
     </View>
   );

@@ -40,11 +40,12 @@ const styles = StyleSheet.create({
   toggleBox: {
     flexDirection: "row",
     marginTop: 10,
-    borderRadius: 20,
+    borderRadius: 25,
     alignItems: "center",
     justifyContent: "space-between",
-    ...theme.elevationLight,
+    ...theme.elevationHeavy,
     backgroundColor: theme.colors.white,
+    padding: 5,
   },
   toggleButton: {
     width: "50%",

@@ -1,18 +1,31 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React, { useRef } from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import Entypo from "@expo/vector-icons/Entypo";
 import theme from "../../../../../utils/theme";
-const FormBottomOption = () => {
+
+const FormBottomOption = ({
+  modalizeRefTravel,
+  modalizeRefClass,
+  classType,
+}: any) => {
+  const onOpenTravellers = () => {
+    modalizeRefTravel.current?.open();
+  };
+
+  const onOpenClass = () => {
+    modalizeRefClass.current?.open();
+  };
+
   return (
     <View style={styles.mainBox}>
-      <View style={styles.firstBox}>
+      <TouchableOpacity style={styles.firstBox} onPress={onOpenTravellers}>
         <Text style={styles.label}>Traveller</Text>
         <View style={styles.textBox}>
           <Text style={styles.text}>1 Adult</Text>
         </View>
-      </View>
+      </TouchableOpacity>
 
-      <View style={styles.secondBox}>
+      <TouchableOpacity style={styles.secondBox} onPress={onOpenClass}>
         <Text style={[styles.label, { width: 45 }]}>Class</Text>
         <View
           style={[
@@ -20,10 +33,10 @@ const FormBottomOption = () => {
             { alignItems: "center", justifyContent: "space-between" },
           ]}
         >
-          <Text style={styles.text}>Economy</Text>
+          <Text style={styles.text}>{classType}</Text>
           <Entypo name="chevron-down" size={20} color={theme.colors.black} />
         </View>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };

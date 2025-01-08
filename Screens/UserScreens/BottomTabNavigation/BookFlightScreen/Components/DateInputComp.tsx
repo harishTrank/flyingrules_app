@@ -88,7 +88,10 @@ const DateInputComp = ({ tripType }: any) => {
       )}
 
       {tripType === "Round Trip" && (
-        <View style={styles.inputWidth}>
+        <TouchableOpacity
+          style={styles.inputWidth}
+          onPress={() => setOpenMultiple(true)}
+        >
           <Text style={[styles.label, { width: 50 }]}>Return</Text>
           <View style={styles.returnBox}>
             <Text style={styles.textDate}>
@@ -97,7 +100,7 @@ const DateInputComp = ({ tripType }: any) => {
                 : "+ Return Date"}
             </Text>
           </View>
-        </View>
+        </TouchableOpacity>
       )}
     </View>
   );
