@@ -15,7 +15,7 @@ const BookFlightScreen = ({ navigation }: any) => {
         style={styles.mainContainer}
       >
         <ToggleButton tripType={tripType} setTripType={setTripType} />
-        <BookFlightForm />
+        <BookFlightForm tripType={tripType} />
       </ScrollView>
     </View>
   );

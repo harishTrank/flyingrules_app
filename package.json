@@ -26,10 +26,12 @@
     "react-native-pager-view": "6.5.1",
     "react-native-paper": "^5.11.1",
     "react-native-paper-dates": "^0.20.3",
+    "react-native-reanimated": "^3.16.6",
     "react-native-safe-area-context": "4.12.0",
     "react-native-toast-message": "^2.2.1",
     "strip-ansi": "6",
-    "wrap-ansi": "5"
+    "wrap-ansi": "5",
+    "dayjs": "^1.11.10"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

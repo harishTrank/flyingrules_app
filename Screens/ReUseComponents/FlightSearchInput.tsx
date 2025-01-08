@@ -62,18 +62,18 @@ const styles = StyleSheet.create({
   },
   firstText: {
     color: theme.colors.black,
-    ...theme.font.fontBold,
     fontSize: 25,
+    ...theme.font.fontBold,
+    marginBottom: -5,
   },
   secondText: {
-    paddingBottom: 7,
     paddingLeft: 10,
-    ...theme.font.fontSemiBold,
     color: theme.colors.basicGrey,
+    ...theme.font.fontSemiBold,
   },
   thirdText: {
-    ...theme.font.fontMedium,
     color: theme.colors.basicGrey,
     fontSize: 12,
+    ...theme.font.fontMedium,
   },
 });
