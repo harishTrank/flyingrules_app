@@ -14,6 +14,7 @@ import ToggleButton from "./Components/ToggleButton";
 import BookFlightForm from "./Components/BookFlightForm";
 import { Modalize } from "react-native-modalize";
 import ImageModule from "../../../../ImageModule";
+import TravellerQuantity from "../../../ReUseComponents/TravellerQuantity";
 const { height, width } = Dimensions.get("window");
 
 const classData: any = [
@@ -22,7 +23,7 @@ const classData: any = [
     image: ImageModule.economy,
   },
   {
-    name: "Premium Economy",
+    name: "P.Economy",
     image: ImageModule.peconomy,
   },
   {
@@ -40,6 +41,10 @@ const BookFlightScreen = ({ navigation }: any) => {
   const modalizeRefClass = useRef<Modalize>(null);
   const [tripType, setTripType]: any = useState("Round Trip");
   const [classType, setClassType]: any = useState("Economy");
+  const [travellers, setTravellers]: any = useState({
+    adult: 1,
+    child: 0,
+  });
 
   return (
     <View style={styles.screenRap}>
@@ -56,9 +61,13 @@ const BookFlightScreen = ({ navigation }: any) => {
           classType={classType}
         />
       </ScrollView>
-      <Modalize ref={modalizeRefTravel} modalHeight={height * 0.3}>
-        <Text>123456</Text>
+      <Modalize ref={modalizeRefTravel} modalHeight={height * 0.2}>
+        <TravellerQuantity
+          travellers={travellers}
+          setTravellers={setTravellers}
+        />
       </Modalize>
+
       <Modalize ref={modalizeRefClass} modalHeight={height * 0.45}>
         <View style={styles.classView}>
           {classData.map((item: any) => (
