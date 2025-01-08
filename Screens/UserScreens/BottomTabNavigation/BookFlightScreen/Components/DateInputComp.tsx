@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import ImageModule from "../../../../../ImageModule";
 import theme from "../../../../../utils/theme";
@@ -12,10 +12,6 @@ const DateInputComp = ({ tripType }: any) => {
   });
   const [openSingle, setOpenSingle] = useState(false);
   const [openMultiple, setOpenMultiple] = useState(false);
-
-  useEffect(() => {
-    console.log("date", date);
-  }, [date]);
 
   const onDismissSingle = useCallback(() => {
     setOpenSingle(false);
