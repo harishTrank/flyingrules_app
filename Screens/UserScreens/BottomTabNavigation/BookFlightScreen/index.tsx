@@ -68,7 +68,7 @@ const BookFlightScreen = ({ navigation }: any) => {
         />
       </Modalize>
 
-      <Modalize ref={modalizeRefClass} modalHeight={400}>
+      <Modalize ref={modalizeRefClass} modalHeight={450}>
         <View style={styles.classView}>
           {classData.map((item: any) => (
             <TouchableOpacity
