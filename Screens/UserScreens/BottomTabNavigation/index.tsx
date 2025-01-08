@@ -1,9 +1,9 @@
 import theme from "../../../utils/theme";
 import { AntDesign, MaterialIcons, Foundation } from "@expo/vector-icons";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
+import MyTripScreen from "./MyTripScreen";
 import HomeScreen from "./HomeScreen";
 import BookFlightScreen from "./BookFlightScreen";
-import MyTripScreen from "./MyTripScreen";
 
 const Tab = createMaterialBottomTabNavigator();
 

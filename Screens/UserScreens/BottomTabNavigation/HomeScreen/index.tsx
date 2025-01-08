@@ -1,35 +1,12 @@
-import React, { useState } from "react";
-import { View, StyleSheet, ScrollView } from "react-native";
-import HeaderComp from "../../../ReUseComponents/HeaderComp";
-import theme from "../../../../utils/theme";
-import ToggleButton from "./Components/ToggleButton";
-import BookFlightForm from "./Components/BookFlightForm";
+import React from "react";
+import { View, Text } from "react-native";
 
-const HomeScreen = ({ navigation }: any) => {
-  const [tripType, setTripType]: any = useState("One Way");
+const HomeScreen = () => {
   return (
-    <View style={styles.screenRap}>
-      <HeaderComp navigation={navigation} />
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        style={styles.mainContainer}
-      >
-        <ToggleButton tripType={tripType} setTripType={setTripType} />
-        <BookFlightForm />
-      </ScrollView>
+    <View>
+      <Text>qweerq</Text>
     </View>
   );
 };
 
 export default HomeScreen;
-
-const styles = StyleSheet.create({
-  screenRap: {
-    flex: 1,
-    backgroundColor: theme.colors.primaryLight,
-  },
-  mainContainer: {
-    flex: 1,
-    paddingHorizontal: 20,
-  },
-});
