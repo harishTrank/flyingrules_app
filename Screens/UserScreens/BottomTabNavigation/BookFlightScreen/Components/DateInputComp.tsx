@@ -7,7 +7,7 @@ import dayjs from "dayjs";
 
 const DateInputComp = ({ tripType }: any) => {
   const [date, setDate]: any = useState({
-    depart: new Date(),
+    depart: undefined,
     arrival: undefined,
   });
   const [openSingle, setOpenSingle] = useState(false);

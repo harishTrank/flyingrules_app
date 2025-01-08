@@ -6,7 +6,7 @@ import ToggleButton from "./Components/ToggleButton";
 import BookFlightForm from "./Components/BookFlightForm";
 
 const BookFlightScreen = ({ navigation }: any) => {
-  const [tripType, setTripType]: any = useState("One Way");
+  const [tripType, setTripType]: any = useState("Round Trip");
   return (
     <View style={styles.screenRap}>
       <HeaderComp navigation={navigation} />
