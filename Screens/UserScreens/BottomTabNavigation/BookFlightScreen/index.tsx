@@ -3,7 +3,6 @@ import {
   View,
   StyleSheet,
   ScrollView,
-  Text,
   Dimensions,
   Image,
   TouchableOpacity,
@@ -59,6 +58,7 @@ const BookFlightScreen = ({ navigation }: any) => {
           modalizeRefTravel={modalizeRefTravel}
           modalizeRefClass={modalizeRefClass}
           classType={classType}
+          travellers={travellers}
         />
       </ScrollView>
       <Modalize ref={modalizeRefTravel} modalHeight={height * 0.2}>
@@ -68,7 +68,7 @@ const BookFlightScreen = ({ navigation }: any) => {
         />
       </Modalize>
 
-      <Modalize ref={modalizeRefClass} modalHeight={height * 0.45}>
+      <Modalize ref={modalizeRefClass} modalHeight={400}>
         <View style={styles.classView}>
           {classData.map((item: any) => (
             <TouchableOpacity

@@ -12,6 +12,7 @@ const BookFlightForm = ({
   modalizeRefTravel,
   modalizeRefClass,
   classType,
+  travellers,
 }: any) => {
   return (
     <View style={styles.mainBox}>
@@ -22,6 +23,7 @@ const BookFlightForm = ({
         modalizeRefTravel={modalizeRefTravel}
         modalizeRefClass={modalizeRefClass}
         classType={classType}
+        travellers={travellers}
       />
       <CustomButton title={"Search"} onPress={() => console.log("Fuck you")} />
     </View>

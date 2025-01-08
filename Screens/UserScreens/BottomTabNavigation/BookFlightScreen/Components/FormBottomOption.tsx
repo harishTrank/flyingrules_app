@@ -7,6 +7,7 @@ const FormBottomOption = ({
   modalizeRefTravel,
   modalizeRefClass,
   classType,
+  travellers,
 }: any) => {
   const onOpenTravellers = () => {
     modalizeRefTravel.current?.open();
@@ -21,7 +22,9 @@ const FormBottomOption = ({
       <TouchableOpacity style={styles.firstBox} onPress={onOpenTravellers}>
         <Text style={styles.label}>Traveller</Text>
         <View style={styles.textBox}>
-          <Text style={styles.text}>1 Adult</Text>
+          <Text style={styles.text}>{`${travellers.adult} Adult${
+            travellers.child !== 0 ? `, ${travellers.child} Child` : ""
+          }`}</Text>
         </View>
       </TouchableOpacity>
 
