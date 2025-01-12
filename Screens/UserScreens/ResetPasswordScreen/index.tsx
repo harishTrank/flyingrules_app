@@ -130,8 +130,7 @@ const ResetPasswordScreen: React.FC = ({ navigation }: any) => {
       <TouchableOpacity
         style={styles.createAccountButton}
         onPress={() => {
-          // Handle create account logic (e.g., navigation)
-          console.log("Create an account pressed");
+          navigation.navigate("CreateAccount");
         }}
       >
         <Text style={styles.createAccountButtonText}>Create an account</Text>

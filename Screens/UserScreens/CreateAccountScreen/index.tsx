@@ -8,13 +8,15 @@ import {
   StatusBar,
   Image,
 } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import theme from "../../../utils/theme";
 import ImageModule from "../../../ImageModule";
 
+// Validation Schema using Yup
 const validationSchema = Yup.object().shape({
+  name: Yup.string().required("Name is required"),
   email: Yup.string()
     .email("Invalid email address")
     .required("Email is required"),
@@ -23,11 +25,16 @@ const validationSchema = Yup.object().shape({
     .required("Password is required"),
 });
 
-const LoginScreen: React.FC = ({ navigation }: any) => {
-  const [eyeSecure, setEyeSecure]: any = useState(true);
-  const handleLogin = (values: any) => {
-    console.log("Login values:", values);
-    navigation.navigate("OTPVerification", { email: values.email });
+const CreateAccountScreen: React.FC = ({ navigation }: any) => {
+  const [secureTextEntry, setSecureTextEntry] = useState(true);
+
+  const handleCreateAccount = (values: any) => {
+    // Handle create account logic here (e.g., API call)
+    console.log("Create Account values:", values);
+    // Replace this with your actual create account implementation
+    alert(
+      `Name: ${values.name}\nEmail: ${values.email}\nPassword: ${values.password}`
+    );
   };
 
   return (
@@ -35,13 +42,13 @@ const LoginScreen: React.FC = ({ navigation }: any) => {
       style={[styles.container, { paddingTop: useSafeAreaInsets().top + 40 }]}
     >
       <StatusBar barStyle="dark-content" />
-      <Text style={styles.title}>Login</Text>
-      <Text style={styles.subtitle}>Welcome back to the app</Text>
+
+      <Text style={styles.title}>Create an Account</Text>
 
       <Formik
-        initialValues={{ email: "", password: "", keepMeSignedIn: false }}
+        initialValues={{ name: "", email: "", password: "" }}
         validationSchema={validationSchema}
-        onSubmit={handleLogin}
+        onSubmit={handleCreateAccount}
       >
         {({
           handleChange,
@@ -50,9 +57,20 @@ const LoginScreen: React.FC = ({ navigation }: any) => {
           values,
           errors,
           touched,
-          setFieldValue,
         }: any) => (
           <View>
+            <Text style={styles.label}>Name</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="John Doe"
+              onChangeText={handleChange("name")}
+              onBlur={handleBlur("name")}
+              value={values.name}
+            />
+            {touched.name && errors.name && (
+              <Text style={styles.errorText}>{errors.name}</Text>
+            )}
+
             <Text style={styles.label}>Email Address</Text>
             <TextInput
               style={styles.input}
@@ -70,74 +88,56 @@ const LoginScreen: React.FC = ({ navigation }: any) => {
               <TextInput
                 style={styles.passwordInput}
                 placeholder="••••••••••••"
-                secureTextEntry={eyeSecure}
                 onChangeText={handleChange("password")}
                 onBlur={handleBlur("password")}
                 value={values.password}
+                secureTextEntry={secureTextEntry}
               />
               <TouchableOpacity
                 style={styles.eyeIcon}
-                onPress={() => setEyeSecure(!eyeSecure)}
+                onPress={() => setSecureTextEntry(!secureTextEntry)}
               >
                 <Text
-                  style={[eyeSecure && { textDecorationLine: "line-through" }]}
+                  style={[
+                    secureTextEntry && { textDecorationLine: "line-through" },
+                  ]}
                 >
                   👁️
                 </Text>
               </TouchableOpacity>
             </View>
-
             {touched.password && errors.password && (
               <Text style={styles.errorText}>{errors.password}</Text>
             )}
-
+            <Text style={styles.termsText}>
+              By continuing, you agree to our{" "}
+              <Text style={{ color: theme.colors.primary }}>
+                terms of service.
+              </Text>
+            </Text>
             <TouchableOpacity
-              onPress={() => {
-                navigation.navigate("ForgotPassword");
-              }}
+              style={styles.signupButton}
+              onPress={handleSubmit}
             >
-              <Text style={styles.forgotPassword}>Forgot Password?</Text>
-            </TouchableOpacity>
-
-            <View style={styles.checkboxContainer}>
-              <TouchableOpacity
-                style={[
-                  styles.checkbox,
-                  values.keepMeSignedIn && styles.checkboxChecked,
-                ]}
-                onPress={() =>
-                  setFieldValue("keepMeSignedIn", !values.keepMeSignedIn)
-                }
-              >
-                {values.keepMeSignedIn && (
-                  <Text style={styles.checkMark}>✓</Text>
-                )}
-              </TouchableOpacity>
-              <Text style={styles.checkboxLabel}>Keep me signed in</Text>
-            </View>
-
-            <TouchableOpacity style={styles.loginButton} onPress={handleSubmit}>
-              <Text style={styles.loginButtonText}>Login</Text>
-            </TouchableOpacity>
-
-            <Text style={styles.orText}>or sign in with</Text>
-
-            <TouchableOpacity style={styles.googleButton}>
-              <Image style={styles.googleImage} source={ImageModule.google} />
-              <Text style={styles.googleButtonText}>Continue with Google</Text>
+              <Text style={styles.signupButtonText}>Sign up</Text>
             </TouchableOpacity>
           </View>
         )}
       </Formik>
 
-      <TouchableOpacity
-        style={styles.createAccountButton}
-        onPress={() => {
-          navigation.navigate("CreateAccount");
-        }}
-      >
-        <Text style={styles.createAccountButtonText}>Create an account</Text>
+      <Text style={styles.orText}>or</Text>
+
+      <TouchableOpacity style={styles.googleButton}>
+        <Image style={styles.googleImage} source={ImageModule.google} />
+        <Text style={styles.googleButtonText}>Continue with Google</Text>
       </TouchableOpacity>
+
+      <View style={styles.signInContainer}>
+        <Text style={styles.signInText}>Already have an account? </Text>
+        <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+          <Text style={styles.signInButtonText}>Sign in here</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -149,15 +149,10 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   title: {
-    marginBottom: 10,
+    marginBottom: 20,
     ...theme.font.fontSemiBold,
     fontSize: 30,
-  },
-  subtitle: {
-    fontSize: 18,
-    color: "#555",
-    marginBottom: 20,
-    ...theme.font.fontMedium,
+    color: theme.colors.black,
   },
   label: {
     fontSize: 15,
@@ -186,6 +181,9 @@ const styles = StyleSheet.create({
   passwordInput: {
     flex: 1,
     padding: 10,
+    fontSize: 15,
+    ...theme.font.fontMedium,
+    color: theme.colors.black,
   },
   eyeIcon: {
     padding: 10,
@@ -195,46 +193,20 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginBottom: 10,
   },
-  forgotPassword: {
-    color: theme.colors.primary,
-    marginBottom: 15,
-    textAlign: "right",
-    ...theme.font.fontMedium,
-  },
-  checkboxContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 15,
-  },
-  checkbox: {
-    width: 20,
-    height: 20,
-    borderWidth: 1,
-    borderColor: "#ccc",
-    justifyContent: "center",
-    alignItems: "center",
-    marginRight: 10,
-  },
-  checkboxChecked: {
-    backgroundColor: theme.colors.primary,
-    borderColor: theme.colors.primary,
-  },
-  checkMark: {
-    color: "white",
-    fontSize: 12,
-  },
-  checkboxLabel: {
+  termsText: {
     ...theme.font.fontRegular,
+    fontSize: 14,
     color: theme.colors.black,
+    marginBottom: 15,
   },
-  loginButton: {
+  signupButton: {
     backgroundColor: theme.colors.primary,
     padding: 15,
     borderRadius: 5,
     alignItems: "center",
     marginBottom: 10,
   },
-  loginButtonText: {
+  signupButtonText: {
     color: "#fff",
     fontSize: 17,
     ...theme.font.fontMedium,
@@ -267,15 +239,19 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     ...theme.font.fontMedium,
   },
-  createAccountButton: {
-    padding: 15,
-    alignItems: "center",
+  signInContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginTop: 20,
   },
-  createAccountButtonText: {
+  signInText: {
+    ...theme.font.fontRegular,
+    color: theme.colors.black,
+  },
+  signInButtonText: {
     color: theme.colors.primary,
-    fontSize: 16,
     ...theme.font.fontMedium,
   },
 });
 
-export default LoginScreen;
+export default CreateAccountScreen;
