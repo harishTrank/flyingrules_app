@@ -1,28 +1,54 @@
 import React from "react";
-import { Text, View, Image, StyleSheet, Dimensions } from "react-native";
+import {
+  Text,
+  View,
+  Image,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+} from "react-native";
 import theme from "../../utils/theme";
 
 const { width } = Dimensions.get("window");
 
-const FlightSearchInput = ({ label, icon }: any) => {
+const FlightSearchInput = ({
+  label,
+  icon,
+  value,
+  onFocus,
+  airport,
+}: any) => {
   return (
-    <View style={styles.mainBox}>
-      <Text style={[styles.lable, { width: label === "To" ? width * 0.05 : width * 0.11 }]}>
+    <TouchableOpacity
+      style={styles.mainBox}
+      onPress={onFocus}
+      disabled={!onFocus}
+    >
+      <Text
+        style={[
+          styles.lable,
+          { width: label === "To" ? width * 0.05 : width * 0.11 },
+        ]}
+      >
         {label}
       </Text>
       <View style={styles.inputBox}>
         <Image style={styles.iconImg} source={icon} />
         <View style={styles.textParentBox}>
           <View style={styles.textBox}>
-            <Text style={styles.firstText}>Delhi</Text>
-            <Text style={styles.secondText}>DEL</Text>
+            <Text style={styles.firstText}>
+              {airport ? airport.city : value ? value : label}
+            </Text>
+            <Text style={styles.secondText}>
+              {airport ? airport.code : `Code`}
+            </Text>
           </View>
           <Text style={styles.thirdText}>
-            Indira Gandhi International Airport
+            {airport ? airport.airport : "Location"}
           </Text>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -35,28 +61,29 @@ const styles = StyleSheet.create({
     ...theme.font.fontMedium,
     backgroundColor: theme.colors.white,
     position: "relative",
-    top: width * 0.03, // Use 3% of screen width
+    top: width * 0.03,
     zIndex: 2,
     textAlign: "center",
-    left: width * 0.025, // Use 2.5% of screen width
-    fontSize: width * 0.03, // Responsive font size
+    left: width * 0.025,
+    fontSize: width * 0.03,
     color: "#787878",
   },
   inputBox: {
     borderWidth: 2,
     borderColor: theme.colors.grey,
     borderRadius: 10,
-    paddingVertical: width * 0.025, // Use 2.5% of screen width
-    paddingHorizontal: width * 0.04, // Use 4% of screen width
+    paddingVertical: width * 0.025,
+    paddingHorizontal: width * 0.04,
     flexDirection: "row",
+    alignItems: "center", // Align items vertically in the center
   },
   iconImg: {
-    height: width * 0.06, // Use 6% of screen width
-    width: width * 0.06, // Use 6% of screen width
+    height: width * 0.06,
+    width: width * 0.06,
     objectFit: "contain",
   },
   textParentBox: {
-    paddingLeft: width * 0.025, // Use 2.5% of screen width
+    paddingLeft: width * 0.025,
   },
   textBox: {
     flexDirection: "row",
@@ -64,19 +91,19 @@ const styles = StyleSheet.create({
   },
   firstText: {
     color: theme.colors.black,
-    fontSize: width * 0.05, // Responsive font size
+    fontSize: width * 0.05,
     ...theme.font.fontBold,
     marginBottom: -5,
   },
   secondText: {
-    paddingLeft: width * 0.025, // Use 2.5% of screen width
+    paddingLeft: width * 0.025,
     color: theme.colors.basicGrey,
     ...theme.font.fontSemiBold,
-    fontSize: width * 0.035, // Responsive font size
+    fontSize: width * 0.035,
   },
   thirdText: {
     color: theme.colors.basicGrey,
     ...theme.font.fontMedium,
-    fontSize: width * 0.03, // Responsive font size
+    fontSize: width * 0.03,
   },
 });
