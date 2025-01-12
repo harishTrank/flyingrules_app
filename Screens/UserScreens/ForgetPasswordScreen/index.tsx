@@ -22,10 +22,7 @@ const validationSchema = Yup.object().shape({
 
 const ForgotPasswordScreen: React.FC = ({ navigation }: any) => {
   const handleResetPassword = (values: any) => {
-    // Handle password reset logic here (e.g., API call)
-    console.log('Reset Password values:', values);
-    // Replace this with your actual password reset implementation
-    alert(`Password reset requested for: ${values.email}`);
+    navigation.navigate("ResetPassword", values);
   };
 
   return (
