@@ -14,6 +14,8 @@ import BookFlightForm from "./Components/BookFlightForm";
 import { Modalize } from "react-native-modalize";
 import ImageModule from "../../../../ImageModule";
 import TravellerQuantity from "../../../ReUseComponents/TravellerQuantity";
+import PopularDestination from "../../../ReUseComponents/PopularDestination";
+
 const { height, width } = Dimensions.get("window");
 
 const classData: any = [
@@ -50,7 +52,7 @@ const BookFlightScreen = ({ navigation }: any) => {
       <HeaderComp navigation={navigation} />
       <ScrollView
         showsVerticalScrollIndicator={false}
-        style={styles.mainContainer}
+        style={[styles.mainContainer]}
       >
         <ToggleButton tripType={tripType} setTripType={setTripType} />
         <BookFlightForm
@@ -60,15 +62,28 @@ const BookFlightScreen = ({ navigation }: any) => {
           classType={classType}
           travellers={travellers}
         />
+        <PopularDestination/>
       </ScrollView>
-      <Modalize ref={modalizeRefTravel} modalHeight={height * 0.2}>
+      <Modalize
+        ref={modalizeRefTravel}
+        modalHeight={height * 0.25}
+        handleStyle={styles.modalHandle}
+        handlePosition="inside"
+        modalStyle={styles.modalStyle}
+      >
         <TravellerQuantity
           travellers={travellers}
           setTravellers={setTravellers}
         />
       </Modalize>
 
-      <Modalize ref={modalizeRefClass} modalHeight={450}>
+      <Modalize
+        ref={modalizeRefClass}
+        modalHeight={height * 0.5}
+        handleStyle={styles.modalHandle}
+        handlePosition="inside"
+        modalStyle={styles.modalStyle}
+      >
         <View style={styles.classView}>
           {classData.map((item: any) => (
             <TouchableOpacity
@@ -99,26 +114,38 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     flex: 1,
-    paddingHorizontal: 20,
+    paddingHorizontal: width * 0.04,
   },
 
   // class style
   classView: {
-    padding: 15,
+    padding: width * 0.04,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     flexWrap: "wrap",
   },
   classItem: {
-    marginBottom: 7,
+    marginBottom: width * 0.02,
     borderRadius: 15,
     borderWidth: 3,
     borderColor: "transparent",
   },
   classImage: {
-    height: width * 0.43,
-    width: width * 0.43,
-    borderColor: "red",
+    height: width * 0.4,
+    width: width * 0.4,
+    resizeMode: "contain",
   },
+
+  // Modal styles
+  modalHandle: {
+    backgroundColor: theme.colors.grey,
+    width: width * 0.15,
+    height: width * 0.015,
+    top: width * 0.03
+  },
+  modalStyle: {
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25
+  }
 });

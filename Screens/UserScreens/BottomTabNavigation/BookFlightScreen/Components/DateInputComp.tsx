@@ -1,9 +1,18 @@
 import React, { useCallback, useState } from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  Dimensions,
+} from "react-native";
 import ImageModule from "../../../../../ImageModule";
 import theme from "../../../../../utils/theme";
 import { DatePickerModal } from "react-native-paper-dates";
 import dayjs from "dayjs";
+
+const { width } = Dimensions.get("window");
 
 const DateInputComp = ({ tripType }: any) => {
   const [date, setDate]: any = useState({
@@ -42,28 +51,6 @@ const DateInputComp = ({ tripType }: any) => {
 
   return (
     <View style={styles.mainBox}>
-      <TouchableOpacity
-        onPress={() =>
-          tripType === "Round Trip"
-            ? setOpenMultiple(true)
-            : setOpenSingle(true)
-        }
-        style={[
-          styles.inputWidth,
-          { width: tripType === "Round Trip" ? "48%" : "100%" },
-        ]}
-      >
-        <Text style={styles.label}>Departure</Text>
-        <View style={styles.departBox}>
-          <View style={styles.innerBox}>
-            <Image style={styles.imageIcon} source={ImageModule.calendatIcon} />
-            <Text style={styles.textDate}>
-              {dayjs(date?.depart).format("MMM DD,YYYY")}
-            </Text>
-          </View>
-        </View>
-      </TouchableOpacity>
-
       {tripType === "Round Trip" ? (
         <DatePickerModal
           locale="en"
@@ -86,13 +73,36 @@ const DateInputComp = ({ tripType }: any) => {
           validRange={{ startDate: new Date() }}
         />
       )}
+      <TouchableOpacity
+        onPress={() =>
+          tripType === "Round Trip"
+            ? setOpenMultiple(true)
+            : setOpenSingle(true)
+        }
+        style={[
+          styles.inputWidth,
+          { width: tripType === "Round Trip" ? "48%" : "100%" },
+        ]}
+      >
+        <Text style={[styles.label, {width: tripType === "Round Trip" ? width * 0.17 : width * 0.20}]}>Departure</Text>
+        <View style={styles.departBox}>
+          <View style={styles.innerBox}>
+            <Image style={styles.imageIcon} source={ImageModule.calendatIcon} />
+            <Text style={styles.textDate}>
+              {date?.depart
+                ? dayjs(date?.depart).format("MMM DD,YYYY")
+                : "Select Date"}
+            </Text>
+          </View>
+        </View>
+      </TouchableOpacity>
 
       {tripType === "Round Trip" && (
         <TouchableOpacity
-          style={styles.inputWidth}
+          style={[styles.inputWidth, {marginLeft: width * 0.02}]}
           onPress={() => setOpenMultiple(true)}
         >
-          <Text style={[styles.label, { width: 50 }]}>Return</Text>
+          <Text style={[styles.label, { width: width * 0.12 }]}>Return</Text>
           <View style={styles.returnBox}>
             <Text style={styles.textDate}>
               {date?.arrival
@@ -121,20 +131,19 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: theme.colors.grey,
     borderRadius: 10,
-    paddingVertical: 10,
-    paddingHorizontal: 15,
+    paddingVertical: width * 0.025,
+    paddingHorizontal: width * 0.04,
     flexDirection: "row",
   },
   label: {
     ...theme.font.fontMedium,
     backgroundColor: theme.colors.white,
     position: "relative",
-    top: 10,
+    top: width * 0.03,
     zIndex: 2,
-    width: 70,
     textAlign: "center",
-    left: 10,
-    fontSize: 12,
+    left: width * 0.025,
+    fontSize: width * 0.03,
     color: "#787878",
   },
   innerBox: {
@@ -143,20 +152,21 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
   imageIcon: {
-    height: 20,
-    width: 20,
+    height: width * 0.05,
+    width: width * 0.05,
     objectFit: "contain",
   },
   textDate: {
     ...theme.font.fontSemiBold,
     color: theme.colors.black,
-    paddingLeft: 5,
+    paddingLeft: width * 0.02,
+    fontSize: width * 0.035,
   },
   returnBox: {
     borderWidth: 2,
     borderColor: theme.colors.grey,
     borderRadius: 10,
-    paddingVertical: 10,
-    paddingHorizontal: 15,
+    paddingVertical: width * 0.025,
+    paddingHorizontal: width * 0.04,
   },
 });

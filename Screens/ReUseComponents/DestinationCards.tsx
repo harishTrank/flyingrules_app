@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View, Image, Dimensions } from "react-native";
-import theme from "../../../../../utils/theme";
+import theme from "../../utils/theme";
 import { LinearGradient } from "expo-linear-gradient";
 
 const DestinationCards = ({ url, title, price }: any) => {
@@ -26,15 +26,15 @@ const DestinationCards = ({ url, title, price }: any) => {
 
 const styles = StyleSheet.create({
   card: {
-    width: Dimensions.get("window").width * 0.35,
+    width: Dimensions.get("window").width * 0.37,
     height: 200,
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
     overflow: "hidden",
-    marginVertical: 10,
     elevation: 5,
     backgroundColor: theme.colors.black,
-    margin: 10,
+    marginVertical: 10,
+    marginHorizontal: 7
   },
   image: {
     width: "100%",

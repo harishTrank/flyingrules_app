@@ -2,12 +2,12 @@ import React from "react";
 import { Text, View, Image, StyleSheet, Dimensions } from "react-native";
 import theme from "../../utils/theme";
 
-const {width} = Dimensions.get("window");
+const { width } = Dimensions.get("window");
 
 const FlightSearchInput = ({ label, icon }: any) => {
   return (
     <View style={styles.mainBox}>
-      <Text style={[styles.lable, { width: label === "To" ? 20 : 45 }]}>
+      <Text style={[styles.lable, { width: label === "To" ? width * 0.05 : width * 0.11 }]}>
         {label}
       </Text>
       <View style={styles.inputBox}>
@@ -29,34 +29,34 @@ const FlightSearchInput = ({ label, icon }: any) => {
 export default FlightSearchInput;
 
 const styles = StyleSheet.create({
-  mainBox: {},
+  mainBox: {
+  },
   lable: {
     ...theme.font.fontMedium,
     backgroundColor: theme.colors.white,
     position: "relative",
-    top: 10,
+    top: width * 0.03, // Use 3% of screen width
     zIndex: 2,
-    width: 45,
     textAlign: "center",
-    left: 10,
-    fontSize: 12,
+    left: width * 0.025, // Use 2.5% of screen width
+    fontSize: width * 0.03, // Responsive font size
     color: "#787878",
   },
   inputBox: {
     borderWidth: 2,
     borderColor: theme.colors.grey,
     borderRadius: 10,
-    paddingVertical: 10,
-    paddingHorizontal: 15,
+    paddingVertical: width * 0.025, // Use 2.5% of screen width
+    paddingHorizontal: width * 0.04, // Use 4% of screen width
     flexDirection: "row",
   },
   iconImg: {
-    height: 25,
-    width: 25,
+    height: width * 0.06, // Use 6% of screen width
+    width: width * 0.06, // Use 6% of screen width
     objectFit: "contain",
   },
   textParentBox: {
-    paddingLeft: 10,
+    paddingLeft: width * 0.025, // Use 2.5% of screen width
   },
   textBox: {
     flexDirection: "row",
@@ -64,19 +64,19 @@ const styles = StyleSheet.create({
   },
   firstText: {
     color: theme.colors.black,
-    fontSize: width * 0.07,
+    fontSize: width * 0.05, // Responsive font size
     ...theme.font.fontBold,
     marginBottom: -5,
   },
   secondText: {
-    paddingLeft: 10,
+    paddingLeft: width * 0.025, // Use 2.5% of screen width
     color: theme.colors.basicGrey,
     ...theme.font.fontSemiBold,
-    fontSize: width * 0.035,
+    fontSize: width * 0.035, // Responsive font size
   },
   thirdText: {
     color: theme.colors.basicGrey,
     ...theme.font.fontMedium,
-    fontSize: width * 0.03,
+    fontSize: width * 0.03, // Responsive font size
   },
 });

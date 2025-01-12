@@ -1,11 +1,13 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Dimensions } from "react-native";
 import theme from "../../../../../utils/theme";
 import FlightSearchInput from "../../../../ReUseComponents/FlightSearchInput";
 import ImageModule from "../../../../../ImageModule";
 import DateInputComp from "./DateInputComp";
 import FormBottomOption from "./FormBottomOption";
 import CustomButton from "../../../../ReUseComponents/CustomButton";
+
+const { width } = Dimensions.get("window");
 
 const BookFlightForm = ({
   tripType,
@@ -34,7 +36,7 @@ export default BookFlightForm;
 
 const styles = StyleSheet.create({
   mainBox: {
-    padding: 20,
+    padding: width * 0.04, // Use 4% of screen width for padding
     borderRadius: 15,
     backgroundColor: theme.colors.white,
     marginTop: 15,

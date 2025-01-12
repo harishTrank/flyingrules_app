@@ -15,7 +15,7 @@ const UserScreens = () => {
       screenOptions={{
         headerShown: false,
       }}
-      initialRouteName={"LoginScreen"}
+      initialRouteName={"BottomTabNavigation"}
     >
       <Stack.Screen
         name="BottomTabNavigation"

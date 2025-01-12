@@ -1,6 +1,14 @@
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Dimensions,
+} from "react-native";
 import theme from "../../utils/theme";
+
+const { width } = Dimensions.get("window");
 
 const TravellerQuantity = ({ travellers, setTravellers }: any) => {
   const travelHandler = (sign: any, type: any) => {
@@ -83,31 +91,31 @@ export default TravellerQuantity;
 
 const styles = StyleSheet.create({
   travelBox: {
-    marginTop: 10,
+    marginTop: width * 0.04,
+    paddingHorizontal: width * 0.04,
   },
   travelComp: {
     flexDirection: "row",
-    marginHorizontal: 20,
-    marginVertical: 10,
+    marginVertical: width * 0.02,
     alignItems: "center",
     justifyContent: "space-between",
   },
   buttonStyle: {
     backgroundColor: "#0060e3",
-    height: 50,
-    width: 50,
+    height: width * 0.12,
+    width: width * 0.12,
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: 25,
+    borderRadius: width * 0.06,
   },
   buttonText: {
     ...theme.font.fontSemiBold,
     color: theme.colors.white,
-    fontSize: 20,
+    fontSize: width * 0.05,
   },
   resultText: {
     ...theme.font.fontSemiBold,
     color: theme.colors.black,
-    fontSize: 18,
+    fontSize: width * 0.04,
   },
 });

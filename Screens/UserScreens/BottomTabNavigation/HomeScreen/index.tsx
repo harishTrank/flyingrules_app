@@ -1,34 +1,18 @@
-import React from "react";
-import { View, StyleSheet, ScrollView, FlatList } from "react-native";
+import React, { useRef, useState, useEffect } from "react";
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  FlatList,
+  Platform,
+} from "react-native";
 import HeaderComp from "../../../ReUseComponents/HeaderComp";
-import DestinationCards from "./Components/DestinationCards";
+import DestinationCards from "../../../ReUseComponents/DestinationCards";
 import HeadingText from "./Components/HeadingText";
 import ChooseCard from "./Components/ChooseCard";
 import WhyImage from "./Components/WhyImage";
-import { Dimensions } from "react-native";
+import PopularDestination from "../../../ReUseComponents/PopularDestination";
 
-const {height} = Dimensions.get("window");
-
-const destinationData = [
-  {
-    id: "1",
-    url: "https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    title: "Paris",
-    price: "400",
-  },
-  {
-    id: "2",
-    url: "https://plus.unsplash.com/premium_photo-1677829177642-30def98b0963?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    title: "Bali",
-    price: "499",
-  },
-  {
-    id: "3",
-    url: "https://plus.unsplash.com/premium_photo-1661962958462-9e52fda9954d?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    title: "Thailand",
-    price: "450",
-  },
-];
 
 const chooseCardData = [
   {
@@ -57,59 +41,76 @@ const whyCardData = [
     path: require("../../../../assets/Image/whyimage1.png"),
   },
   {
-    id: "1",
+    id: "2",
     path: require("../../../../assets/Image/whyimage2.png"),
   },
   {
-    id: "1",
+    id: "3",
     path: require("../../../../assets/Image/whyimage3.png"),
   },
 ];
 
 const HomeScreen = ({ navigation }: any) => {
-  return (
-    <View>
-      <HeaderComp navigation={navigation} />
-      <ScrollView style={styles.mainContainer} showsVerticalScrollIndicator={false}>
-        <HeadingText text="Popular Destination" />
+  const flatListRef = useRef<FlatList>(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-        <FlatList
-          horizontal={true}
-          data={destinationData} // data to be rendered
-          renderItem={({ item }) => (
-            <DestinationCards
-              url={item.url}
-              title={item.title}
-              price={item.price}
-            />
-          )} // render each item using renderItem function
-          keyExtractor={(item) => item.id} // unique key for each item
-          showsHorizontalScrollIndicator={false}
-        />
+  const onViewableItemsChanged = useRef(({ viewableItems }: any) => {
+    if (viewableItems.length > 0) {
+      setCurrentIndex(viewableItems[0].index);
+    }
+  });
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const nextIndex = (currentIndex + 1) % whyCardData.length;
+      flatListRef.current?.scrollToIndex({
+        index: nextIndex,
+        animated: true,
+      });
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [currentIndex]);
+
+  return (
+    <View style={styles.container}>
+      <HeaderComp navigation={navigation} />
+      <ScrollView
+        style={[styles.mainContainer]}
+        showsVerticalScrollIndicator={false}
+      >
+        <PopularDestination/>
 
         <HeadingText text="Why to choose us ?" />
         <FlatList
           horizontal={true}
-          data={chooseCardData} // data to be rendered
+          data={chooseCardData}
           renderItem={({ item }) => (
             <ChooseCard
               path={item.path}
               title={item.title}
               description={item.description}
             />
-          )} // render each item using renderItem function
-          keyExtractor={(item) => item.id} // unique key for each item
+          )}
+          keyExtractor={(item) => item.id}
           showsHorizontalScrollIndicator={false}
+          style={styles.flatList}
         />
 
         <HeadingText text="Why to book with us ?" />
         <FlatList
+          ref={flatListRef}
           showsHorizontalScrollIndicator={false}
           pagingEnabled
           horizontal={true}
-          data={whyCardData} // data to be rendered
-          renderItem={({ item }) => <WhyImage path={item.path} />} // render each item using renderItem function
-          keyExtractor={(item) => item.id} // unique key for each item
+          data={whyCardData}
+          renderItem={({ item }) => <WhyImage path={item.path} />}
+          keyExtractor={(item) => item.id}
+          onViewableItemsChanged={onViewableItemsChanged.current}
+          viewabilityConfig={{
+            itemVisiblePercentThreshold: 50,
+          }}
+          style={styles.flatList}
         />
       </ScrollView>
     </View>
@@ -119,11 +120,15 @@ const HomeScreen = ({ navigation }: any) => {
 export default HomeScreen;
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+  },
   mainContainer: {
     padding: 20,
-    height: height* 0.715,
   },
-  cardScroll: {
-    flexDirection: "row",
-  },
+  flatList: {
+    // Ensure FlatLists don't overflow their content
+    ...(Platform.OS === 'android' && { overflow: 'hidden' }),
+  }
 });
