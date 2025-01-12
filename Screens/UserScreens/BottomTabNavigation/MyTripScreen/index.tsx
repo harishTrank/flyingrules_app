@@ -149,13 +149,13 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     ...theme.elevationHeavy,
     backgroundColor: theme.colors.white,
-    padding: width * 0.015, // Use width for consistent padding
+    padding: 5, // Use width for consistent padding
   },
   toggleButton: {
     width: "49%", // Slightly less than 50% to avoid overlap due to rounding
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: height * 0.015, // Use height for consistent padding
+    paddingVertical: 10, // Use height for consistent padding
     borderRadius: 25,
   },
   toggleText: {
