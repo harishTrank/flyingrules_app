@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   StyleSheet,
   View,
@@ -6,38 +6,40 @@ import {
   TextInput,
   TouchableOpacity,
   StatusBar,
-  Image
-} from 'react-native';
-import { Formik } from 'formik';
-import * as Yup from 'yup';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import theme from '../../../utils/theme';
-import ImageModule from '../../../ImageModule';
+  Image,
+} from "react-native";
+import { Formik } from "formik";
+import * as Yup from "yup";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import theme from "../../../utils/theme";
+import ImageModule from "../../../ImageModule";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
-    .email('Invalid email address')
-    .required('Email is required'),
+    .email("Invalid email address")
+    .required("Email is required"),
   password: Yup.string()
-    .min(6, 'Password must be at least 6 characters')
-    .required('Password is required'),
+    .min(6, "Password must be at least 6 characters")
+    .required("Password is required"),
 });
 
-const LoginScreen: React.FC = ({navigation}: any) => {
-    const [eyeSecure, setEyeSecure]: any = useState(true);
+const LoginScreen: React.FC = ({ navigation }: any) => {
+  const [eyeSecure, setEyeSecure]: any = useState(true);
   const handleLogin = (values: any) => {
-    console.log('Login values:', values);
-    navigation.navigate('OTPVerification', { email: values.email });
+    console.log("Login values:", values);
+    navigation.navigate("OTPVerification", { email: values.email });
   };
 
   return (
-    <View style={[styles.container, {paddingTop: useSafeAreaInsets().top + 40}]}>
+    <View
+      style={[styles.container, { paddingTop: useSafeAreaInsets().top + 40 }]}
+    >
       <StatusBar barStyle="dark-content" />
       <Text style={styles.title}>Login</Text>
       <Text style={styles.subtitle}>Welcome back to the app</Text>
 
       <Formik
-        initialValues={{ email: '', password: '', keepMeSignedIn: false }}
+        initialValues={{ email: "", password: "", keepMeSignedIn: false }}
         validationSchema={validationSchema}
         onSubmit={handleLogin}
       >
@@ -55,8 +57,8 @@ const LoginScreen: React.FC = ({navigation}: any) => {
             <TextInput
               style={styles.input}
               placeholder="hello@example.com"
-              onChangeText={handleChange('email')}
-              onBlur={handleBlur('email')}
+              onChangeText={handleChange("email")}
+              onBlur={handleBlur("email")}
               value={values.email}
             />
             {touched.email && errors.email && (
@@ -69,13 +71,20 @@ const LoginScreen: React.FC = ({navigation}: any) => {
                 style={styles.passwordInput}
                 placeholder="••••••••••••"
                 secureTextEntry={eyeSecure}
-                onChangeText={handleChange('password')}
-                onBlur={handleBlur('password')}
+                onChangeText={handleChange("password")}
+                onBlur={handleBlur("password")}
                 value={values.password}
               />
-              <TouchableOpacity style={styles.eyeIcon} onPress={() => setEyeSecure(!eyeSecure)}>
-              <Text style={[eyeSecure && {textDecorationLine: "line-through"}]}>👁️</Text>
-            </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.eyeIcon}
+                onPress={() => setEyeSecure(!eyeSecure)}
+              >
+                <Text
+                  style={[eyeSecure && { textDecorationLine: "line-through" }]}
+                >
+                  👁️
+                </Text>
+              </TouchableOpacity>
             </View>
 
             {touched.password && errors.password && (
@@ -84,8 +93,7 @@ const LoginScreen: React.FC = ({navigation}: any) => {
 
             <TouchableOpacity
               onPress={() => {
-                // Handle forgot password logic
-                console.log('Forgot Password pressed');
+                navigation.navigate("ForgotPassword");
               }}
             >
               <Text style={styles.forgotPassword}>Forgot Password?</Text>
@@ -98,10 +106,12 @@ const LoginScreen: React.FC = ({navigation}: any) => {
                   values.keepMeSignedIn && styles.checkboxChecked,
                 ]}
                 onPress={() =>
-                  setFieldValue('keepMeSignedIn', !values.keepMeSignedIn)
+                  setFieldValue("keepMeSignedIn", !values.keepMeSignedIn)
                 }
               >
-                {values.keepMeSignedIn && <Text style={styles.checkMark}>✓</Text>}
+                {values.keepMeSignedIn && (
+                  <Text style={styles.checkMark}>✓</Text>
+                )}
               </TouchableOpacity>
               <Text style={styles.checkboxLabel}>Keep me signed in</Text>
             </View>
@@ -113,10 +123,8 @@ const LoginScreen: React.FC = ({navigation}: any) => {
             <Text style={styles.orText}>or sign in with</Text>
 
             <TouchableOpacity style={styles.googleButton}>
-                <Image style={styles.googleImage} source={ImageModule.google}/>
-              <Text style={styles.googleButtonText}>
-                Continue with Google
-              </Text>
+              <Image style={styles.googleImage} source={ImageModule.google} />
+              <Text style={styles.googleButtonText}>Continue with Google</Text>
             </TouchableOpacity>
           </View>
         )}
@@ -126,7 +134,7 @@ const LoginScreen: React.FC = ({navigation}: any) => {
         style={styles.createAccountButton}
         onPress={() => {
           // Handle create account logic (e.g., navigation)
-          console.log('Create an account pressed');
+          console.log("Create an account pressed");
         }}
       >
         <Text style={styles.createAccountButtonText}>Create an account</Text>
@@ -138,17 +146,17 @@ const LoginScreen: React.FC = ({navigation}: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     padding: 20,
   },
   title: {
     marginBottom: 10,
     ...theme.font.fontSemiBold,
-    fontSize: 30
+    fontSize: 30,
   },
   subtitle: {
     fontSize: 18,
-    color: '#555',
+    color: "#555",
     marginBottom: 20,
     ...theme.font.fontMedium,
   },
@@ -156,23 +164,23 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginBottom: 5,
     ...theme.font.fontMedium,
-    color: theme.colors.black
+    color: theme.colors.black,
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     borderRadius: 5,
     padding: 12,
     marginBottom: 10,
     fontSize: 15,
     ...theme.font.fontMedium,
-    color: theme.colors.black
+    color: theme.colors.black,
   },
   passwordInputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     borderRadius: 5,
     marginBottom: 10,
   },
@@ -184,28 +192,28 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   errorText: {
-    color: 'red',
+    color: "red",
     fontSize: 12,
     marginBottom: 10,
   },
   forgotPassword: {
     color: theme.colors.primary,
     marginBottom: 15,
-    textAlign: 'right',
-    ...theme.font.fontMedium
+    textAlign: "right",
+    ...theme.font.fontMedium,
   },
   checkboxContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 15,
   },
   checkbox: {
     width: 20,
     height: 20,
     borderWidth: 1,
-    borderColor: '#ccc',
-    justifyContent: 'center',
-    alignItems: 'center',
+    borderColor: "#ccc",
+    justifyContent: "center",
+    alignItems: "center",
     marginRight: 10,
   },
   checkboxChecked: {
@@ -213,61 +221,61 @@ const styles = StyleSheet.create({
     borderColor: theme.colors.primary,
   },
   checkMark: {
-    color: 'white',
+    color: "white",
     fontSize: 12,
   },
   checkboxLabel: {
     ...theme.font.fontRegular,
-    color: theme.colors.black
+    color: theme.colors.black,
   },
   loginButton: {
     backgroundColor: theme.colors.primary,
     padding: 15,
     borderRadius: 5,
-    alignItems: 'center',
+    alignItems: "center",
     marginBottom: 10,
   },
   loginButtonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 17,
-    ...theme.font.fontMedium
+    ...theme.font.fontMedium,
   },
   orText: {
-    textAlign: 'center',
+    textAlign: "center",
     marginBottom: 10,
-    color: '#555',
+    color: "#555",
     ...theme.font.fontRegular,
     fontSize: 12,
-    paddingVertical: 5
+    paddingVertical: 5,
   },
   googleButton: {
-    backgroundColor: '#e9e9e9',
+    backgroundColor: "#e9e9e9",
     padding: 15,
     borderRadius: 5,
-    alignItems: 'center',
+    alignItems: "center",
     marginBottom: 20,
-    flexDirection: 'row',
-    justifyContent: 'center'
+    flexDirection: "row",
+    justifyContent: "center",
   },
-  googleImage:{
+  googleImage: {
     height: 30,
     width: 30,
-    objectFit:"contain"
+    objectFit: "contain",
   },
   googleButtonText: {
-    color: '#555',
+    color: "#555",
     fontSize: 16,
     marginLeft: 10,
-    ...theme.font.fontMedium
+    ...theme.font.fontMedium,
   },
   createAccountButton: {
     padding: 15,
-    alignItems: 'center',
+    alignItems: "center",
   },
   createAccountButtonText: {
     color: theme.colors.primary,
     fontSize: 16,
-    ...theme.font.fontMedium
+    ...theme.font.fontMedium,
   },
 });
 
