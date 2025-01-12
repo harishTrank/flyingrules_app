@@ -11,6 +11,7 @@ const ImageModule = {
   economy: require("../assets/Icons/economy.png"),
   peconomy: require("../assets/Icons/peconomy.png"),
   first: require("../assets/Icons/first.png"),
+  google: require("../assets/Icons/Google.png"),
 };
 
 export default ImageModule;

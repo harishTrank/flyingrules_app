@@ -121,7 +121,7 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   mainContainer: {
     padding: 20,
-    height: height* 0.72
+    height: height* 0.715,
   },
   cardScroll: {
     flexDirection: "row",

@@ -1,6 +1,7 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import BottomTabNavigation from "./BottomTabNavigation";
+import LoginScreen from "./LoginScreen";
 
 const Stack = createStackNavigator<any>();
 
@@ -10,11 +11,15 @@ const UserScreens = () => {
       screenOptions={{
         headerShown: false,
       }}
-      initialRouteName={"BottomTabNavigation"}
+      initialRouteName={"LoginScreen"}
     >
       <Stack.Screen
         name="BottomTabNavigation"
         component={BottomTabNavigation}
+      />
+      <Stack.Screen
+        name="LoginScreen"
+        component={LoginScreen}
       />
     </Stack.Navigator>
   );
