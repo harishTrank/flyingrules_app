@@ -1,10 +1,13 @@
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
 import { View, StyleSheet, ScrollView, FlatList } from "react-native";
 import HeaderComp from "../../../ReUseComponents/HeaderComp";
 import DestinationCards from "./Components/DestinationCards";
 import HeadingText from "./Components/HeadingText";
 import ChooseCard from "./Components/ChooseCard";
 import WhyImage from "./Components/WhyImage";
+import { Dimensions } from "react-native";
+
+const {height} = Dimensions.get("window");
 
 const destinationData = [
   {
@@ -67,7 +70,7 @@ const HomeScreen = ({ navigation }: any) => {
   return (
     <View>
       <HeaderComp navigation={navigation} />
-      <ScrollView style={styles.mainContainer}>
+      <ScrollView style={styles.mainContainer} showsVerticalScrollIndicator={false}>
         <HeadingText text="Popular Destination" />
 
         <FlatList
@@ -81,6 +84,7 @@ const HomeScreen = ({ navigation }: any) => {
             />
           )} // render each item using renderItem function
           keyExtractor={(item) => item.id} // unique key for each item
+          showsHorizontalScrollIndicator={false}
         />
 
         <HeadingText text="Why to choose us ?" />
@@ -95,6 +99,7 @@ const HomeScreen = ({ navigation }: any) => {
             />
           )} // render each item using renderItem function
           keyExtractor={(item) => item.id} // unique key for each item
+          showsHorizontalScrollIndicator={false}
         />
 
         <HeadingText text="Why to book with us ?" />
@@ -116,6 +121,7 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   mainContainer: {
     padding: 20,
+    height: height* 0.72
   },
   cardScroll: {
     flexDirection: "row",

@@ -14,11 +14,10 @@ const styles = StyleSheet.create({
   containerCard: {
     flexDirection: "row",
     width: width * 0.85,
-    height: 200,
     borderRadius: 15,
     marginRight: 15,
     margin: 10,
-    marginBottom: 150,
+    paddingBottom: 50
   },
   img: {
     width: width * 0.85,

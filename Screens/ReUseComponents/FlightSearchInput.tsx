@@ -1,6 +1,8 @@
 import React from "react";
-import { Text, View, Image, StyleSheet } from "react-native";
+import { Text, View, Image, StyleSheet, Dimensions } from "react-native";
 import theme from "../../utils/theme";
+
+const {width} = Dimensions.get("window");
 
 const FlightSearchInput = ({ label, icon }: any) => {
   return (
@@ -62,7 +64,7 @@ const styles = StyleSheet.create({
   },
   firstText: {
     color: theme.colors.black,
-    fontSize: 25,
+    fontSize: width * 0.07,
     ...theme.font.fontBold,
     marginBottom: -5,
   },
@@ -70,10 +72,11 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     color: theme.colors.basicGrey,
     ...theme.font.fontSemiBold,
+    fontSize: width * 0.035,
   },
   thirdText: {
     color: theme.colors.basicGrey,
-    fontSize: 12,
     ...theme.font.fontMedium,
+    fontSize: width * 0.03,
   },
 });
