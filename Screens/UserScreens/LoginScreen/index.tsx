@@ -23,11 +23,11 @@ const validationSchema = Yup.object().shape({
     .required('Password is required'),
 });
 
-const LoginScreen: React.FC = () => {
+const LoginScreen: React.FC = ({navigation}: any) => {
     const [eyeSecure, setEyeSecure]: any = useState(true);
   const handleLogin = (values: any) => {
     console.log('Login values:', values);
-    alert(`Email: ${values.email}\nPassword: ${values.password}`);
+    navigation.navigate('OTPVerification', { email: values.email });
   };
 
   return (

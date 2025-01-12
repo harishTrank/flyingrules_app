@@ -2,6 +2,7 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import BottomTabNavigation from "./BottomTabNavigation";
 import LoginScreen from "./LoginScreen";
+import OTPVerificationScreen from "./OTPVerificationScreen";
 
 const Stack = createStackNavigator<any>();
 
@@ -20,6 +21,10 @@ const UserScreens = () => {
       <Stack.Screen
         name="LoginScreen"
         component={LoginScreen}
+      />
+       <Stack.Screen
+        name="OTPVerification"
+        component={OTPVerificationScreen}
       />
     </Stack.Navigator>
   );
