@@ -12,25 +12,11 @@ import theme from "../../../../../utils/theme";
 
 const { width, height } = Dimensions.get("window");
 
-interface Trip {
-  id: string;
-  airline: string;
-  price: string;
-  from: {
-    code: string;
-    city: string;
-    country: string;
-    date: string;
+const TripCard = ({ trip, navigation }: any) => {
+  const handleMoreDetailsPress = () => {
+    console.log("trip12", trip);
+    navigation.navigate("FlightTicketDetails", { trip }); // Navigate and pass data
   };
-  to: {
-    code: string;
-    city: string;
-    country: string;
-    date: string;
-  };
-}
-
-const TripCard = ({ trip }: { trip: Trip }) => {
   return (
     <View style={styles.card}>
       <View style={styles.topRow}>
@@ -39,33 +25,36 @@ const TripCard = ({ trip }: { trip: Trip }) => {
       </View>
 
       <View style={styles.cardSecond}>
-      <View style={styles.middleRow}>
-        <View style={styles.locationContainer}>
-          <Text style={styles.codeText}>{trip.from.code}</Text>
-          <Text style={styles.cityText}>
-            {trip.from.city}, {trip.from.country}
-          </Text>
-          <Text style={styles.dateText}>{trip.from.date}</Text>
+        <View style={styles.middleRow}>
+          <View style={styles.locationContainer}>
+            <Text style={styles.codeText}>{trip.from.code}</Text>
+            <Text style={styles.cityText}>
+              {trip.from.city}, {trip.from.country}
+            </Text>
+            <Text style={styles.dateText}>{trip.from.date}</Text>
+          </View>
+          <View style={styles.iconContainer}>
+            <Image style={styles.middleImg} source={ImageModule.mytripplane} />
+          </View>
+          <View style={styles.locationContainer}>
+            <Text style={[styles.codeText, { textAlign: "right" }]}>
+              {trip.to.code}
+            </Text>
+            <Text style={[styles.cityText, { textAlign: "right" }]}>
+              {trip.to.city}, {trip.to.country}
+            </Text>
+            <Text style={[styles.dateText, { textAlign: "right" }]}>
+              {trip.to.date}
+            </Text>
+          </View>
         </View>
-        <View style={styles.iconContainer}>
-          <Image style={styles.middleImg} source={ImageModule.mytripplane} />
-        </View>
-        <View style={styles.locationContainer}>
-          <Text style={[styles.codeText, { textAlign: "right" }]}>
-            {trip.to.code}
-          </Text>
-          <Text style={[styles.cityText, { textAlign: "right" }]}>
-            {trip.to.city}, {trip.to.country}
-          </Text>
-          <Text style={[styles.dateText, { textAlign: "right" }]}>
-            {trip.to.date}
-          </Text>
-        </View>
-      </View>
 
-      <TouchableOpacity style={styles.moreDetailsButton}>
-        <Text style={styles.moreDetailsText}>More Details</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.moreDetailsButton}
+          onPress={handleMoreDetailsPress}
+        >
+          <Text style={styles.moreDetailsText}>More Details</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -77,7 +66,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: height * 0.02,
   },
-  middleImg :{
+  middleImg: {
     height: width * 0.1,
     width: width * 0.1,
   },
@@ -92,7 +81,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.primary,
     padding: 10,
     borderTopEndRadius: 10,
-    borderTopLeftRadius: 10
+    borderTopLeftRadius: 10,
   },
   airlineText: {
     ...theme.font.fontBold,

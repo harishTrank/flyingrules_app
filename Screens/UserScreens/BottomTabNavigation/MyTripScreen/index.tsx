@@ -6,11 +6,13 @@ import {
   TouchableOpacity,
   Text,
   FlatList,
-  Platform,
 } from "react-native";
 import HeaderComp from "../../../ReUseComponents/HeaderComp";
 import theme from "../../../../utils/theme";
 import TripCard from "./Component/TripCard";
+import { createStackNavigator } from "@react-navigation/stack";
+import FlightTicketDetailsScreen from "./FlightTicketDetailsScreen";
+const Stack = createStackNavigator<any>();
 
 const { width, height } = Dimensions.get("window");
 
@@ -18,57 +20,28 @@ const tripsData = [
   {
     id: "1",
     airline: "FINNAIR",
-    price: "$1265.85",
     from: {
       code: "DEL",
       city: "Delhi",
-      country: "India",
-      date: "Jan 15,2025",
+      airport: "Indira Gandhi International Airport",
+      date: "15/01/2025",
+      time: "09.30",
     },
     to: {
-      code: "AAL",
-      city: "Aalborg",
-      country: "Denmark",
-      date: "Jan 15,2025",
+      code: "JFK",
+      city: "New York",
+      airport: "Aalborg Airport",
+      date: "15/01/2025", // You might want to adjust this
+      time: "09.30", // You might want to adjust this
     },
-  },
-  {
-    id: "2",
-    airline: "FINNAIR",
-    price: "$1265.85",
-    from: {
-      code: "DEL",
-      city: "Delhi",
-      country: "India",
-      date: "Jan 15,2025",
-    },
-    to: {
-      code: "AAL",
-      city: "Aalborg",
-      country: "Denmark",
-      date: "Jan 15,2025",
-    },
-  },
-  {
-    id: "3",
-    airline: "FINNAIR",
-    price: "$1265.85",
-    from: {
-      code: "DEL",
-      city: "Delhi",
-      country: "India",
-      date: "Jan 15,2025",
-    },
-    to: {
-      code: "AAL",
-      city: "Aalborg",
-      country: "Denmark",
-      date: "Jan 15,2025",
-    },
+    flightNumber: "IN 230",
+    gate: "22",
+    seat: "2B",
+    class: "Economy",
   },
 ];
 
-const MyTripsScreen = ({ navigation }: any) => {
+const MyTrips = ({ navigation }: any) => {
   const option: any = ["Active Trips", "Past Trips"];
   const [tripType, setTripType]: any = useState("Active Trips");
 
@@ -111,15 +84,32 @@ const MyTripsScreen = ({ navigation }: any) => {
           <FlatList
             data={tripsData}
             keyExtractor={(item) => item.id}
-            renderItem={({ item }) => <TripCard trip={item} />}
-            contentContainerStyle={[
-              styles.listContainer,
-            ]}
+            renderItem={({ item }) => (
+              <TripCard navigation={navigation} trip={item} />
+            )}
+            contentContainerStyle={[styles.listContainer]}
             showsVerticalScrollIndicator={false}
           />
         </View>
       </View>
     </View>
+  );
+};
+
+const MyTripsScreen = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+      initialRouteName={"BottomTabNavigation"}
+    >
+      <Stack.Screen name="BottomTabNavigation" component={MyTrips} />
+      <Stack.Screen
+        name="FlightTicketDetails"
+        component={FlightTicketDetailsScreen}
+      />
+    </Stack.Navigator>
   );
 };
 

@@ -14,6 +14,9 @@ const ImageModule = {
   google: require("../assets/Icons/Google.png"),
   plane: require("../assets/Icons/plane.png"),
   mytripplane: require("../assets/Icons/mytripplane.png"),
+  Calendersecond: require("../assets/Icons/Calendersecond.png"),
+  planemid: require("../assets/Icons/planemid.png"),
+  clock: require("../assets/Icons/clock.png"),
 };
 
 export default ImageModule;

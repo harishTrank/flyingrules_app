@@ -134,7 +134,7 @@ const CreateAccountScreen: React.FC = ({ navigation }: any) => {
 
       <View style={styles.signInContainer}>
         <Text style={styles.signInText}>Already have an account? </Text>
-        <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+        <TouchableOpacity onPress={() => navigation.navigate("LoginScreen")}>
           <Text style={styles.signInButtonText}>Sign in here</Text>
         </TouchableOpacity>
       </View>
