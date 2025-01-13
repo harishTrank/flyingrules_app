@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from "react";
 import {
   StyleSheet,
   View,
@@ -6,14 +6,14 @@ import {
   TextInput,
   TouchableOpacity,
   StatusBar,
-} from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import theme from '../../../utils/theme';
-import BackButtonComp from '../../ReUseComponents/BackButtonComp';
+} from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import theme from "../../../utils/theme";
+import BackButtonComp from "../../ReUseComponents/BackButtonComp";
 
 const OTPVerificationScreen = ({ navigation, route }: any) => {
   const { email } = route.params;
-  const [otp, setOtp] = useState(['', '', '', '']);
+  const [otp, setOtp] = useState(["", "", "", ""]);
   const [countdown, setCountdown] = useState(23);
   const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
   const inputRefs = useRef<(TextInput | null)[]>([]);
@@ -51,21 +51,18 @@ const OTPVerificationScreen = ({ navigation, route }: any) => {
   };
 
   const handleKeyPress = (event: any, index: number) => {
-    if (event.nativeEvent.key === 'Backspace' && !otp[index] && index > 0) {
+    if (event.nativeEvent.key === "Backspace" && !otp[index] && index > 0) {
       inputRefs.current[index - 1]?.focus();
     }
   };
 
   const handleVerify = () => {
-    const enteredOTP = otp.join('');
-    console.log('Entered OTP:', enteredOTP);
+    const enteredOTP = otp.join("");
     alert(`Verifying OTP: ${enteredOTP}`);
   };
 
   const handleResendOTP = () => {
     setCountdown(23);
-    console.log('Resending OTP...');
-    alert('Resending OTP...');
   };
 
   return (
@@ -119,7 +116,7 @@ const OTPVerificationScreen = ({ navigation, route }: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     padding: 20,
   },
   title: {
@@ -130,29 +127,29 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 18,
-    color: '#555',
+    color: "#555",
     marginBottom: 5,
     ...theme.font.fontMedium,
   },
   emailText: {
     fontSize: 15,
-    color: '#555',
+    color: "#555",
     marginBottom: 20,
     ...theme.font.fontMedium,
   },
   otpContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginBottom: 20,
-    paddingVertical: 20
+    paddingVertical: 20,
   },
   otpInput: {
     width: 65,
     height: 65,
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     borderRadius: 5,
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: 24,
     ...theme.font.fontMedium,
     color: theme.colors.black,
@@ -164,18 +161,18 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.primary,
     padding: 15,
     borderRadius: 5,
-    alignItems: 'center',
+    alignItems: "center",
     marginBottom: 20,
   },
   verifyButtonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 17,
     ...theme.font.fontMedium,
   },
   resendContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
   },
   resendText: {
     ...theme.font.fontRegular,

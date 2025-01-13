@@ -26,7 +26,6 @@ const validationSchema = Yup.object().shape({
 const LoginScreen: React.FC = ({ navigation }: any) => {
   const [eyeSecure, setEyeSecure]: any = useState(true);
   const handleLogin = (values: any) => {
-    console.log("Login values:", values);
     navigation.navigate("OTPVerification", { email: values.email });
   };
 

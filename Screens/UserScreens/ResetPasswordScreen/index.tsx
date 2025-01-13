@@ -28,9 +28,6 @@ const ResetPasswordScreen: React.FC = ({ navigation }: any) => {
   const [confirmSecureTextEntry, setConfirmSecureTextEntry] = useState(true);
 
   const handleResetPasswordSubmit = (values: any) => {
-    // Handle password reset submission logic here (e.g., API call)
-    console.log("Reset Password values:", values);
-    // Replace this with your actual password reset implementation
     alert(
       `New Password: ${values.newPassword}\nConfirm Password: ${values.confirmPassword}`
     );

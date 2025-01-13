@@ -14,7 +14,6 @@ const { width, height } = Dimensions.get("window");
 
 const TripCard = ({ trip, navigation }: any) => {
   const handleMoreDetailsPress = () => {
-    console.log("trip12", trip);
     navigation.navigate("FlightTicketDetails", { trip }); // Navigate and pass data
   };
   return (

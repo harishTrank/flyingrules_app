@@ -29,9 +29,6 @@ const CreateAccountScreen: React.FC = ({ navigation }: any) => {
   const [secureTextEntry, setSecureTextEntry] = useState(true);
 
   const handleCreateAccount = (values: any) => {
-    // Handle create account logic here (e.g., API call)
-    console.log("Create Account values:", values);
-    // Replace this with your actual create account implementation
     alert(
       `Name: ${values.name}\nEmail: ${values.email}\nPassword: ${values.password}`
     );
