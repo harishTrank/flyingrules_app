@@ -17,12 +17,12 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     marginRight: 15,
     margin: 10,
-    paddingBottom: 50
+    marginTop: -10,
   },
   img: {
     width: width * 0.85,
     height: 200,
-    objectFit: "cover",
+    objectFit: "contain",
     borderRadius: 15,
   },
 });

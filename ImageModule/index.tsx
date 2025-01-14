@@ -2,7 +2,7 @@ const ImageModule = {
   appIcon: require("../assets/Icons/appIcon.png"),
 
   // icons
-  departIcon: require("../assets/Icons/AirplaneTakeoff.png"),
+  departIcon: require("../assets/Icons/inputTakeoff.png"),
   arrivalIcon: require("../assets/Icons/AirplaneLanding.png"),
   calendatIcon: require("../assets/Icons/Calender.png"),
 
