@@ -106,7 +106,10 @@ const FlightShowDetailsScreen: React.FC<FlightShowDetailsScreenProps> = ({
         </TouchableOpacity>
       </View>
 
-      <ScrollView contentContainerStyle={styles.contentContainer}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.contentContainer}
+      >
         {activeTab === "itinerary" ? (
           <View>
             <View style={styles.section}>
@@ -128,7 +131,7 @@ const FlightShowDetailsScreen: React.FC<FlightShowDetailsScreenProps> = ({
               </View>
             </View>
             <FlightDetailsComp itineraryData={itineraryData} />
-            <View style={[styles.section, styles.bottomTransit]}>
+            <View style={[styles.bottomTransit]}>
               <View style={styles.headerRow}>
                 <Image
                   source={ImageModule.transitIcon}
@@ -144,6 +147,7 @@ const FlightShowDetailsScreen: React.FC<FlightShowDetailsScreenProps> = ({
                 </View>
               </View>
             </View>
+            <FlightDetailsComp itineraryData={itineraryData} />
           </View>
         ) : (
           <View style={styles.faresContainer}>
