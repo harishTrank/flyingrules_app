@@ -57,7 +57,7 @@ const Profile: React.FC<ProfileScreenProps> = ({ navigation }) => {
     {
       name: "Logout",
       icon: ImageModule.logout,
-      onPress: () => {},
+      onPress: () => navigation.navigate("LoginScreen"),
     },
   ];
   return (
