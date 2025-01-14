@@ -214,8 +214,9 @@ const styles = StyleSheet.create({
     marginBottom: height * 0.01,
   },
   bottomTransit: {
-    padding: 10,
+    paddingHorizontal: 10,
     width: "100%",
+    paddingTop: 15,
   },
   headerRow1: {
     flexDirection: "row",

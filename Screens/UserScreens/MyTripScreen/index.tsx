@@ -7,8 +7,8 @@ import {
   Text,
   FlatList,
 } from "react-native";
-import HeaderComp from "../../../ReUseComponents/HeaderComp";
-import theme from "../../../../utils/theme";
+import HeaderComp from "../../ReUseComponents/HeaderComp";
+import theme from "../../../utils/theme";
 import TripCard from "./Component/TripCard";
 import { createStackNavigator } from "@react-navigation/stack";
 import FlightTicketDetailsScreen from "./FlightTicketDetailsScreen";

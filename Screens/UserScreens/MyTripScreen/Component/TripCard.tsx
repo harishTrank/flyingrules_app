@@ -7,8 +7,8 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
-import ImageModule from "../../../../../ImageModule";
-import theme from "../../../../../utils/theme";
+import ImageModule from "../../../../ImageModule";
+import theme from "../../../../utils/theme";
 
 const { width, height } = Dimensions.get("window");
 

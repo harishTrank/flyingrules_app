@@ -10,7 +10,7 @@ const FlightDetailsComp = ({ itineraryData }: any) => {
     <View style={styles.itineraryContainer}>
       <View>
         <View style={styles.head}>
-          <Image source={ImageModule.dummyLogo} style={styles.flightLogo} />
+          {/* <Image source={ImageModule.dummyLogo} style={styles.flightLogo} /> */}
           <Text style={styles.flightText}>
             {itineraryData.departure.flight}
           </Text>
@@ -43,7 +43,6 @@ const FlightDetailsComp = ({ itineraryData }: any) => {
 
       <View>
         <View style={styles.head}>
-          <Image source={ImageModule.dummyLogo} style={styles.flightLogo} />
           <Text style={styles.flightText}>
             {itineraryData.departure.flight}
           </Text>
@@ -93,7 +92,7 @@ const styles = StyleSheet.create({
     color: theme.colors.black,
     ...theme.font.fontMedium,
     fontSize: width * 0.04,
-    marginLeft: 8,
+    // marginLeft: 8,
   },
   secondRow: {
     flexDirection: "row",

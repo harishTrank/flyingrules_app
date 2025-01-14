@@ -1,9 +1,9 @@
 import theme from "../../../utils/theme";
-import { AntDesign, MaterialIcons, Foundation } from "@expo/vector-icons";
+import { AntDesign, MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
-import MyTripScreen from "./MyTripScreen";
 import HomeScreen from "./HomeScreen";
 import BookFlightScreen from "./BookFlightScreen";
+import ProfileScreen from "./ProfileScreen";
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -48,13 +48,13 @@ const BottomTabNavigation = ({ navigation }: any) => {
         }}
       />
       <Tab.Screen
-        name="MyTripScreen"
-        component={MyTripScreen}
+        name="ProfileScreen"
+        component={ProfileScreen}
         options={{
-          tabBarLabel: "My Trip",
+          tabBarLabel: "Profile",
           tabBarIcon: ({ focused }: any) => (
-            <Foundation
-              name="clipboard-notes"
+            <FontAwesome5
+              name="user-alt"
               size={24}
               color={focused ? theme.colors.primary : theme.colors.white}
             />

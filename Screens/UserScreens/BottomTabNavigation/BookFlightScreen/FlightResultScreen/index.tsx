@@ -75,8 +75,7 @@ const FlightResultScreen: React.FC<FlightResultScreenProps> = ({
   ]);
 
   const handleBookNow = (flight: any) => {
-    console.log("Book Now:", flight);
-    navigation.navigate("FlightDetails", { trip: flight });
+    navigation.navigate("BookNowScreen", { trip: flight });
   };
 
   const renderItem = ({ item }: { item: any }) => (

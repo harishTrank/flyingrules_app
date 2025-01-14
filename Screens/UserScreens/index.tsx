@@ -7,6 +7,7 @@ import ForgotPasswordScreen from "./ForgetPasswordScreen";
 import ResetPasswordScreen from "./ResetPasswordScreen";
 import CreateAccountScreen from "./CreateAccountScreen";
 import FlightShowDetailsScreen from "./FlightShowDetailsScreen";
+import BookNowScreen from "./BookNowScreen";
 
 const Stack = createStackNavigator<any>();
 
@@ -31,6 +32,7 @@ const UserScreens = () => {
         name="FlightShowDetails"
         component={FlightShowDetailsScreen}
       />
+      <Stack.Screen name="BookNowScreen" component={BookNowScreen} />
     </Stack.Navigator>
   );
 };
