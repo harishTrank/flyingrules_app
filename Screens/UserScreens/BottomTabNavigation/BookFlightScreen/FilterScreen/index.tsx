@@ -4,11 +4,13 @@ import {
   Text,
   StyleSheet,
   Dimensions,
-  FlatList, // Import FlatList
+  FlatList,
   TouchableOpacity,
+  Image,
 } from "react-native";
 import theme from "../../../../../utils/theme";
 import HeaderComp from "../../../../ReUseComponents/HeaderComp";
+import ImageModule from "../../../../../ImageModule";
 
 const { width, height } = Dimensions.get("window");
 
@@ -18,6 +20,7 @@ interface FilterScreenProps {
 
 const FilterScreen: React.FC<FilterScreenProps> = ({ navigation }) => {
   const [activeTab, setActiveTab] = useState<string>("Stops");
+  const [selectedOptions, setSelectedOptions] = useState<any>({}); // State for selected options
 
   // Dummy data for filter options (replace with actual data from API)
   const filterOptions: any = {
@@ -73,23 +76,53 @@ const FilterScreen: React.FC<FilterScreenProps> = ({ navigation }) => {
   };
 
   const handleClearAll = () => {
-    // Handle clearing all selected filters
-    console.log("Clear All Filters");
+    setSelectedOptions({}); // Clear all selected options
   };
 
-  const renderItem = ({ item, index }: any) => (
-    <TouchableOpacity
-      style={[
-        styles.optionRow,
-        index % 2 === 0 && {
-          backgroundColor: theme.colors.primarySecond,
-        },
-      ]}
-    >
-      <Text style={styles.optionText}>{item}</Text>
-      <View style={styles.checkbox} />
-    </TouchableOpacity>
-  );
+  // Function to handle option press (for toggling selection)
+  const handleOptionPress = (tab: string, option: string) => {
+    setSelectedOptions((prevOptions: any) => {
+      const updatedOptions = { ...prevOptions };
+      if (!updatedOptions[tab]) {
+        updatedOptions[tab] = [];
+      }
+      const index = updatedOptions[tab].indexOf(option);
+      if (index > -1) {
+        updatedOptions[tab].splice(index, 1); // Remove if already selected
+      } else {
+        updatedOptions[tab].push(option); // Add if not selected
+      }
+      return updatedOptions;
+    });
+  };
+
+  const renderItem = ({ item, index }: { item: any; index: number }) => {
+    const isSelected = selectedOptions[activeTab]?.includes(item);
+
+    return (
+      <TouchableOpacity
+        style={[
+          styles.optionRow,
+          index % 2 === 0 && {
+            backgroundColor: theme.colors.primarySecond,
+          },
+        ]}
+        onPress={() => handleOptionPress(activeTab, item)} // Pass tab and item to the handler
+      >
+        <Text style={styles.optionText}>{item}</Text>
+        <View
+          style={[
+            styles.checkbox,
+            isSelected && styles.checkboxChecked, // Apply checked style if selected
+          ]}
+        >
+          {isSelected && (
+            <Image source={ImageModule.checkIcon} style={styles.checkIcon} />
+          )}
+        </View>
+      </TouchableOpacity>
+    );
+  };
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.colors.white }}>
@@ -124,8 +157,7 @@ const FilterScreen: React.FC<FilterScreenProps> = ({ navigation }) => {
       <FlatList
         data={filterOptions[activeTab]}
         renderItem={renderItem}
-        keyExtractor={(item, index) => index.toString()} // Use index as a fallback key
-        // contentContainerStyle={styles.contentContainer}
+        keyExtractor={(item, index) => index.toString()}
         showsVerticalScrollIndicator={false}
       />
     </View>
@@ -176,13 +208,11 @@ const styles = StyleSheet.create({
     ...theme.font.fontSemiBold,
     color: theme.colors.black,
   },
-  contentContainer: {
-    padding: width * 0.04,
-  },
   optionRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    paddingVertical: height * 0.015,
     padding: width * 0.04,
   },
   optionText: {
@@ -196,6 +226,16 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: theme.colors.basicGrey,
     borderRadius: 4,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  checkboxChecked: {
+    backgroundColor: theme.colors.primary,
+  },
+  checkIcon: {
+    width: width * 0.03,
+    height: width * 0.03,
+    objectFit: "cover",
   },
 });
 

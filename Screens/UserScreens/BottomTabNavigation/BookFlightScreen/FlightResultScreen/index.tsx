@@ -154,7 +154,10 @@ const FlightResultScreen: React.FC<FlightResultScreenProps> = ({
             <Text style={styles.buttonText}>Filter</Text>
             <Entypo name="chevron-down" size={20} color={theme.colors.black} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.navigate("SortScreen")}
+          >
             <Image source={ImageModule.sortIcon} style={styles.buttonIcon} />
             <Text style={styles.buttonText}>Sort</Text>
             <Entypo name="chevron-down" size={20} color={theme.colors.black} />

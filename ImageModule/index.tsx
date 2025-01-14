@@ -26,6 +26,7 @@ const ImageModule = {
   transitIcon: require("../assets/Icons/transitIcon.png"),
   lineIcon: require("../assets/Icons/line.png"),
   dummyLogo: require("../assets/Icons/dummylogo.png"),
+  checkIcon: require("../assets/Icons/checkIcon.png"),
 };
 
 export default ImageModule;
