@@ -178,7 +178,7 @@ const FlightResultScreen: React.FC<FlightResultScreenProps> = ({
 
 const styles = StyleSheet.create({
   listContentContainer: {
-    paddingHorizontal: width * 0.04,
+    paddingHorizontal: width * 0.025,
     paddingTop: height * 0.02,
   },
   filterSortContainer: {
