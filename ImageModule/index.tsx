@@ -27,6 +27,16 @@ const ImageModule = {
   lineIcon: require("../assets/Icons/line.png"),
   dummyLogo: require("../assets/Icons/dummylogo.png"),
   checkIcon: require("../assets/Icons/checkIcon.png"),
+  eye_open: require("../assets/Icons/eye_open.png"),
+  eye_close: require("../assets/Icons/eye_close.png"),
+  profile_bg: require("../assets/Icons/profile_bg.png"),
+  mic: require("../assets/Icons/mic.png"),
+  settings: require("../assets/Icons/settings.png"),
+  aboutus: require("../assets/Icons/aboutus.png"),
+  addUser: require("../assets/Icons/addUser.png"),
+  my_account: require("../assets/Icons/my_account.png"),
+  manage_trip: require("../assets/Icons/manage_trip.png"),
+  logout: require("../assets/Icons/logout.png"),
 };
 
 export default ImageModule;

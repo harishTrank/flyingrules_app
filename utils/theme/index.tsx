@@ -9,6 +9,7 @@ const theme = {
     white: "#FFF",
     grey: "#dedede",
     basicGrey: "#8e8b8b",
+    red: "#e83731",
   },
   font: {
     fontBold: {
