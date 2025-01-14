@@ -9,30 +9,11 @@ import {
 } from "react-native";
 import ImageModule from "../../ImageModule";
 import theme from "../../utils/theme";
+import Entypo from "@expo/vector-icons/Entypo";
 
 const { width, height } = Dimensions.get("window");
 
-interface FlightCardProps {
-  flight: {
-    airline: string;
-    price: string;
-    departure: {
-      code: string;
-      time: string;
-      date: string;
-    };
-    arrival: {
-      code: string;
-      time: string;
-      date: string;
-    };
-    duration: string;
-    stops: string;
-  };
-  onPress: () => void;
-}
-
-const FlightCard: React.FC<FlightCardProps> = ({ flight, onPress }) => {
+const FlightCard = ({ navigation, flight, onPress }: any) => {
   return (
     <View style={styles.card}>
       <View style={styles.topRow}>
@@ -75,8 +56,16 @@ const FlightCard: React.FC<FlightCardProps> = ({ flight, onPress }) => {
             <Image source={ImageModule.carryOnIcon} style={styles.icon} />
             <Image source={ImageModule.refreshIcon} style={styles.icon} />
           </View>
-          <TouchableOpacity onPress={() => {}}>
+          <TouchableOpacity
+            style={styles.showDetailsBox}
+            onPress={() => navigation.navigate("FlightShowDetails")}
+          >
             <Text style={styles.showDetailsText}>Show Details</Text>
+            <Entypo
+              name="chevron-down"
+              size={18}
+              color={theme.colors.primary}
+            />
           </TouchableOpacity>
           <TouchableOpacity style={styles.bookNowButton} onPress={onPress}>
             <Text style={styles.bookNowText}>BOOK NOW</Text>
@@ -98,7 +87,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: width * 0.04,
+    padding: width * 0.025,
     borderBottomWidth: 1,
     borderBottomColor: theme.colors.basicGrey,
     backgroundColor: theme.colors.primary,
@@ -131,14 +120,19 @@ const styles = StyleSheet.create({
     fontSize: width * 0.065,
     color: theme.colors.black,
   },
+  showDetailsBox: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   routeTime: {
     ...theme.font.fontRegular,
-    fontSize: width * 0.04,
+    fontSize: width * 0.035,
     color: theme.colors.black,
   },
   routeDate: {
     ...theme.font.fontRegular,
-    fontSize: width * 0.035,
+    fontSize: width * 0.03,
     color: theme.colors.black,
   },
   textAlignRight: {
@@ -155,7 +149,7 @@ const styles = StyleSheet.create({
   },
   durationText: {
     ...theme.font.fontRegular,
-    fontSize: width * 0.035,
+    fontSize: width * 0.03,
     color: theme.colors.black,
   },
   stopsText: {
@@ -183,8 +177,8 @@ const styles = StyleSheet.create({
     objectFit: "contain",
   },
   showDetailsText: {
-    ...theme.font.fontRegular,
-    fontSize: width * 0.035,
+    ...theme.font.fontMedium,
+    fontSize: width * 0.03,
     color: theme.colors.primary,
   },
   bookNowButton: {

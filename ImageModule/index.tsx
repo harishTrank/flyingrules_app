@@ -22,6 +22,10 @@ const ImageModule = {
   refreshIcon: require("../assets/Icons/refreshIcon.png"),
   filterIcon: require("../assets/Icons/filter.png"),
   sortIcon: require("../assets/Icons/sort.png"),
+  airplaneTakeoff: require("../assets/Icons/airplaneTakeoff.png"),
+  transitIcon: require("../assets/Icons/transitIcon.png"),
+  lineIcon: require("../assets/Icons/line.png"),
+  dummyLogo: require("../assets/Icons/dummylogo.png"),
 };
 
 export default ImageModule;

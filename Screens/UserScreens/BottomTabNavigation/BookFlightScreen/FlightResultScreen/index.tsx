@@ -80,7 +80,11 @@ const FlightResultScreen: React.FC<FlightResultScreenProps> = ({
   };
 
   const renderItem = ({ item }: { item: any }) => (
-    <FlightCard flight={item} onPress={() => handleBookNow(item)} />
+    <FlightCard
+      navigation={navigation}
+      flight={item}
+      onPress={() => handleBookNow(item)}
+    />
   );
 
   // flight categories search

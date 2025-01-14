@@ -6,6 +6,7 @@ import OTPVerificationScreen from "./OTPVerificationScreen";
 import ForgotPasswordScreen from "./ForgetPasswordScreen";
 import ResetPasswordScreen from "./ResetPasswordScreen";
 import CreateAccountScreen from "./CreateAccountScreen";
+import FlightShowDetailsScreen from "./FlightShowDetailsScreen";
 
 const Stack = createStackNavigator<any>();
 
@@ -26,6 +27,10 @@ const UserScreens = () => {
       <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
       <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} />
       <Stack.Screen name="CreateAccount" component={CreateAccountScreen} />
+      <Stack.Screen
+        name="FlightShowDetails"
+        component={FlightShowDetailsScreen}
+      />
     </Stack.Navigator>
   );
 };
