@@ -16,6 +16,7 @@ const BookFlightForm = ({
   modalizeRefClass,
   classType,
   travellers,
+  navigation,
 }: any) => {
   const [isFromModalVisible, setIsFromModalVisible]: any = useState(false);
   const [isToModalVisible, setIsToModalVisible]: any = useState(false);
@@ -30,6 +31,10 @@ const BookFlightForm = ({
   const handleToAirportSelect = (airport: any) => {
     setSelectedToAirport(airport);
     setIsToModalVisible(false); // Close the modal
+  };
+
+  const searchFlightBtnHandler = () => {
+    navigation.navigate("FlightResult");
   };
   return (
     <View style={styles.mainBox}>
@@ -68,7 +73,7 @@ const BookFlightForm = ({
         classType={classType}
         travellers={travellers}
       />
-      <CustomButton title={"Search"} onPress={() => console.log("Fuck you")} />
+      <CustomButton title={"Search"} onPress={searchFlightBtnHandler} />
     </View>
   );
 };

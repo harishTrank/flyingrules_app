@@ -10,6 +10,7 @@ import {
 import ImageModule from "../../../../../ImageModule";
 import theme from "../../../../../utils/theme";
 import HeaderComp from "../../../../ReUseComponents/HeaderComp";
+import FlightCard from "../../../../ReUseComponents/FlightCard";
 
 const { width, height } = Dimensions.get("window");
 

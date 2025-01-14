@@ -11,7 +11,7 @@ const BottomTabNavigation = ({ navigation }: any) => {
   return (
     <Tab.Navigator
       initialRouteName="HomeScreen"
-      activeColor={theme.colors.black}
+      activeColor={theme.colors.white}
       inactiveColor={theme.colors.white}
       barStyle={{
         backgroundColor: theme.colors.primary,
@@ -28,7 +28,7 @@ const BottomTabNavigation = ({ navigation }: any) => {
             <AntDesign
               name="home"
               size={24}
-              color={focused ? theme.colors.black : theme.colors.white}
+              color={focused ? theme.colors.primary : theme.colors.white}
             />
           ),
         }}
@@ -42,7 +42,7 @@ const BottomTabNavigation = ({ navigation }: any) => {
             <MaterialIcons
               name="flight"
               size={24}
-              color={focused ? theme.colors.black : theme.colors.white}
+              color={focused ? theme.colors.primary : theme.colors.white}
             />
           ),
         }}
@@ -56,7 +56,7 @@ const BottomTabNavigation = ({ navigation }: any) => {
             <Foundation
               name="clipboard-notes"
               size={24}
-              color={focused ? theme.colors.black : theme.colors.white}
+              color={focused ? theme.colors.primary : theme.colors.white}
             />
           ),
         }}

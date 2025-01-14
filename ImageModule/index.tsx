@@ -17,6 +17,11 @@ const ImageModule = {
   Calendersecond: require("../assets/Icons/Calendersecond.png"),
   planemid: require("../assets/Icons/planemid.png"),
   clock: require("../assets/Icons/clock.png"),
+  baggageIcon: require("../assets/Icons/baggageIcon.png"),
+  carryOnIcon: require("../assets/Icons/carryOnIcon.png"),
+  refreshIcon: require("../assets/Icons/refreshIcon.png"),
+  filterIcon: require("../assets/Icons/filter.png"),
+  sortIcon: require("../assets/Icons/sort.png"),
 };
 
 export default ImageModule;

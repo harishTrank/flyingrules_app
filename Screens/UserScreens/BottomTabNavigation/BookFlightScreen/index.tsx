@@ -15,6 +15,10 @@ import { Modalize } from "react-native-modalize";
 import ImageModule from "../../../../ImageModule";
 import TravellerQuantity from "../../../ReUseComponents/TravellerQuantity";
 import PopularDestination from "../../../ReUseComponents/PopularDestination";
+import { createStackNavigator } from "@react-navigation/stack";
+import FlightResultScreen from "./FlightResultScreen";
+
+const Stack = createStackNavigator<any>();
 
 const { height, width } = Dimensions.get("window");
 
@@ -37,7 +41,7 @@ const classData: any = [
   },
 ];
 
-const BookFlightScreen = ({ navigation }: any) => {
+const BookFlight = ({ navigation }: any) => {
   const modalizeRefTravel = useRef<Modalize>(null);
   const modalizeRefClass = useRef<Modalize>(null);
   const [tripType, setTripType]: any = useState("Round Trip");
@@ -61,8 +65,9 @@ const BookFlightScreen = ({ navigation }: any) => {
           modalizeRefClass={modalizeRefClass}
           classType={classType}
           travellers={travellers}
+          navigation={navigation}
         />
-        <PopularDestination/>
+        <PopularDestination />
       </ScrollView>
       <Modalize
         ref={modalizeRefTravel}
@@ -105,6 +110,20 @@ const BookFlightScreen = ({ navigation }: any) => {
   );
 };
 
+const BookFlightScreen = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+      initialRouteName={"BookFlight"}
+    >
+      <Stack.Screen name="BookFlight" component={BookFlight} />
+      <Stack.Screen name="FlightResult" component={FlightResultScreen} />
+    </Stack.Navigator>
+  );
+};
+
 export default BookFlightScreen;
 
 const styles = StyleSheet.create({
@@ -142,10 +161,10 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.grey,
     width: width * 0.15,
     height: width * 0.015,
-    top: width * 0.03
+    top: width * 0.03,
   },
   modalStyle: {
     borderTopLeftRadius: 25,
-    borderTopRightRadius: 25
-  }
+    borderTopRightRadius: 25,
+  },
 });
