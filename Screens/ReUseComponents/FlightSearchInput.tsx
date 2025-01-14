@@ -11,13 +11,7 @@ import theme from "../../utils/theme";
 
 const { width } = Dimensions.get("window");
 
-const FlightSearchInput = ({
-  label,
-  icon,
-  value,
-  onFocus,
-  airport,
-}: any) => {
+const FlightSearchInput = ({ label, icon, value, onFocus, airport }: any) => {
   return (
     <TouchableOpacity
       style={styles.mainBox}
@@ -37,14 +31,14 @@ const FlightSearchInput = ({
         <View style={styles.textParentBox}>
           <View style={styles.textBox}>
             <Text style={styles.firstText}>
-              {airport ? airport.city : value ? value : label}
+              {airport ? airport?.address?.cityName : value ? value : label}
             </Text>
             <Text style={styles.secondText}>
-              {airport ? airport.code : `Code`}
+              {airport ? airport?.iataCode : `Code`}
             </Text>
           </View>
           <Text style={styles.thirdText}>
-            {airport ? airport.airport : "Location"}
+            {airport ? airport.address?.countryName : "Location"}
           </Text>
         </View>
       </View>
@@ -55,8 +49,7 @@ const FlightSearchInput = ({
 export default FlightSearchInput;
 
 const styles = StyleSheet.create({
-  mainBox: {
-  },
+  mainBox: {},
   lable: {
     ...theme.font.fontMedium,
     backgroundColor: theme.colors.white,

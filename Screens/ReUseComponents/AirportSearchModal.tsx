@@ -17,32 +17,10 @@ import {
 import ImageModule from "../../ImageModule";
 import theme from "../../utils/theme";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import axios from "axios";
+import { AmadeusURL } from "../../utils/api/amadeus";
 
 const { width, height } = Dimensions.get("window");
-
-const airportData = [
-  {
-    city: "New York City",
-    state: "New York",
-    country: "United States",
-    airport: "La Guardia Airport",
-    code: "LGA",
-  },
-  {
-    city: "New York City",
-    state: "New York",
-    country: "United States",
-    airport: "Kennedy Airport",
-    code: "JFK",
-  },
-  {
-    city: "New York City",
-    state: "New York",
-    country: "United States",
-    airport: "Newark Liberty International Airport",
-    code: "EWA",
-  },
-];
 
 const AirportSearchModal = ({
   isVisible,
@@ -51,6 +29,25 @@ const AirportSearchModal = ({
   selectedAirport,
 }: any) => {
   const [searchText, setSearchText] = useState("");
+  const [apiResponse, setApiResponse]: any = useState([]);
+
+  const listApiHandler = async () => {
+    try {
+      const response = await axios.post(`${AmadeusURL}/flight/search-airport`, {
+        searchTerm: searchText,
+      });
+      setApiResponse(response?.data?.data);
+    } catch (error: any) {
+      console.error("Error:", error);
+    }
+  };
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      listApiHandler();
+    }, 300);
+    return () => clearTimeout(timeout);
+  }, [searchText]);
 
   useEffect(() => {
     if (isVisible) {
@@ -62,7 +59,8 @@ const AirportSearchModal = ({
     <TouchableOpacity
       style={[
         styles.airportItem,
-        item.code === selectedAirport?.code && styles.selectedAirportItem,
+        item?.iataCode === selectedAirport?.iataCode &&
+          styles.selectedAirportItem,
       ]}
       onPress={() => {
         onAirportSelect(item);
@@ -71,22 +69,16 @@ const AirportSearchModal = ({
     >
       <View style={styles.cityContainer}>
         <View style={styles.cityTextBox}>
-          <Text style={styles.airportText}>
-            {item.city}, {item.state}
-          </Text>
+          <Text style={styles.airportText}>{item?.address?.cityName}</Text>
         </View>
-        <Text style={styles.airportCode}>{item.code}</Text>
+        <Text style={styles.airportCode}>{item?.iataCode}</Text>
       </View>
 
       <View style={styles.airportNameContainer}>
         <Image style={styles.airportIconImg} source={ImageModule.plane} />
-        <Text style={styles.airportName}>{item.airport}</Text>
+        <Text style={styles.airportName}>{item?.address?.countryName}</Text>
       </View>
     </TouchableOpacity>
-  );
-
-  const filteredAirports = airportData.filter((item) =>
-    item.city.toLowerCase().includes(searchText.toLowerCase())
   );
 
   return (
@@ -97,7 +89,12 @@ const AirportSearchModal = ({
       onRequestClose={onClose}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={[styles.modalContainer, {paddingTop: useSafeAreaInsets().top}]}>
+        <View
+          style={[
+            styles.modalContainer,
+            { paddingTop: useSafeAreaInsets().top },
+          ]}
+        >
           <View style={styles.headerContainer}>
             <Text style={styles.modalTitle}>Select Airport</Text>
             <TouchableOpacity onPress={onClose} style={styles.closeButton}>
@@ -117,6 +114,7 @@ const AirportSearchModal = ({
                 value={searchText}
                 onChangeText={setSearchText}
                 autoFocus={true}
+                autoCorrect={false}
               />
               {searchText && (
                 <Text style={styles.matchingText}>
@@ -125,7 +123,7 @@ const AirportSearchModal = ({
               )}
             </View>
             <FlatList
-              data={filteredAirports}
+              data={apiResponse}
               renderItem={renderItem}
               keyExtractor={(item) => item.code}
               contentContainerStyle={styles.flatListContent}
