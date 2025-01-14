@@ -17,6 +17,7 @@ import TravellerQuantity from "../../../ReUseComponents/TravellerQuantity";
 import PopularDestination from "../../../ReUseComponents/PopularDestination";
 import { createStackNavigator } from "@react-navigation/stack";
 import FlightResultScreen from "./FlightResultScreen";
+import FilterScreen from "./FilterScreen";
 
 const Stack = createStackNavigator<any>();
 
@@ -120,6 +121,7 @@ const BookFlightScreen = () => {
     >
       <Stack.Screen name="BookFlight" component={BookFlight} />
       <Stack.Screen name="FlightResult" component={FlightResultScreen} />
+      <Stack.Screen name="FilterScreen" component={FilterScreen} />
     </Stack.Navigator>
   );
 };
