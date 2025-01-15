@@ -37,6 +37,7 @@ const ImageModule = {
   my_account: require("../assets/Icons/my_account.png"),
   manage_trip: require("../assets/Icons/manage_trip.png"),
   logout: require("../assets/Icons/logout.png"),
+  protection: require("../assets/Icons/protection.png"),
 };
 
 export default ImageModule;

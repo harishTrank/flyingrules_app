@@ -10,6 +10,7 @@ const theme = {
     grey: "#dedede",
     basicGrey: "#8e8b8b",
     red: "#e83731",
+    green: "#00b300",
   },
   font: {
     fontBold: {

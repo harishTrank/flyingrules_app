@@ -23,7 +23,7 @@ interface ProfileScreenProps {
 }
 
 const Profile: React.FC<ProfileScreenProps> = ({ navigation }) => {
-  const [isLogin, setIsLogin]: any = useState(false);
+  const [isLogin, setIsLogin]: any = useState(true);
   const nonLoginRoute: any = [
     {
       name: "Customer Support",
