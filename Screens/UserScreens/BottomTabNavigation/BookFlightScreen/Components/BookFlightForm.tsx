@@ -7,6 +7,7 @@ import DateInputComp from "./DateInputComp";
 import FormBottomOption from "./FormBottomOption";
 import CustomButton from "../../../../ReUseComponents/CustomButton";
 import AirportSearchModal from "../../../../ReUseComponents/AirportSearchModal";
+import Toast from "react-native-toast-message";
 
 const { width } = Dimensions.get("window");
 
@@ -23,6 +24,17 @@ const BookFlightForm = ({
   setIsToModalVisible,
 }: any) => {
   const searchFlightBtnHandler = () => {
+    if (!selectedFromAirport) {
+      return Toast.show({
+        type: "error",
+        text1: "Please Select From Location.",
+      });
+    } else if (!selectedToAirport) {
+      return Toast.show({
+        type: "error",
+        text1: "Please Select To Location.",
+      });
+    }
     navigation.navigate("FlightResult");
   };
   return (

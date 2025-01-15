@@ -16,8 +16,8 @@ const { width } = Dimensions.get("window");
 
 const DateInputComp = ({ tripType }: any) => {
   const [date, setDate]: any = useState({
-    depart: undefined,
-    arrival: undefined,
+    depart: new Date(),
+    arrival: new Date(),
   });
   const [openSingle, setOpenSingle] = useState(false);
   const [openMultiple, setOpenMultiple] = useState(false);
@@ -84,7 +84,14 @@ const DateInputComp = ({ tripType }: any) => {
           { width: tripType === "Round Trip" ? "48%" : "100%" },
         ]}
       >
-        <Text style={[styles.label, {width: tripType === "Round Trip" ? width * 0.17 : width * 0.20}]}>Departure</Text>
+        <Text
+          style={[
+            styles.label,
+            { width: tripType === "Round Trip" ? width * 0.17 : width * 0.2 },
+          ]}
+        >
+          Departure
+        </Text>
         <View style={styles.departBox}>
           <View style={styles.innerBox}>
             <Image style={styles.imageIcon} source={ImageModule.calendatIcon} />
@@ -99,7 +106,7 @@ const DateInputComp = ({ tripType }: any) => {
 
       {tripType === "Round Trip" && (
         <TouchableOpacity
-          style={[styles.inputWidth, {marginLeft: width * 0.02}]}
+          style={[styles.inputWidth, { marginLeft: width * 0.02 }]}
           onPress={() => setOpenMultiple(true)}
         >
           <Text style={[styles.label, { width: width * 0.12 }]}>Return</Text>
