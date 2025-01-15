@@ -77,7 +77,7 @@ const OTPVerificationScreen = ({ navigation, route }: any) => {
       ?.then(async (res: any) => {
         await AsyncStorage.setItem("accessToken", res?.data?.token);
         setGlobalFlagManager(true);
-        navigation.navigate("BottomTabNavigation");
+        navigation.replace("BottomTabNavigation");
         Toast.show({
           type: "success",
           text1: "User Login successfully.",

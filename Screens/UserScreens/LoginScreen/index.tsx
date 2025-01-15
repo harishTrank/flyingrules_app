@@ -44,7 +44,7 @@ const LoginScreen: React.FC = ({ navigation }: any) => {
           type: "success",
           text1: "OTP send successfully.",
         });
-        navigation.navigate("OTPVerification", values);
+        navigation.replace("OTPVerification", values);
       })
       .catch((err: any) =>
         Toast.show({

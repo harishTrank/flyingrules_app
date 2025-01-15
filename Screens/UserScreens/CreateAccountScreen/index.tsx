@@ -59,7 +59,7 @@ const CreateAccountScreen: React.FC = ({ navigation }: any) => {
           type: "success",
           text1: "Send OTP on email Successfully.",
         });
-        navigation.navigate("OTPVerification", values);
+        navigation.replace("OTPVerification", values);
       })
       ?.catch((err: any) => {
         console.log("err?.data", err?.data);
