@@ -3,7 +3,7 @@ import Axios from "axios";
 import queryString from "querystring";
 
 export const hostname = () => {
-  let hostUrl = "https://cmi.tranktechnologies.com/api";
+  let hostUrl = "http://cmi.tranktechnologies.com/api";
 
   return hostUrl;
 };

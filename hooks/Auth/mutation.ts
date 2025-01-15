@@ -1,17 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
-import { changePassword, loginApiCall, mobileLogout } from "../../store/Services/Auth";
+import { createUserApi } from "../../store/Services/Auth";
 
 
-export const useloginApiCall = () => {
-    return useMutation((payload) => loginApiCall(payload));
+export const useCreateUserApi = () => {
+    return useMutation((payload) => createUserApi(payload));
 };
-
-export const useMobileLogout = () => {
-    return useMutation((payload) => mobileLogout(payload));
-};
-
-export const useChangePassword = () => {
-    return useMutation((payload) => changePassword(payload));
-};
-
-

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   View,
   Text,
@@ -13,6 +13,8 @@ import ImageModule from "../../../../ImageModule";
 import { createStackNavigator } from "@react-navigation/stack";
 import ProfileHeadSection from "./Component/ProfileHeadSection";
 import MyTripsScreen from "../../MyTripScreen";
+import { useAtom } from "jotai";
+import { loginGlobalFlag } from "../../../../JotaiStore";
 
 const Stack = createStackNavigator<any>();
 
@@ -23,7 +25,7 @@ interface ProfileScreenProps {
 }
 
 const Profile: React.FC<ProfileScreenProps> = ({ navigation }) => {
-  const [isLogin, setIsLogin]: any = useState(true);
+  const [isLogin]: any = useAtom(loginGlobalFlag);
   const nonLoginRoute: any = [
     {
       name: "Customer Support",

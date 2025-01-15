@@ -15,6 +15,12 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import theme from "../../../utils/theme";
 import ImageModule from "../../../ImageModule";
+import { useCreateUserApi } from "../../../hooks/Auth/mutation";
+import FullScreenLoader from "../../ReUseComponents/FullScreenLoader";
+import Toast from "react-native-toast-message";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useAtom } from "jotai";
+import { loginGlobalFlag } from "../../../JotaiStore";
 
 const { width, height } = Dimensions.get("window");
 
@@ -35,13 +41,35 @@ const validationSchema = Yup.object().shape({
 const CreateAccountScreen: React.FC = ({ navigation }: any) => {
   const [secureTextEntry, setSecureTextEntry] = useState(true);
   const [confirmSecureTextEntry, setConfirmSecureTextEntry] = useState(true);
+  const [, setGlobalFlagManager]: any = useAtom(loginGlobalFlag);
+  const createUserApiCall: any = useCreateUserApi();
 
   const handleCreateAccount = (values: any) => {
-    // Handle account creation logic here (e.g., API call)
-    console.log("Account created with:", values);
-    alert(
-      `Name: ${values.name}\nEmail: ${values.email}\nPassword: ${values.password}\nConfirmPassword: ${values.confirmPassword}`
-    );
+    createUserApiCall
+      ?.mutateAsync({
+        body: {
+          name: values?.name,
+          email: values?.email,
+          password: values?.password,
+          c_password: values?.confirmPassword,
+        },
+      })
+      ?.then(async (res: any) => {
+        await AsyncStorage.setItem("accessToken", res?.data?.token);
+        setGlobalFlagManager(true);
+        navigation.navigate("BottomTabNavigation");
+        Toast.show({
+          type: "success",
+          text1: "User created successfully.",
+        });
+      })
+      ?.catch((err: any) => {
+        console.log("err?.data", err?.data);
+        Toast.show({
+          type: "error",
+          text1: err?.data?.error,
+        });
+      });
   };
 
   return (
@@ -49,6 +77,7 @@ const CreateAccountScreen: React.FC = ({ navigation }: any) => {
       style={{ flex: 1, backgroundColor: theme.colors.white }}
       contentContainerStyle={{ flexGrow: 1 }}
     >
+      <FullScreenLoader loading={createUserApiCall?.isLoading} />
       <View
         style={[
           styles.container,
