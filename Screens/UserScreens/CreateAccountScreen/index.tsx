@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: theme.colors.grey,
     borderRadius: 5,
-    padding: width * 0.04,
+    padding: width * 0.03,
     marginBottom: height * 0.01,
     fontSize: width * 0.04,
     ...theme.font.fontMedium,
@@ -261,7 +261,7 @@ const styles = StyleSheet.create({
   },
   signupButton: {
     backgroundColor: theme.colors.primary,
-    padding: width * 0.04,
+    padding: width * 0.03,
     borderRadius: 5,
     alignItems: "center",
     marginBottom: height * 0.01,
@@ -269,7 +269,7 @@ const styles = StyleSheet.create({
   signupButtonText: {
     color: theme.colors.white,
     fontSize: width * 0.045,
-    ...theme.font.fontMedium,
+    ...theme.font.fontSemiBold,
   },
   orText: {
     textAlign: "center",
@@ -281,7 +281,7 @@ const styles = StyleSheet.create({
   },
   googleButton: {
     backgroundColor: theme.colors.grey,
-    padding: width * 0.04,
+    padding: width * 0.03,
     borderRadius: 5,
     alignItems: "center",
     marginBottom: height * 0.02,
