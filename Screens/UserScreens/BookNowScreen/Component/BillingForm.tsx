@@ -12,7 +12,7 @@ import * as Yup from "yup";
 import RNPickerSelect from "react-native-picker-select";
 import theme from "../../../../utils/theme";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import ImageModule from "../../../../ImageModule";
+// import ImageModule from "../../../../ImageModule";
 
 const { width } = Dimensions.get("window");
 
@@ -68,6 +68,7 @@ const BillingForm = () => {
         errors,
         touched,
         handleBlur,
+        handleChange,
       }: any) => (
         <View style={styles.container}>
           <View style={styles.section}>
@@ -85,7 +86,9 @@ const BillingForm = () => {
                       {...field}
                       style={styles.input}
                       placeholder="Enter Address"
+                      onChangeText={handleChange("address")}
                       onBlur={handleBlur("address")}
+                      value={values.address}
                     />
                   )}
                 </Field>
@@ -108,7 +111,6 @@ const BillingForm = () => {
                     placeholder={{ label: "Select Country", value: null }}
                     value={values.country}
                     useNativeAndroidPickerStyle={false}
-                    onClose={() => handleBlur("country")}
                     style={{
                       inputAndroid: {
                         color: "black",
@@ -142,7 +144,9 @@ const BillingForm = () => {
                       style={styles.input}
                       placeholder="Enter Zip Code"
                       keyboardType="number-pad"
+                      onChangeText={handleChange("zipCode")}
                       onBlur={handleBlur("zipCode")}
+                      value={values.zipCode}
                     />
                   )}
                 </Field>
@@ -160,7 +164,9 @@ const BillingForm = () => {
                       {...field}
                       style={styles.input}
                       placeholder="Enter City"
+                      onChangeText={handleChange("city")}
                       onBlur={handleBlur("city")}
+                      value={values.city}
                     />
                   )}
                 </Field>
@@ -183,7 +189,6 @@ const BillingForm = () => {
                     placeholder={{ label: "Select State", value: null }}
                     value={values.state}
                     useNativeAndroidPickerStyle={false}
-                    onClose={() => handleBlur("state")}
                     style={{
                       inputAndroid: {
                         color: "black",
@@ -274,7 +279,9 @@ const BillingForm = () => {
                       style={styles.input}
                       placeholder="Enter Card Number"
                       keyboardType="number-pad"
+                      onChangeText={handleChange("card_number")}
                       onBlur={handleBlur("card_number")}
+                      value={values.card_number}
                     />
                   )}
                 </Field>
@@ -292,7 +299,9 @@ const BillingForm = () => {
                       {...field}
                       style={styles.input}
                       placeholder="Enter Name on Card"
+                      onChangeText={handleChange("name_on_card")}
                       onBlur={handleBlur("name_on_card")}
+                      value={values.name_on_card}
                     />
                   )}
                 </Field>
@@ -311,7 +320,9 @@ const BillingForm = () => {
                         {...field}
                         style={styles.input}
                         placeholder="MM/YY"
+                        onChangeText={handleChange("expiry_date")}
                         onBlur={handleBlur("expiry_date")}
+                        value={values.expiry_date}
                       />
                     )}
                   </Field>
@@ -329,7 +340,9 @@ const BillingForm = () => {
                         style={styles.input}
                         placeholder="Enter CVC"
                         keyboardType="number-pad"
+                        onChangeText={handleChange("cvc")}
                         onBlur={handleBlur("cvc")}
+                        value={values.cvc}
                       />
                     )}
                   </Field>
@@ -349,7 +362,7 @@ const BillingForm = () => {
               <View style={styles.checkbox}>
                 {values.agree_terms && (
                   <Image
-                    source={ImageModule.checkIcon}
+                    // source={ImageModule.checkIcon}
                     style={styles.checkboxChecked}
                   />
                 )}

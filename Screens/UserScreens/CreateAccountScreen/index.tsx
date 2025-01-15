@@ -274,7 +274,7 @@ const styles = StyleSheet.create({
   orText: {
     textAlign: "center",
     marginBottom: height * 0.01,
-    color: theme.colors.grey,
+    color: theme.colors.basicGrey,
     ...theme.font.fontRegular,
     fontSize: width * 0.035,
     paddingVertical: height * 0.01,
