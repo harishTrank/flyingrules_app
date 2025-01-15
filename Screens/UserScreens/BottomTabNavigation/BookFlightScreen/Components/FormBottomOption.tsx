@@ -28,7 +28,7 @@ const FormBottomOption = ({
   return (
     <View style={styles.mainBox}>
       <TouchableOpacity style={styles.firstBox} onPress={onOpenTravellers}>
-        <Text style={[styles.label, {width: width * 0.18}]}>Traveller</Text>
+        <Text style={[styles.label, { width: width * 0.18 }]}>Traveller</Text>
         <View style={styles.textBox}>
           <Text style={styles.text}>{`${travellers.adult} Adult${
             travellers.child !== 0 ? `, ${travellers.child} Child` : ""
@@ -44,7 +44,7 @@ const FormBottomOption = ({
             { alignItems: "center", justifyContent: "space-between" },
           ]}
         >
-          <Text style={styles.text}>{classType}</Text>
+          <Text style={styles.text}>{classType?.name}</Text>
           <Entypo
             name="chevron-down"
             size={width * 0.05}

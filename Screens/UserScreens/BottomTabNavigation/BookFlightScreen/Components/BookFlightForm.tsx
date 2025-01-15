@@ -23,6 +23,10 @@ const BookFlightForm = ({
   selectedToAirport,
   setIsToModalVisible,
 }: any) => {
+  const [date, setDate]: any = useState({
+    depart: new Date(),
+    arrival: new Date(),
+  });
   const searchFlightBtnHandler = () => {
     if (!selectedFromAirport) {
       return Toast.show({
@@ -35,7 +39,15 @@ const BookFlightForm = ({
         text1: "Please Select To Location.",
       });
     }
-    navigation.navigate("FlightResult");
+    navigation.navigate("FlightResult", {
+      locationDeparture: selectedFromAirport?.iataCode,
+      locationArrival: selectedToAirport?.iataCode,
+      arrival: date?.arrival,
+      departure: date?.depart,
+      travellers,
+      flightClass: classType.apiKey,
+      tripType: tripType,
+    });
   };
   return (
     <View style={styles.mainBox}>
@@ -54,7 +66,7 @@ const BookFlightForm = ({
         airport={selectedToAirport}
       />
 
-      <DateInputComp tripType={tripType} />
+      <DateInputComp tripType={tripType} date={date} setDate={setDate} />
       <FormBottomOption
         modalizeRefTravel={modalizeRefTravel}
         modalizeRefClass={modalizeRefClass}

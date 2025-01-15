@@ -15,13 +15,7 @@ import ImageModule from "../../../../../ImageModule";
 import Entypo from "@expo/vector-icons/Entypo";
 const { width, height } = Dimensions.get("window");
 
-interface FlightResultScreenProps {
-  navigation: any;
-}
-
-const FlightResultScreen: React.FC<FlightResultScreenProps> = ({
-  navigation,
-}) => {
+const FlightResultScreen = ({ navigation, route }: any) => {
   const [flights, setFlights] = useState([
     // ... your flight data
     {
@@ -73,6 +67,8 @@ const FlightResultScreen: React.FC<FlightResultScreenProps> = ({
       stops: "1 Stop(s)",
     },
   ]);
+
+  console.log("first", route?.params);
 
   const handleBookNow = (flight: any) => {
     navigation.navigate("BookNowScreen", { trip: flight });

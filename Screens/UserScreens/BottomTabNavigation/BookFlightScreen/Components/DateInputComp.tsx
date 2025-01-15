@@ -14,11 +14,7 @@ import dayjs from "dayjs";
 
 const { width } = Dimensions.get("window");
 
-const DateInputComp = ({ tripType }: any) => {
-  const [date, setDate]: any = useState({
-    depart: new Date(),
-    arrival: new Date(),
-  });
+const DateInputComp = ({ tripType, date, setDate }: any) => {
   const [openSingle, setOpenSingle] = useState(false);
   const [openMultiple, setOpenMultiple] = useState(false);
 

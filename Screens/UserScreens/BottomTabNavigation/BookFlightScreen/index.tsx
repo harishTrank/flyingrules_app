@@ -29,18 +29,22 @@ const classData: any = [
   {
     name: "Economy",
     image: ImageModule.economy,
+    apiKey: "ECONOMY",
   },
   {
     name: "P.Economy",
     image: ImageModule.peconomy,
+    apiKey: "PREMIUM_ECONOMY",
   },
   {
     name: "Business",
     image: ImageModule.business,
+    apiKey: "BUSINESS",
   },
   {
     name: "First",
     image: ImageModule.first,
+    apiKey: "FIRST",
   },
 ];
 
@@ -48,7 +52,7 @@ const BookFlight = ({ navigation }: any) => {
   const modalizeRefTravel = useRef<Modalize>(null);
   const modalizeRefClass = useRef<Modalize>(null);
   const [tripType, setTripType]: any = useState("Round Trip");
-  const [classType, setClassType]: any = useState("Economy");
+  const [classType, setClassType]: any = useState(classData?.[0]);
   const [travellers, setTravellers]: any = useState({
     adult: 1,
     child: 0,
@@ -128,12 +132,15 @@ const BookFlight = ({ navigation }: any) => {
             <TouchableOpacity
               style={[
                 styles.classItem,
-                item.name === classType && {
+                item.name === classType?.name && {
                   borderColor: "green",
                 },
               ]}
               key={item.name}
-              onPress={() => setClassType(item.name)}
+              onPress={() => {
+                setClassType(item);
+                modalizeRefClass.current?.close();
+              }}
             >
               <Image style={styles.classImage} source={item.image} />
             </TouchableOpacity>
