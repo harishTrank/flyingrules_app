@@ -55,31 +55,34 @@ const AirportSearchModal = ({
     }
   }, [isVisible]);
 
-  const renderItem = ({ item }: any) => (
-    <TouchableOpacity
-      style={[
-        styles.airportItem,
-        item?.iataCode === selectedAirport?.iataCode &&
-          styles.selectedAirportItem,
-      ]}
-      onPress={() => {
-        onAirportSelect(item);
-        onClose();
-      }}
-    >
-      <View style={styles.cityContainer}>
-        <View style={styles.cityTextBox}>
-          <Text style={styles.airportText}>{item?.address?.cityName}</Text>
+  const renderItem = ({ item }: any) => {
+    return (
+      <TouchableOpacity
+        style={[
+          styles.airportItem,
+          item?.iataCode === selectedAirport?.iataCode &&
+            styles.selectedAirportItem,
+        ]}
+        key={item.id}
+        onPress={() => {
+          onAirportSelect(item);
+          onClose();
+        }}
+      >
+        <View style={styles.cityContainer}>
+          <View style={styles.cityTextBox}>
+            <Text style={styles.airportText}>{item?.address?.cityName}</Text>
+          </View>
+          <Text style={styles.airportCode}>{item?.iataCode}</Text>
         </View>
-        <Text style={styles.airportCode}>{item?.iataCode}</Text>
-      </View>
 
-      <View style={styles.airportNameContainer}>
-        <Image style={styles.airportIconImg} source={ImageModule.plane} />
-        <Text style={styles.airportName}>{item?.address?.countryName}</Text>
-      </View>
-    </TouchableOpacity>
-  );
+        <View style={styles.airportNameContainer}>
+          <Image style={styles.airportIconImg} source={ImageModule.plane} />
+          <Text style={styles.airportName}>{item?.address?.countryName}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
 
   return (
     <Modal
@@ -128,6 +131,7 @@ const AirportSearchModal = ({
               keyExtractor={(item) => item.code}
               contentContainerStyle={styles.flatListContent}
               keyboardShouldPersistTaps="handled"
+              showsVerticalScrollIndicator={false}
             />
           </KeyboardAvoidingView>
         </View>

@@ -19,6 +19,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import FlightResultScreen from "./FlightResultScreen";
 import FilterScreen from "./FilterScreen";
 import SortScreen from "./SortScreen";
+import AirportSearchModal from "../../../ReUseComponents/AirportSearchModal";
 
 const Stack = createStackNavigator<any>();
 
@@ -52,10 +53,37 @@ const BookFlight = ({ navigation }: any) => {
     adult: 1,
     child: 0,
   });
+  const [isFromModalVisible, setIsFromModalVisible]: any = useState(false);
+  const [isToModalVisible, setIsToModalVisible]: any = useState(false);
+  const [selectedFromAirport, setSelectedFromAirport]: any = useState(null);
+  const [selectedToAirport, setSelectedToAirport]: any = useState(null);
+
+  const handleFromAirportSelect = (airport: any) => {
+    setSelectedFromAirport(airport);
+    setIsFromModalVisible(false); // Close the modal
+  };
+
+  const handleToAirportSelect = (airport: any) => {
+    setSelectedToAirport(airport);
+    setIsToModalVisible(false); // Close the modal
+  };
 
   return (
     <View style={styles.screenRap}>
       <HeaderComp navigation={navigation} />
+      <AirportSearchModal
+        isVisible={isFromModalVisible}
+        onClose={() => setIsFromModalVisible(false)}
+        onAirportSelect={handleFromAirportSelect}
+        selectedAirport={selectedFromAirport}
+      />
+
+      <AirportSearchModal
+        isVisible={isToModalVisible}
+        onClose={() => setIsToModalVisible(false)}
+        onAirportSelect={handleToAirportSelect}
+        selectedAirport={selectedToAirport}
+      />
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={[styles.mainContainer]}
@@ -68,6 +96,10 @@ const BookFlight = ({ navigation }: any) => {
           classType={classType}
           travellers={travellers}
           navigation={navigation}
+          selectedFromAirport={selectedFromAirport}
+          setIsFromModalVisible={setIsFromModalVisible}
+          selectedToAirport={selectedToAirport}
+          setIsToModalVisible={setIsToModalVisible}
         />
         <PopularDestination />
       </ScrollView>

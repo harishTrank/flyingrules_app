@@ -17,22 +17,11 @@ const BookFlightForm = ({
   classType,
   travellers,
   navigation,
+  selectedFromAirport,
+  setIsFromModalVisible,
+  selectedToAirport,
+  setIsToModalVisible,
 }: any) => {
-  const [isFromModalVisible, setIsFromModalVisible]: any = useState(false);
-  const [isToModalVisible, setIsToModalVisible]: any = useState(false);
-  const [selectedFromAirport, setSelectedFromAirport]: any = useState(null);
-  const [selectedToAirport, setSelectedToAirport]: any = useState(null);
-
-  const handleFromAirportSelect = (airport: any) => {
-    setSelectedFromAirport(airport);
-    setIsFromModalVisible(false); // Close the modal
-  };
-
-  const handleToAirportSelect = (airport: any) => {
-    setSelectedToAirport(airport);
-    setIsToModalVisible(false); // Close the modal
-  };
-
   const searchFlightBtnHandler = () => {
     navigation.navigate("FlightResult");
   };
@@ -53,19 +42,6 @@ const BookFlightForm = ({
         airport={selectedToAirport}
       />
 
-      <AirportSearchModal
-        isVisible={isFromModalVisible}
-        onClose={() => setIsFromModalVisible(false)}
-        onAirportSelect={handleFromAirportSelect}
-        selectedAirport={selectedFromAirport}
-      />
-
-      <AirportSearchModal
-        isVisible={isToModalVisible}
-        onClose={() => setIsToModalVisible(false)}
-        onAirportSelect={handleToAirportSelect}
-        selectedAirport={selectedToAirport}
-      />
       <DateInputComp tripType={tripType} />
       <FormBottomOption
         modalizeRefTravel={modalizeRefTravel}
