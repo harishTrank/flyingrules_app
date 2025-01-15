@@ -41,7 +41,6 @@ const validationSchema = Yup.object().shape({
 const CreateAccountScreen: React.FC = ({ navigation }: any) => {
   const [secureTextEntry, setSecureTextEntry] = useState(true);
   const [confirmSecureTextEntry, setConfirmSecureTextEntry] = useState(true);
-  const [, setGlobalFlagManager]: any = useAtom(loginGlobalFlag);
   const createUserApiCall: any = useCreateUserApi();
 
   const handleCreateAccount = (values: any) => {
@@ -55,13 +54,12 @@ const CreateAccountScreen: React.FC = ({ navigation }: any) => {
         },
       })
       ?.then(async (res: any) => {
-        await AsyncStorage.setItem("accessToken", res?.data?.token);
-        setGlobalFlagManager(true);
-        navigation.navigate("BottomTabNavigation");
+        console.log("res", res);
         Toast.show({
           type: "success",
-          text1: "User created successfully.",
+          text1: "Send OTP on email Successfully.",
         });
+        navigation.navigate("OTPVerification", values);
       })
       ?.catch((err: any) => {
         console.log("err?.data", err?.data);

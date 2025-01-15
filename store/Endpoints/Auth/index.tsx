@@ -15,4 +15,11 @@ export const authEndpoints = {
       uri: "/login",
     },
   },
+  varifyOTP: {
+    v1: {
+      ...defaults.methods.POST,
+      ...defaults.versions.v1,
+      uri: "/verify-otp",
+    },
+  },
 };

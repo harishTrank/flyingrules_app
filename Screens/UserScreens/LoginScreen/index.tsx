@@ -16,6 +16,7 @@ import theme from "../../../utils/theme";
 import ImageModule from "../../../ImageModule";
 import { useLoginUserApi } from "../../../hooks/Auth/mutation";
 import FullScreenLoader from "../../ReUseComponents/FullScreenLoader";
+import Toast from "react-native-toast-message";
 
 const { width } = Dimensions.get("window");
 
@@ -39,8 +40,18 @@ const LoginScreen: React.FC = ({ navigation }: any) => {
       })
       .then((res: any) => {
         console.log("res", res);
+        Toast.show({
+          type: "success",
+          text1: "OTP send successfully.",
+        });
+        navigation.navigate("OTPVerification", values);
       })
-      .catch((err: any) => console.log("err", err));
+      .catch((err: any) =>
+        Toast.show({
+          type: "error",
+          text1: "Wrong Credentials",
+        })
+      );
   };
 
   return (

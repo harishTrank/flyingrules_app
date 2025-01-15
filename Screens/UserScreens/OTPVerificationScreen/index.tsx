@@ -10,6 +10,12 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import theme from "../../../utils/theme";
 import BackButtonComp from "../../ReUseComponents/BackButtonComp";
+import { useLoginUserApi, useVarifyOTPApi } from "../../../hooks/Auth/mutation";
+import FullScreenLoader from "../../ReUseComponents/FullScreenLoader";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { loginGlobalFlag } from "../../../JotaiStore";
+import { useAtom } from "jotai";
+import Toast from "react-native-toast-message";
 
 const OTPVerificationScreen = ({ navigation, route }: any) => {
   const { email } = route.params;
@@ -17,6 +23,9 @@ const OTPVerificationScreen = ({ navigation, route }: any) => {
   const [countdown, setCountdown] = useState(23);
   const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
   const inputRefs = useRef<(TextInput | null)[]>([]);
+  const varifyOTPAPiCaller: any = useVarifyOTPApi();
+  const [, setGlobalFlagManager]: any = useAtom(loginGlobalFlag);
+  const loginApiCaller: any = useLoginUserApi();
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -58,17 +67,61 @@ const OTPVerificationScreen = ({ navigation, route }: any) => {
 
   const handleVerify = () => {
     const enteredOTP = otp.join("");
-    alert(`Verifying OTP: ${enteredOTP}`);
+    varifyOTPAPiCaller
+      ?.mutateAsync({
+        body: {
+          email: email,
+          otp: enteredOTP,
+        },
+      })
+      ?.then(async (res: any) => {
+        await AsyncStorage.setItem("accessToken", res?.data?.token);
+        setGlobalFlagManager(true);
+        navigation.navigate("BottomTabNavigation");
+        Toast.show({
+          type: "success",
+          text1: "User Login successfully.",
+        });
+      })
+      ?.catch((err: any) =>
+        Toast.show({
+          type: "error",
+          text1: "Invalid OTP.",
+        })
+      );
   };
 
-  const handleResendOTP = () => {
-    setCountdown(23);
+  const handleResendOTP = (values: any) => {
+    loginApiCaller
+      ?.mutateAsync({
+        body: {
+          email,
+          password: route?.params?.password,
+        },
+      })
+      .then((res: any) => {
+        console.log("res", res);
+        setCountdown(23);
+        Toast.show({
+          type: "success",
+          text1: "OTP Resend successfully.",
+        });
+      })
+      .catch(() =>
+        Toast.show({
+          type: "error",
+          text1: "Wrong Credentials",
+        })
+      );
   };
 
   return (
     <View
       style={[styles.container, { paddingTop: useSafeAreaInsets().top + 40 }]}
     >
+      <FullScreenLoader
+        loading={varifyOTPAPiCaller?.isLoading || loginApiCaller?.isLoading}
+      />
       <StatusBar barStyle="dark-content" />
       <BackButtonComp navigation={navigation} />
       <Text style={styles.title}>OTP Verification</Text>

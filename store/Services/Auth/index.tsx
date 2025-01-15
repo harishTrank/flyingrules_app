@@ -12,3 +12,9 @@ export const loginUserApi = ({ body }: any) =>
     uriEndPoint: authEndpoints.loginUser.v1,
     body,
   });
+
+export const varifyOTPApi = ({ body }: any) =>
+  callApi({
+    uriEndPoint: authEndpoints.varifyOTP.v1,
+    body,
+  });
