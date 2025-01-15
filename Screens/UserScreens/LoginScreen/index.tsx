@@ -7,12 +7,15 @@ import {
   TouchableOpacity,
   StatusBar,
   Image,
+  Dimensions,
 } from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import theme from "../../../utils/theme";
 import ImageModule from "../../../ImageModule";
+
+const { width } = Dimensions.get("window");
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
@@ -78,11 +81,12 @@ const LoginScreen: React.FC = ({ navigation }: any) => {
                 style={styles.eyeIcon}
                 onPress={() => setEyeSecure(!eyeSecure)}
               >
-                <Text
-                  style={[eyeSecure && { textDecorationLine: "line-through" }]}
-                >
-                  👁️
-                </Text>
+                <Image
+                  source={
+                    eyeSecure ? ImageModule.eye_close : ImageModule.eye_open
+                  }
+                  style={styles.eyeImage}
+                />
               </TouchableOpacity>
             </View>
 
@@ -168,7 +172,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 5,
-    padding: 12,
+    padding: 10,
     marginBottom: 10,
     fontSize: 15,
     ...theme.font.fontMedium,
@@ -228,7 +232,7 @@ const styles = StyleSheet.create({
   },
   loginButton: {
     backgroundColor: theme.colors.primary,
-    padding: 15,
+    padding: 10,
     borderRadius: 5,
     alignItems: "center",
     marginBottom: 10,
@@ -248,7 +252,7 @@ const styles = StyleSheet.create({
   },
   googleButton: {
     backgroundColor: "#e9e9e9",
-    padding: 15,
+    padding: 10,
     borderRadius: 5,
     alignItems: "center",
     marginBottom: 20,
@@ -265,6 +269,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginLeft: 10,
     ...theme.font.fontMedium,
+  },
+  eyeImage: {
+    width: width * 0.05,
+    height: width * 0.05,
+    tintColor: theme.colors.basicGrey,
   },
   createAccountButton: {
     padding: 15,
