@@ -67,7 +67,7 @@ const CreateAccountScreen: React.FC = ({ navigation }: any) => {
         console.log("err?.data", err?.data);
         Toast.show({
           type: "error",
-          text1: err?.data?.error,
+          text1: err?.data?.data?.errors,
         });
       });
   };

@@ -15,6 +15,7 @@ import ProfileHeadSection from "./Component/ProfileHeadSection";
 import MyTripsScreen from "../../MyTripScreen";
 import { useAtom } from "jotai";
 import { loginGlobalFlag } from "../../../../JotaiStore";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Stack = createStackNavigator<any>();
 
@@ -25,7 +26,12 @@ interface ProfileScreenProps {
 }
 
 const Profile: React.FC<ProfileScreenProps> = ({ navigation }) => {
-  const [isLogin]: any = useAtom(loginGlobalFlag);
+  const [isLogin, setIsLogin]: any = useAtom(loginGlobalFlag);
+  const logoutButtonHandler = async () => {
+    await AsyncStorage.removeItem("accessToken");
+    navigation.navigate("LoginScreen");
+    setIsLogin(false);
+  };
   const nonLoginRoute: any = [
     {
       name: "Customer Support",
@@ -59,7 +65,7 @@ const Profile: React.FC<ProfileScreenProps> = ({ navigation }) => {
     {
       name: "Logout",
       icon: ImageModule.logout,
-      onPress: () => navigation.navigate("LoginScreen"),
+      onPress: logoutButtonHandler,
     },
   ];
   return (

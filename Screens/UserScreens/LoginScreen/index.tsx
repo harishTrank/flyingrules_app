@@ -14,6 +14,8 @@ import * as Yup from "yup";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import theme from "../../../utils/theme";
 import ImageModule from "../../../ImageModule";
+import { useLoginUserApi } from "../../../hooks/Auth/mutation";
+import FullScreenLoader from "../../ReUseComponents/FullScreenLoader";
 
 const { width } = Dimensions.get("window");
 
@@ -28,14 +30,24 @@ const validationSchema = Yup.object().shape({
 
 const LoginScreen: React.FC = ({ navigation }: any) => {
   const [eyeSecure, setEyeSecure]: any = useState(true);
+  const loginApiCaller: any = useLoginUserApi();
+
   const handleLogin = (values: any) => {
-    navigation.navigate("OTPVerification", { email: values.email });
+    loginApiCaller
+      ?.mutateAsync({
+        body: values,
+      })
+      .then((res: any) => {
+        console.log("res", res);
+      })
+      .catch((err: any) => console.log("err", err));
   };
 
   return (
     <View
       style={[styles.container, { paddingTop: useSafeAreaInsets().top + 40 }]}
     >
+      <FullScreenLoader loading={loginApiCaller?.isLoading} />
       <StatusBar barStyle="dark-content" />
       <Text style={styles.title}>Login</Text>
       <Text style={styles.subtitle}>Welcome back to the app</Text>

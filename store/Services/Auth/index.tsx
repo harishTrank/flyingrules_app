@@ -6,3 +6,9 @@ export const createUserApi = ({ body }: any) =>
     uriEndPoint: authEndpoints.createUser.v1,
     body,
   });
+
+export const loginUserApi = ({ body }: any) =>
+  callApi({
+    uriEndPoint: authEndpoints.loginUser.v1,
+    body,
+  });
