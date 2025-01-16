@@ -74,8 +74,8 @@ const styles = StyleSheet.create({
     color: theme.colors.black,
   },
   icon: {
-    width: 20,
-    height: 20,
+    width: 25,
+    height: 25,
     resizeMode: "contain",
   },
 });

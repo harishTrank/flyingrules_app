@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -14,62 +14,55 @@ import HeaderComp from "../../../../ReUseComponents/HeaderComp";
 import ImageModule from "../../../../../ImageModule";
 import Entypo from "@expo/vector-icons/Entypo";
 import FlightSearchLoader from "./Component/FlightSearchLoader";
+import axios from "axios";
+import { AmadeusURL } from "../../../../../utils/api/amadeus";
+import dayjs from "dayjs";
 const { width, height } = Dimensions.get("window");
 
 const FlightResultScreen = ({ navigation, route }: any) => {
-  const [flights, setFlights] = useState([
-    // ... your flight data
-    {
-      airline: "FINNAIR",
-      price: "$1265.85",
-      departure: {
-        code: "DEL",
-        time: "2:30pm",
-        date: "Fri, Jan 17",
-      },
-      arrival: {
-        code: "JFK",
-        time: "6:55pm",
-        date: "Fri, Jan 17",
-      },
-      duration: "02hr 40min",
-      stops: "1 Stop(s)",
-    },
-    {
-      airline: "FINNAIR",
-      price: "$1265.85",
-      departure: {
-        code: "DEL",
-        time: "2:30pm",
-        date: "Fri, Jan 17",
-      },
-      arrival: {
-        code: "JFK",
-        time: "6:55pm",
-        date: "Fri, Jan 17",
-      },
-      duration: "02hr 40min",
-      stops: "1 Stop(s)",
-    },
-    {
-      airline: "FINNAIR",
-      price: "$1265.85",
-      departure: {
-        code: "DEL",
-        time: "2:30pm",
-        date: "Fri, Jan 17",
-      },
-      arrival: {
-        code: "JFK",
-        time: "6:55pm",
-        date: "Fri, Jan 17",
-      },
-      duration: "02hr 40min",
-      stops: "1 Stop(s)",
-    },
-  ]);
+  const [flights, setFlights] = useState([]);
+  const [loading, isLoading]: any = useState(true);
+  const { params }: any = route;
 
-  console.log("first", route?.params);
+  const flightOfferApiHandler = async () => {
+    try {
+      const body: any = {
+        search_time: "1727515541",
+        ...params,
+        arrival: params?.arrival
+          ? dayjs(params?.arrival).format("YYYY-MM-DD")
+          : "null",
+        departure: dayjs(params?.departure).format("YYYY-MM-DD"),
+        travellers: [
+          {
+            id: "1",
+            travelerType: "ADULT",
+          },
+        ],
+        filters: {
+          carrierFilter: null,
+          stopsFilter: null,
+          maxFlightTime: 100,
+        },
+        currency: "USD",
+      };
+      console.log("body", body);
+      const response = await axios.post(
+        `${AmadeusURL}/flight/flight-offer`,
+        body
+      );
+      // setFlights(response?.data?.data);
+      isLoading(false);
+      console.log(response?.data);
+    } catch (error: any) {
+      console.error("Error:", error);
+    }
+  };
+
+  useEffect(() => {
+    console.log("params", params);
+    flightOfferApiHandler();
+  }, [params]);
 
   const handleBookNow = (flight: any) => {
     navigation.navigate("BookNowScreen", { trip: flight });
@@ -104,7 +97,7 @@ const FlightResultScreen = ({ navigation, route }: any) => {
     <View style={{ flex: 1, backgroundColor: theme.colors.white }}>
       <HeaderComp navigation={navigation} />
 
-      {true ? (
+      {loading ? (
         <FlightSearchLoader searchForm={route?.params} />
       ) : (
         <>

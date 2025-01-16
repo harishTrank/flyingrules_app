@@ -8,6 +8,7 @@ import FormBottomOption from "./FormBottomOption";
 import CustomButton from "../../../../ReUseComponents/CustomButton";
 import AirportSearchModal from "../../../../ReUseComponents/AirportSearchModal";
 import Toast from "react-native-toast-message";
+import dayjs from "dayjs";
 
 const { width } = Dimensions.get("window");
 
@@ -42,8 +43,8 @@ const BookFlightForm = ({
     navigation.navigate("FlightResult", {
       locationDeparture: selectedFromAirport?.iataCode,
       locationArrival: selectedToAirport?.iataCode,
-      arrival: date?.arrival,
       departure: date?.depart,
+      arrival: date?.arrival,
       travellers,
       flightClass: classType.apiKey,
       tripType: tripType,
