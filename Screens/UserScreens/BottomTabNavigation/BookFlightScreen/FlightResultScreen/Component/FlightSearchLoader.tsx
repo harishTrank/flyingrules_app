@@ -21,7 +21,7 @@ const FlightSearchLoader = ({ searchForm }: any) => {
           "DD MMM YYYY"
         )}${
           searchForm?.tripType === "round-trip"
-            ? `- ${dayjs(searchForm?.arrival).format("DD MMM YYYY")}`
+            ? ` - ${dayjs(searchForm?.arrival).format("DD MMM YYYY")}`
             : ""
         }`}</Text>
       </View>

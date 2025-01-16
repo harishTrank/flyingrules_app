@@ -12,6 +12,9 @@ import theme from "../../../utils/theme";
 import HeaderComp from "../../ReUseComponents/HeaderComp";
 import ImageModule from "../../../ImageModule";
 import FlightDetailsComp from "./Component/FlightDetailsComp";
+import { getAirportNames } from "../../../utils/UserUtils";
+import { useAtom } from "jotai";
+import { globalDictionaries } from "../../../JotaiStore";
 
 const { width, height } = Dimensions.get("window");
 
@@ -20,6 +23,7 @@ const FlightShowDetailsScreen = ({ navigation, route }: any) => {
     "itinerary"
   );
   const { flight } = route?.params;
+  const [dictionaries]: any = useAtom(globalDictionaries);
 
   const faresData = {
     adult: {
@@ -73,28 +77,37 @@ const FlightShowDetailsScreen = ({ navigation, route }: any) => {
       >
         {activeTab === "itinerary" ? (
           <View>
-            <View style={styles.section}>
-              <View style={styles.headerRow1}>
-                <Image
-                  source={ImageModule.airplaneTakeoff}
-                  style={styles.iconImg}
-                />
-                {/* <View>
-                  <Text style={styles.sectionTitle}>
-                    Departure - {itineraryData?.departure.city}
-                  </Text>
-                  <Text
-                    style={[styles.airportText, { color: theme.colors.black }]}
-                  >
-                    {`${itineraryData?.departure.airport}, ${itineraryData.departure.country}`}
-                  </Text>
-                </View> */}
+            {flight?.itineraries?.map((inter: any, index: any) => (
+              <View key={index}>
+                <View style={styles.section}>
+                  <View style={styles.headerRow1}>
+                    <Image
+                      source={ImageModule.airplaneTakeoff}
+                      style={styles.iconImg}
+                    />
+                    <View>
+                      <Text style={styles.sectionTitle}>
+                        {`${index === 0 ? "Departure" : "Return"}`} -{" "}
+                        {inter?.segments?.[0]?.departure?.iataCode}
+                      </Text>
+                      <Text
+                        style={[
+                          styles.airportText,
+                          { color: theme.colors.black },
+                        ]}
+                      >
+                        {getAirportNames(
+                          inter?.segments?.[0]?.departure?.iataCode,
+                          dictionaries?.airportNames
+                        )}
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+                <FlightDetailsComp itineraryData={inter} />
               </View>
-            </View>
-
-            {flight?.itineraries?.map((itineraryData: any, index: any) => (
-              <FlightDetailsComp key={index} itineraryData={itineraryData} />
             ))}
+
             {/* <View style={[styles.bottomTransit]}>
               <View style={styles.headerRow}>
                 <Image

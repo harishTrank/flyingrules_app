@@ -19,6 +19,7 @@ import dayjs from "dayjs";
 import { useFlightOffersApi } from "../../../../../hooks/Travel/mutation";
 import { useAtom } from "jotai";
 import { globalDictionaries } from "../../../../../JotaiStore";
+import { getAirports } from "../../../../../utils/UserUtils";
 const { width, height } = Dimensions.get("window");
 
 const FlightResultScreen = ({ navigation, route }: any) => {
@@ -65,8 +66,10 @@ const FlightResultScreen = ({ navigation, route }: any) => {
       })
       .then((res: any) => {
         setFlights(res?.data?.data);
-        setdictionaries(res?.data?.dictionaries);
-        console.log(res?.data?.data?.[0]);
+        setdictionaries({
+          ...res?.data?.dictionaries,
+          airportNames: getAirports(res?.data?.dictionaries?.locations),
+        });
       })
       .catch((err: any) => console.log("err", err));
   };

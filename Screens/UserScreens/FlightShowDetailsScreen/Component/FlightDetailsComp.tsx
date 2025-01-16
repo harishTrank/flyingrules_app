@@ -4,13 +4,12 @@ import theme from "../../../../utils/theme";
 import { useAtom } from "jotai";
 import { globalDictionaries } from "../../../../JotaiStore";
 import dayjs from "dayjs";
-import { durationFormator } from "../../../../utils/UserUtils";
+import { durationFormator, getAirportNames } from "../../../../utils/UserUtils";
 
 const { height, width } = Dimensions.get("window");
 
 const FlightDetailsComp = ({ itineraryData }: any) => {
   const [dictionaries]: any = useAtom(globalDictionaries);
-
   return (
     <View style={styles.itineraryContainer}>
       {itineraryData?.segments?.map((segment: any, index: any) => (
@@ -24,7 +23,10 @@ const FlightDetailsComp = ({ itineraryData }: any) => {
             <View>
               <Text style={styles.normalText}>{`${dayjs(
                 segment?.departure?.at
-              )?.format("HH:mma")} ${""}`}</Text>
+              )?.format("HH:mma")} ${getAirportNames(
+                segment?.departure?.iataCode,
+                dictionaries?.airportNames
+              )}`}</Text>
               <View style={styles.secondRow}>
                 <Text style={styles.normalText}>
                   {segment?.departure?.iataCode}
@@ -56,7 +58,10 @@ const FlightDetailsComp = ({ itineraryData }: any) => {
             <View>
               <Text style={styles.normalText}>{`${dayjs(
                 segment?.arrival?.at
-              )?.format("HH:mma")} ${""}`}</Text>
+              )?.format("HH:mma")} ${getAirportNames(
+                segment?.arrival?.iataCode,
+                dictionaries?.airportNames
+              )}`}</Text>
               <View style={styles.secondRow}>
                 <Text style={styles.normalText}>
                   {segment?.arrival?.iataCode}
