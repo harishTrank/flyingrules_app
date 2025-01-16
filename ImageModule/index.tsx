@@ -38,6 +38,8 @@ const ImageModule = {
   manage_trip: require("../assets/Icons/manage_trip.png"),
   logout: require("../assets/Icons/logout.png"),
   protection: require("../assets/Icons/protection.png"),
+  circleplane: require("../assets/Icons/circleplane.png"),
+  placeanimation: require("../assets/Icons/placeanimation.gif"),
 };
 
 export default ImageModule;

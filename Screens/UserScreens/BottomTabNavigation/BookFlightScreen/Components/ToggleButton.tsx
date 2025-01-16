@@ -2,18 +2,23 @@ import { View, TouchableOpacity, StyleSheet, Text } from "react-native";
 import theme from "../../../../../utils/theme";
 
 const ToggleButton = ({ tripType, setTripType }: any) => {
-  const option: any = ["One Way", "Round Trip"];
+  const option: any = [
+    { name: "One Way", apiKey: "one-way" },
+    { name: "Round Trip", apiKey: "round-trip" },
+  ];
   return (
     <View style={styles.toggleBox}>
       {option.map((item: any) => (
         <TouchableOpacity
-          key={item}
-          onPress={() => setTripType(item)}
+          key={item?.name}
+          onPress={() => setTripType(item?.apiKey)}
           style={[
             styles.toggleButton,
             {
               backgroundColor:
-                tripType === item ? theme.colors.primary : theme.colors.white,
+                tripType === item.apiKey
+                  ? theme.colors.primary
+                  : theme.colors.white,
             },
           ]}
         >
@@ -22,11 +27,13 @@ const ToggleButton = ({ tripType, setTripType }: any) => {
               styles.toggleText,
               {
                 color:
-                  tripType === item ? theme.colors.white : theme.colors.black,
+                  tripType === item.apiKey
+                    ? theme.colors.white
+                    : theme.colors.black,
               },
             ]}
           >
-            {item}
+            {item.name}
           </Text>
         </TouchableOpacity>
       ))}

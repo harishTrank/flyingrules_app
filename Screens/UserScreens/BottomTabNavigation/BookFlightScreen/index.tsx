@@ -51,7 +51,7 @@ const classData: any = [
 const BookFlight = ({ navigation }: any) => {
   const modalizeRefTravel = useRef<Modalize>(null);
   const modalizeRefClass = useRef<Modalize>(null);
-  const [tripType, setTripType]: any = useState("Round Trip");
+  const [tripType, setTripType]: any = useState("round-trip");
   const [classType, setClassType]: any = useState(classData?.[0]);
   const [travellers, setTravellers]: any = useState({
     adult: 1,

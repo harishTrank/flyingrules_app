@@ -47,7 +47,7 @@ const DateInputComp = ({ tripType, date, setDate }: any) => {
 
   return (
     <View style={styles.mainBox}>
-      {tripType === "Round Trip" ? (
+      {tripType === "round-trip" ? (
         <DatePickerModal
           locale="en"
           mode="range"
@@ -71,19 +71,19 @@ const DateInputComp = ({ tripType, date, setDate }: any) => {
       )}
       <TouchableOpacity
         onPress={() =>
-          tripType === "Round Trip"
+          tripType === "round-trip"
             ? setOpenMultiple(true)
             : setOpenSingle(true)
         }
         style={[
           styles.inputWidth,
-          { width: tripType === "Round Trip" ? "48%" : "100%" },
+          { width: tripType === "round-trip" ? "48%" : "100%" },
         ]}
       >
         <Text
           style={[
             styles.label,
-            { width: tripType === "Round Trip" ? width * 0.17 : width * 0.2 },
+            { width: tripType === "round-trip" ? width * 0.17 : width * 0.2 },
           ]}
         >
           Departure
@@ -100,7 +100,7 @@ const DateInputComp = ({ tripType, date, setDate }: any) => {
         </View>
       </TouchableOpacity>
 
-      {tripType === "Round Trip" && (
+      {tripType === "round-trip" && (
         <TouchableOpacity
           style={[styles.inputWidth, { marginLeft: width * 0.02 }]}
           onPress={() => setOpenMultiple(true)}

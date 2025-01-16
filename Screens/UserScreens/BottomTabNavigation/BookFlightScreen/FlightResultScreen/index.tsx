@@ -13,6 +13,7 @@ import theme from "../../../../../utils/theme";
 import HeaderComp from "../../../../ReUseComponents/HeaderComp";
 import ImageModule from "../../../../../ImageModule";
 import Entypo from "@expo/vector-icons/Entypo";
+import FlightSearchLoader from "./Component/FlightSearchLoader";
 const { width, height } = Dimensions.get("window");
 
 const FlightResultScreen = ({ navigation, route }: any) => {
@@ -103,70 +104,90 @@ const FlightResultScreen = ({ navigation, route }: any) => {
     <View style={{ flex: 1, backgroundColor: theme.colors.white }}>
       <HeaderComp navigation={navigation} />
 
-      <View style={styles.filterSortContainer}>
-        <View style={styles.filterSortRow}>
-          {flightCategories.map((item: any) => (
-            <TouchableOpacity
-              style={[
-                styles.optionContainer,
-                currentFlight === item.name && {
-                  backgroundColor: theme.colors.primary,
-                },
-              ]}
-              key={item.name}
-              onPress={() => setCurrentFlight(item.name)}
-            >
-              <Text
-                style={[
-                  styles.optionLabel,
-                  currentFlight === item.name && {
-                    color: theme.colors.white,
-                  },
-                ]}
-              >
-                {item.name}
-              </Text>
-              <Text
-                style={[
-                  styles.optionValue,
-                  currentFlight === item.name && {
-                    color: theme.colors.white,
-                  },
-                ]}
-              >
-                {item.price}
-              </Text>
-            </TouchableOpacity>
-          ))}
-        </View>
+      {true ? (
+        <FlightSearchLoader searchForm={route?.params} />
+      ) : (
+        <>
+          <View style={styles.filterSortContainer}>
+            <View style={styles.filterSortRow}>
+              {flightCategories.map((item: any) => (
+                <TouchableOpacity
+                  style={[
+                    styles.optionContainer,
+                    currentFlight === item.name && {
+                      backgroundColor: theme.colors.primary,
+                    },
+                  ]}
+                  key={item.name}
+                  onPress={() => setCurrentFlight(item.name)}
+                >
+                  <Text
+                    style={[
+                      styles.optionLabel,
+                      currentFlight === item.name && {
+                        color: theme.colors.white,
+                      },
+                    ]}
+                  >
+                    {item.name}
+                  </Text>
+                  <Text
+                    style={[
+                      styles.optionValue,
+                      currentFlight === item.name && {
+                        color: theme.colors.white,
+                      },
+                    ]}
+                  >
+                    {item.price}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
 
-        <View style={[styles.filterSortRow, { borderWidth: 0 }]}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => navigation.navigate("FilterScreen")}
-          >
-            <Image source={ImageModule.filterIcon} style={styles.buttonIcon} />
-            <Text style={styles.buttonText}>Filter</Text>
-            <Entypo name="chevron-down" size={20} color={theme.colors.black} />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => navigation.navigate("SortScreen")}
-          >
-            <Image source={ImageModule.sortIcon} style={styles.buttonIcon} />
-            <Text style={styles.buttonText}>Sort</Text>
-            <Entypo name="chevron-down" size={20} color={theme.colors.black} />
-          </TouchableOpacity>
-        </View>
-      </View>
+            <View style={[styles.filterSortRow, { borderWidth: 0 }]}>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => navigation.navigate("FilterScreen")}
+              >
+                <Image
+                  source={ImageModule.filterIcon}
+                  style={styles.buttonIcon}
+                />
+                <Text style={styles.buttonText}>Filter</Text>
+                <Entypo
+                  name="chevron-down"
+                  size={20}
+                  color={theme.colors.black}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => navigation.navigate("SortScreen")}
+              >
+                <Image
+                  source={ImageModule.sortIcon}
+                  style={styles.buttonIcon}
+                />
+                <Text style={styles.buttonText}>Sort</Text>
+                <Entypo
+                  name="chevron-down"
+                  size={20}
+                  color={theme.colors.black}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
 
-      <FlatList
-        data={flights}
-        renderItem={renderItem}
-        keyExtractor={(item, index) => index.toString()}
-        contentContainerStyle={styles.listContentContainer}
-        showsVerticalScrollIndicator={false}
-      />
+          <FlatList
+            data={flights}
+            renderItem={renderItem}
+            keyExtractor={(item, index) => index.toString()}
+            contentContainerStyle={styles.listContentContainer}
+            showsVerticalScrollIndicator={false}
+          />
+        </>
+      )}
     </View>
   );
 };
