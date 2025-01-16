@@ -12,9 +12,9 @@ import theme from "../../../utils/theme";
 import HeaderComp from "../../ReUseComponents/HeaderComp";
 import ImageModule from "../../../ImageModule";
 import FlightDetailsComp from "./Component/FlightDetailsComp";
-import { getAirportNames } from "../../../utils/UserUtils";
+import { currenKeys, getAirportNames } from "../../../utils/UserUtils";
 import { useAtom } from "jotai";
-import { globalDictionaries } from "../../../JotaiStore";
+import { globalDictionaries, travellersGlobal } from "../../../JotaiStore";
 
 const { width, height } = Dimensions.get("window");
 
@@ -24,19 +24,7 @@ const FlightShowDetailsScreen = ({ navigation, route }: any) => {
   );
   const { flight } = route?.params;
   const [dictionaries]: any = useAtom(globalDictionaries);
-
-  const faresData = {
-    adult: {
-      count: 3,
-      price: "578.07",
-    },
-    child: {
-      count: 3,
-      price: "192.69",
-    },
-    taxes: "136.00",
-    grandTotal: "906.76",
-  };
+  const [travellersGlobalData]: any = useAtom(travellersGlobal);
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.colors.white }}>
@@ -90,12 +78,7 @@ const FlightShowDetailsScreen = ({ navigation, route }: any) => {
                         {`${index === 0 ? "Departure" : "Return"}`} -{" "}
                         {inter?.segments?.[0]?.departure?.iataCode}
                       </Text>
-                      <Text
-                        style={[
-                          styles.airportText,
-                          { color: theme.colors.black },
-                        ]}
-                      >
+                      <Text style={styles.airportText}>
                         {getAirportNames(
                           inter?.segments?.[0]?.departure?.iataCode,
                           dictionaries?.airportNames
@@ -107,46 +90,46 @@ const FlightShowDetailsScreen = ({ navigation, route }: any) => {
                 <FlightDetailsComp itineraryData={inter} />
               </View>
             ))}
-
-            {/* <View style={[styles.bottomTransit]}>
-              <View style={styles.headerRow}>
-                <Image
-                  source={ImageModule.transitIcon}
-                  style={styles.bottomiconImg}
-                />
-                <View>
-                  <Text style={styles.sectionTitle}>
-                    {itineraryData.transit.duration} transit in
-                  </Text>
-                  <Text style={styles.airportText}>
-                    {`${itineraryData.departure.airport}, ${itineraryData.departure.country}`}
-                  </Text>
-                </View>
-              </View>
-            </View> */}
           </View>
         ) : (
           <View style={styles.faresContainer}>
-            <View style={styles.fareRow}>
-              <Text style={styles.fareLabel}>
-                Adult X {faresData.adult.count}
+            <View style={styles.tableHeader}>
+              <Text style={styles.tableHeaderText}>S. No.</Text>
+              <Text style={styles.tableHeaderText}>Passenger</Text>
+              <Text style={styles.tableHeaderText}>
+                Base ({flight?.price?.currency})
               </Text>
-              <Text style={styles.fareValue}>$ {faresData.adult.price}</Text>
-            </View>
-            <View style={styles.fareRow}>
-              <Text style={styles.fareLabel}>
-                Child X {faresData.child.count}
+              <Text style={styles.tableHeaderText}>
+                TAX ({flight?.price?.currency})
               </Text>
-              <Text style={styles.fareValue}>$ {faresData.child.price}</Text>
             </View>
-            <View style={styles.fareRow}>
-              <Text style={styles.fareLabel}>Taxes</Text>
-              <Text style={styles.fareValue}>$ {faresData.taxes}</Text>
-            </View>
-            <View style={styles.divider} />
-            <View style={styles.fareRow}>
-              <Text style={styles.fareLabel}>Grand Total</Text>
-              <Text style={styles.fareValue}>$ {faresData.grandTotal}</Text>
+
+            {travellersGlobalData?.map((item: any) => (
+              <View key={item?.id} style={styles.tableRow}>
+                <Text style={styles.tableCell}>{item?.id}</Text>
+                <Text style={styles.tableCell}>{item?.travelerType}</Text>
+                <Text style={styles.tableCell}>
+                  {(
+                    flight?.price?.base / travellersGlobalData?.length
+                  )?.toFixed(2)}
+                </Text>
+                <Text style={styles.tableCell}>
+                  {(flight?.price?.tax / travellersGlobalData?.length)?.toFixed(
+                    2
+                  )}
+                </Text>
+              </View>
+            ))}
+
+            <View style={styles.tableFooter}>
+              <Text style={styles.tableCell}></Text>
+              <Text style={styles.tableCell}></Text>
+              <Text style={[styles.tableCell, styles.grandTotalLabel]}>
+                Grand Total ({flight?.price?.currency})
+              </Text>
+              <Text style={[styles.tableCell, styles.grandTotalValue]}>
+                {`${flight?.price?.grandTotal}`}
+              </Text>
             </View>
           </View>
         )}
@@ -185,14 +168,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: width * 0.04,
     paddingBottom: height * 0.04,
   },
-
   section: {
     marginBottom: height * 0.01,
-  },
-  bottomTransit: {
-    paddingHorizontal: 10,
-    width: "100%",
-    paddingTop: 15,
   },
   headerRow1: {
     flexDirection: "row",
@@ -200,19 +177,9 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: -15,
   },
-  headerRow: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
   iconImg: {
     width: width * 0.1,
     height: width * 0.1,
-    marginRight: width * 0.02,
-    objectFit: "contain",
-  },
-  bottomiconImg: {
-    width: width * 0.07,
-    height: width * 0.07,
     marginRight: width * 0.02,
     objectFit: "contain",
   },
@@ -224,81 +191,55 @@ const styles = StyleSheet.create({
   airportText: {
     ...theme.font.fontMedium,
     fontSize: width * 0.035,
-    color: theme.colors.basicGrey,
+    color: theme.colors.black,
     width: width * 0.85,
-  },
-  flightInfo: {
-    marginBottom: height * 0.01,
-    marginLeft: width * 0.04,
-  },
-  infoRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: height * 0.01,
-  },
-  flightText: {
-    ...theme.font.fontSemiBold,
-    fontSize: width * 0.04,
-    color: theme.colors.black,
-  },
-  timeText: {
-    ...theme.font.fontBold,
-    fontSize: width * 0.05,
-    color: theme.colors.black,
-  },
-  cityText: {
-    ...theme.font.fontBold,
-    fontSize: width * 0.065,
-    color: theme.colors.black,
-    marginHorizontal: width * 0.02,
-  },
-  airportCodeText: {
-    ...theme.font.fontRegular,
-    fontSize: width * 0.04,
-    color: theme.colors.black,
-  },
-  dateText: {
-    ...theme.font.fontRegular,
-    fontSize: width * 0.035,
-    color: theme.colors.black,
-    marginTop: height * 0.005,
-  },
-  terminalText: {
-    ...theme.font.fontRegular,
-    fontSize: width * 0.035,
-    color: theme.colors.black,
-  },
-  durationText: {
-    ...theme.font.fontRegular,
-    fontSize: width * 0.035,
-    color: theme.colors.black,
-  },
-  divider: {
-    height: 1,
-    backgroundColor: theme.colors.basicGrey,
-    marginVertical: height * 0.01,
   },
   faresContainer: {
     backgroundColor: theme.colors.white,
-    borderRadius: 10,
-    ...theme.elevationHeavy,
-    padding: width * 0.04,
+    borderRadius: 5,
+    borderColor: theme.colors.grey,
+    borderWidth: 1,
+    padding: width * 0.015,
     marginTop: height * 0.02,
   },
-  fareRow: {
+  tableHeader: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: height * 0.01,
+    backgroundColor: theme.colors.grey,
+    borderBottomWidth: 1,
+    borderBottomColor: theme.colors.grey,
+    paddingVertical: height * 0.01,
   },
-  fareLabel: {
-    ...theme.font.fontMedium,
-    fontSize: width * 0.04,
+  tableHeaderText: {
+    ...theme.font.fontSemiBold,
+    fontSize: width * 0.032,
     color: theme.colors.black,
+    flex: 1,
+    textAlign: "center",
   },
-  fareValue: {
+  tableRow: {
+    flexDirection: "row",
+    borderBottomWidth: 1,
+    borderBottomColor: theme.colors.grey,
+    paddingVertical: height * 0.01,
+  },
+  tableCell: {
     ...theme.font.fontMedium,
-    fontSize: width * 0.04,
+    fontSize: width * 0.035,
     color: theme.colors.black,
+    flex: 1,
+    textAlign: "center",
+  },
+  tableFooter: {
+    flexDirection: "row",
+    paddingVertical: height * 0.01,
+  },
+  grandTotalLabel: {
+    ...theme.font.fontBold,
+    textAlign: "right",
+    paddingRight: width * 0.02,
+  },
+  grandTotalValue: {
+    ...theme.font.fontBold,
   },
 });
 

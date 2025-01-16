@@ -18,14 +18,20 @@ import axios from "axios";
 import dayjs from "dayjs";
 import { useFlightOffersApi } from "../../../../../hooks/Travel/mutation";
 import { useAtom } from "jotai";
-import { globalDictionaries } from "../../../../../JotaiStore";
+import {
+  globalDictionaries,
+  travellersGlobal,
+} from "../../../../../JotaiStore";
 import { getAirports } from "../../../../../utils/UserUtils";
+import { AmadeusURL } from "../../../../../utils/api/amadeus";
 const { width, height } = Dimensions.get("window");
 
 const FlightResultScreen = ({ navigation, route }: any) => {
   const [flights, setFlights] = useState([]);
   const [dictionaries, setdictionaries]: any = useAtom(globalDictionaries);
+  const [, setTravellersGlobal]: any = useAtom(travellersGlobal);
   const { params }: any = route;
+  const [loading, setLoading]: any = useState(true);
 
   const flightListResultApiCaller: any = useFlightOffersApi();
 
@@ -44,8 +50,8 @@ const FlightResultScreen = ({ navigation, route }: any) => {
           travelerType: "CHILD",
         })),
     ];
+    setTravellersGlobal(travelData);
     const body: any = {
-      search_time: "1727515541",
       ...params,
       arrival: params?.arrival
         ? dayjs(params?.arrival).format("YYYY-MM-DD")
@@ -58,20 +64,33 @@ const FlightResultScreen = ({ navigation, route }: any) => {
         maxFlightTime: 100,
       },
       currencyCode: "USD",
+      currency: "USD",
     };
-    console.log("body", body);
-    flightListResultApiCaller
-      ?.mutateAsync({
-        body,
-      })
+    console.log("body1", body);
+    axios
+      .post(`${AmadeusURL}/flight/flight-offer`, body)
       .then((res: any) => {
-        setFlights(res?.data?.data);
+        setFlights(res?.data?.data?.data);
+        setLoading(false);
         setdictionaries({
-          ...res?.data?.dictionaries,
-          airportNames: getAirports(res?.data?.dictionaries?.locations),
+          ...res?.data?.data?.dictionaries,
+          airportNames: getAirports(res?.data?.data?.dictionaries?.locations),
         });
       })
-      .catch((err: any) => console.log("err", err));
+      ?.catch((err: any) => console.log("err", err));
+
+    // flightListResultApiCaller
+    //   ?.mutateAsync({
+    //     body,
+    //   })
+    //   .then((res: any) => {
+    //     setFlights(res?.data?.data);
+    //     setdictionaries({
+    //       ...res?.data?.dictionaries,
+    //       airportNames: getAirports(res?.data?.dictionaries?.locations),
+    //     });
+    //   })
+    //   .catch((err: any) => console.log("err", err));
   };
 
   useEffect(() => {
@@ -112,7 +131,7 @@ const FlightResultScreen = ({ navigation, route }: any) => {
     <View style={{ flex: 1, backgroundColor: theme.colors.white }}>
       <HeaderComp navigation={navigation} />
 
-      {flightListResultApiCaller?.isLoading ? (
+      {flightListResultApiCaller?.isLoading || loading ? (
         <FlightSearchLoader searchForm={route?.params} />
       ) : (
         <>
