@@ -10,45 +10,78 @@ import {
 import ImageModule from "../../ImageModule";
 import theme from "../../utils/theme";
 import Entypo from "@expo/vector-icons/Entypo";
+import { currenKeys, durationFormator } from "../../utils/UserUtils";
+import dayjs from "dayjs";
 
 const { width, height } = Dimensions.get("window");
 
-const FlightCard = ({ navigation, flight, onPress }: any) => {
+const FlightCard = ({ navigation, flight, dictionaries, onPress }: any) => {
   return (
     <View style={styles.card}>
       <View style={styles.topRow}>
-        <Text style={styles.airlineText}>{flight.airline}</Text>
-        <Text style={styles.priceText}>{flight.price}</Text>
+        <Text style={styles.airlineText}>
+          {dictionaries?.carriers?.[flight?.validatingAirlineCodes?.[0]]}
+        </Text>
+        <Text style={styles.priceText}>{`${
+          currenKeys?.[flight?.price?.currency]
+        }${flight?.price?.grandTotal}`}</Text>
       </View>
 
       <View style={styles.flightDetails}>
-        <View style={styles.route}>
-          <View style={styles.routeDetails}>
-            <Text style={styles.routeCode}>{flight.departure.code}</Text>
-            <Text style={styles.routeTime}>{flight.departure.time}</Text>
-            <Text style={styles.routeDate}>{flight.departure.date}</Text>
-          </View>
+        {flight?.itineraries?.map((itiner: any, index: any) => (
+          <View key={index}>
+            <View style={styles.route}>
+              <View style={styles.routeDetails}>
+                <Text style={styles.routeCode}>
+                  {itiner?.segments?.[0]?.departure?.iataCode}
+                </Text>
+                <Text style={styles.routeTime}>
+                  {dayjs(itiner?.segments?.[0]?.departure?.at).format("h:mma")}
+                </Text>
+                <Text style={styles.routeDate}>
+                  {dayjs(itiner?.segments?.[0]?.departure?.at).format(
+                    "ddd, MMM DD"
+                  )}
+                </Text>
+              </View>
 
-          <View style={styles.flightInfo}>
-            <Image source={ImageModule.planemid} style={styles.airplaneIcon} />
-            <Text style={styles.durationText}>{flight.duration}</Text>
-            <Text style={styles.stopsText}>{flight.stops}</Text>
-          </View>
+              <View style={styles.flightInfo}>
+                <Image
+                  source={ImageModule.planemid}
+                  style={styles.airplaneIcon}
+                />
+                <Text style={styles.durationText}>
+                  {durationFormator(itiner?.duration)}
+                </Text>
+                <Text style={styles.stopsText}>{`${
+                  itiner?.segments?.length - 1
+                } Stop(s)`}</Text>
+              </View>
 
-          <View style={styles.routeDetails}>
-            <Text style={[styles.routeCode, styles.textAlignRight]}>
-              {flight.arrival.code}
-            </Text>
-            <Text style={[styles.routeTime, styles.textAlignRight]}>
-              {flight.arrival.time}
-            </Text>
-            <Text style={[styles.routeDate, styles.textAlignRight]}>
-              {flight.arrival.date}
-            </Text>
+              <View style={styles.routeDetails}>
+                <Text style={[styles.routeCode, styles.textAlignRight]}>
+                  {
+                    itiner?.segments?.[itiner?.segments?.length - 1]?.arrival
+                      ?.iataCode
+                  }
+                </Text>
+                <Text style={[styles.routeTime, styles.textAlignRight]}>
+                  {dayjs(
+                    itiner?.segments?.[itiner?.segments?.length - 1]?.arrival
+                      ?.at
+                  ).format("h:mma")}
+                </Text>
+                <Text style={[styles.routeDate, styles.textAlignRight]}>
+                  {dayjs(
+                    itiner?.segments?.[itiner?.segments?.length - 1]?.arrival
+                      ?.at
+                  ).format("ddd, MMM DD")}
+                </Text>
+              </View>
+            </View>
+            <View style={styles.divider} />
           </View>
-        </View>
-
-        <View style={styles.divider} />
+        ))}
 
         <View style={styles.bottomRow}>
           <View style={styles.iconsContainer}>
@@ -58,7 +91,7 @@ const FlightCard = ({ navigation, flight, onPress }: any) => {
           </View>
           <TouchableOpacity
             style={styles.showDetailsBox}
-            onPress={() => navigation.navigate("FlightShowDetails")}
+            onPress={() => navigation.navigate("FlightShowDetails", { flight })}
           >
             <Text style={styles.showDetailsText}>Show Details</Text>
             <Entypo

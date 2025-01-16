@@ -6,9 +6,7 @@ import ImageModule from "../../../../../ImageModule";
 import DateInputComp from "./DateInputComp";
 import FormBottomOption from "./FormBottomOption";
 import CustomButton from "../../../../ReUseComponents/CustomButton";
-import AirportSearchModal from "../../../../ReUseComponents/AirportSearchModal";
 import Toast from "react-native-toast-message";
-import dayjs from "dayjs";
 
 const { width } = Dimensions.get("window");
 

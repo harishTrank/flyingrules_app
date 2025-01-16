@@ -1,69 +1,78 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, Dimensions } from "react-native";
-import ImageModule from "../../../../ImageModule";
+import { View, Text, StyleSheet, Dimensions } from "react-native";
 import theme from "../../../../utils/theme";
+import { useAtom } from "jotai";
+import { globalDictionaries } from "../../../../JotaiStore";
+import dayjs from "dayjs";
+import { durationFormator } from "../../../../utils/UserUtils";
 
 const { height, width } = Dimensions.get("window");
 
 const FlightDetailsComp = ({ itineraryData }: any) => {
+  const [dictionaries]: any = useAtom(globalDictionaries);
+
   return (
     <View style={styles.itineraryContainer}>
-      <View>
-        <View style={styles.head}>
-          {/* <Image source={ImageModule.dummyLogo} style={styles.flightLogo} /> */}
-          <Text style={styles.flightText}>
-            {itineraryData.departure.flight}
-          </Text>
-        </View>
-        <View>
-          <Text
-            style={styles.normalText}
-          >{`${itineraryData.departure.time} ${itineraryData.departure.city}`}</Text>
-          <View style={styles.secondRow}>
-            <Text style={styles.normalText}>
-              {itineraryData.departure.code}
-            </Text>
-            <Text style={styles.normalText}>
-              {itineraryData.departure.date}
-            </Text>
-          </View>
-        </View>
-        <Text style={styles.terminalText}>
-          {`${itineraryData.departure.airport}\nTerminal ${itineraryData.departure.terminal}`}
-        </Text>
-      </View>
-
-      <View style={styles.flightmainRap}>
-        <View style={styles.flightSapration}>
-          <Text style={[styles.durationText]}>
-            Flight Duration {itineraryData.departure.duration}
-          </Text>
-        </View>
-      </View>
-
-      <View>
-        <View style={styles.head}>
-          <Text style={styles.flightText}>
-            {itineraryData.departure.flight}
-          </Text>
-        </View>
-        <View>
-          <Text
-            style={styles.normalText}
-          >{`${itineraryData.departure.time} ${itineraryData.departure.city}`}</Text>
-          <View style={styles.secondRow}>
-            <Text style={styles.normalText}>
-              {itineraryData.departure.code}
-            </Text>
-            <Text style={styles.normalText}>
-              {itineraryData.departure.date}
+      {itineraryData?.segments?.map((segment: any, index: any) => (
+        <View key={index}>
+          <View>
+            <View style={styles.head}>
+              <Text style={styles.flightText}>{`${
+                dictionaries?.carriers?.[segment?.carrierCode]
+              } ${segment?.carrierCode}-${segment?.number}`}</Text>
+            </View>
+            <View>
+              <Text style={styles.normalText}>{`${dayjs(
+                segment?.departure?.at
+              )?.format("HH:mma")} ${""}`}</Text>
+              <View style={styles.secondRow}>
+                <Text style={styles.normalText}>
+                  {segment?.departure?.iataCode}
+                </Text>
+                <Text style={styles.normalText}>
+                  {dayjs(segment?.departure?.at)?.format("ddd, DD MMM YYYY")}
+                </Text>
+              </View>
+            </View>
+            <Text style={styles.terminalText}>
+              {`${"ABC"}\nTerminal ${segment?.departure?.terminal || 0}`}
             </Text>
           </View>
+
+          <View style={styles.flightmainRap}>
+            <View style={styles.flightSapration}>
+              <Text style={[styles.durationText]}>
+                Flight Duration {durationFormator(segment?.duration)}
+              </Text>
+            </View>
+          </View>
+
+          <View>
+            <View style={styles.head}>
+              <Text style={styles.flightText}>{`${
+                dictionaries?.carriers?.[segment?.carrierCode]
+              } ${segment?.carrierCode}-${segment?.number}`}</Text>
+            </View>
+            <View>
+              <Text style={styles.normalText}>{`${dayjs(
+                segment?.arrival?.at
+              )?.format("HH:mma")} ${""}`}</Text>
+              <View style={styles.secondRow}>
+                <Text style={styles.normalText}>
+                  {segment?.arrival?.iataCode}
+                </Text>
+                <Text style={styles.normalText}>
+                  {dayjs(segment?.arrival?.at)?.format("ddd, DD MMM YYYY")}
+                </Text>
+              </View>
+            </View>
+            <Text style={styles.terminalText}>
+              {`${"ABC"}\nTerminal ${segment?.arrival?.terminal || 0}`}
+            </Text>
+          </View>
+          <View style={styles.divider} />
         </View>
-        <Text style={styles.terminalText}>
-          {`${itineraryData.departure.airport}\nTerminal ${itineraryData.departure.terminal}`}
-        </Text>
-      </View>
+      ))}
     </View>
   );
 };
@@ -127,5 +136,10 @@ const styles = StyleSheet.create({
     color: theme.colors.basicGrey,
     ...theme.font.fontMedium,
     fontSize: width * 0.036,
+  },
+  divider: {
+    height: 1,
+    backgroundColor: theme.colors.basicGrey,
+    marginVertical: height * 0.02,
   },
 });

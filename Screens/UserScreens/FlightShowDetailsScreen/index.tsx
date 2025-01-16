@@ -15,50 +15,11 @@ import FlightDetailsComp from "./Component/FlightDetailsComp";
 
 const { width, height } = Dimensions.get("window");
 
-interface FlightShowDetailsScreenProps {
-  navigation: any;
-}
-
-const FlightShowDetailsScreen: React.FC<FlightShowDetailsScreenProps> = ({
-  navigation,
-}) => {
+const FlightShowDetailsScreen = ({ navigation, route }: any) => {
   const [activeTab, setActiveTab] = useState<"itinerary" | "fares">(
     "itinerary"
   );
-
-  // Dummy data (replace with actual data from API)
-  const itineraryData = {
-    departure: {
-      city: "Delhi",
-      airport: "Indira Gandhi International Airport",
-      country: "India",
-      terminal: "3",
-      code: "DEL",
-      time: "08:55 pm",
-      date: "Thu, 09 Jan 2025",
-      flight: "Air India A1-441",
-      duration: "2 H 25 M",
-    },
-    transit: {
-      city: "Mumbai",
-      airport: "Chhatrapati Shivaji International Airport",
-      country: "India",
-      terminal: "2",
-      code: "BOM",
-      duration: "2 H 25 M",
-    },
-    arrival: {
-      city: "New York",
-      airport: "John F Kennedy International Airport",
-      country: "United States",
-      terminal: "4",
-      code: "JFK",
-      time: "6:55 am",
-      date: "Thu, 10 Jan 2025",
-      flight: "AI-119",
-      duration: "15 H 40 M",
-    },
-  };
+  const { flight } = route?.params;
 
   const faresData = {
     adult: {
@@ -118,20 +79,23 @@ const FlightShowDetailsScreen: React.FC<FlightShowDetailsScreenProps> = ({
                   source={ImageModule.airplaneTakeoff}
                   style={styles.iconImg}
                 />
-                <View>
+                {/* <View>
                   <Text style={styles.sectionTitle}>
-                    Departure - {itineraryData.departure.city}
+                    Departure - {itineraryData?.departure.city}
                   </Text>
                   <Text
                     style={[styles.airportText, { color: theme.colors.black }]}
                   >
-                    {`${itineraryData.departure.airport}, ${itineraryData.departure.country}`}
+                    {`${itineraryData?.departure.airport}, ${itineraryData.departure.country}`}
                   </Text>
-                </View>
+                </View> */}
               </View>
             </View>
-            <FlightDetailsComp itineraryData={itineraryData} />
-            <View style={[styles.bottomTransit]}>
+
+            {flight?.itineraries?.map((itineraryData: any, index: any) => (
+              <FlightDetailsComp key={index} itineraryData={itineraryData} />
+            ))}
+            {/* <View style={[styles.bottomTransit]}>
               <View style={styles.headerRow}>
                 <Image
                   source={ImageModule.transitIcon}
@@ -146,8 +110,7 @@ const FlightShowDetailsScreen: React.FC<FlightShowDetailsScreenProps> = ({
                   </Text>
                 </View>
               </View>
-            </View>
-            <FlightDetailsComp itineraryData={itineraryData} />
+            </View> */}
           </View>
         ) : (
           <View style={styles.faresContainer}>

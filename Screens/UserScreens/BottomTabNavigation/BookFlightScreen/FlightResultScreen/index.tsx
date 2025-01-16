@@ -15,52 +15,63 @@ import ImageModule from "../../../../../ImageModule";
 import Entypo from "@expo/vector-icons/Entypo";
 import FlightSearchLoader from "./Component/FlightSearchLoader";
 import axios from "axios";
-import { AmadeusURL } from "../../../../../utils/api/amadeus";
 import dayjs from "dayjs";
+import { useFlightOffersApi } from "../../../../../hooks/Travel/mutation";
+import { useAtom } from "jotai";
+import { globalDictionaries } from "../../../../../JotaiStore";
 const { width, height } = Dimensions.get("window");
 
 const FlightResultScreen = ({ navigation, route }: any) => {
   const [flights, setFlights] = useState([]);
-  const [loading, isLoading]: any = useState(true);
+  const [dictionaries, setdictionaries]: any = useAtom(globalDictionaries);
   const { params }: any = route;
 
+  const flightListResultApiCaller: any = useFlightOffersApi();
+
   const flightOfferApiHandler = async () => {
-    try {
-      const body: any = {
-        search_time: "1727515541",
-        ...params,
-        arrival: params?.arrival
-          ? dayjs(params?.arrival).format("YYYY-MM-DD")
-          : "null",
-        departure: dayjs(params?.departure).format("YYYY-MM-DD"),
-        travellers: [
-          {
-            id: "1",
-            travelerType: "ADULT",
-          },
-        ],
-        filters: {
-          carrierFilter: null,
-          stopsFilter: null,
-          maxFlightTime: 100,
-        },
-        currency: "USD",
-      };
-      console.log("body", body);
-      const response = await axios.post(
-        `${AmadeusURL}/flight/flight-offer`,
-        body
-      );
-      // setFlights(response?.data?.data);
-      isLoading(false);
-      console.log(response?.data);
-    } catch (error: any) {
-      console.error("Error:", error);
-    }
+    const travelData = [
+      ...Array(Number(params?.travellers?.adult))
+        .fill(null)
+        .map((_, index) => ({
+          id: (index + 1).toString(),
+          travelerType: "ADULT",
+        })),
+      ...Array(Number(params?.travellers?.child))
+        .fill(null)
+        .map((_, index) => ({
+          id: (index + 1 + Number(params?.travellers?.adult)).toString(),
+          travelerType: "CHILD",
+        })),
+    ];
+    const body: any = {
+      search_time: "1727515541",
+      ...params,
+      arrival: params?.arrival
+        ? dayjs(params?.arrival).format("YYYY-MM-DD")
+        : "null",
+      departure: dayjs(params?.departure).format("YYYY-MM-DD"),
+      travellers: travelData,
+      filters: {
+        carrierFilter: null,
+        stopsFilter: null,
+        maxFlightTime: 100,
+      },
+      currencyCode: "USD",
+    };
+    console.log("body", body);
+    flightListResultApiCaller
+      ?.mutateAsync({
+        body,
+      })
+      .then((res: any) => {
+        setFlights(res?.data?.data);
+        setdictionaries(res?.data?.dictionaries);
+        console.log(res?.data?.data?.[0]);
+      })
+      .catch((err: any) => console.log("err", err));
   };
 
   useEffect(() => {
-    console.log("params", params);
     flightOfferApiHandler();
   }, [params]);
 
@@ -72,6 +83,7 @@ const FlightResultScreen = ({ navigation, route }: any) => {
     <FlightCard
       navigation={navigation}
       flight={item}
+      dictionaries={dictionaries}
       onPress={() => handleBookNow(item)}
     />
   );
@@ -97,80 +109,82 @@ const FlightResultScreen = ({ navigation, route }: any) => {
     <View style={{ flex: 1, backgroundColor: theme.colors.white }}>
       <HeaderComp navigation={navigation} />
 
-      {loading ? (
+      {flightListResultApiCaller?.isLoading ? (
         <FlightSearchLoader searchForm={route?.params} />
       ) : (
         <>
-          <View style={styles.filterSortContainer}>
-            <View style={styles.filterSortRow}>
-              {flightCategories.map((item: any) => (
-                <TouchableOpacity
-                  style={[
-                    styles.optionContainer,
-                    currentFlight === item.name && {
-                      backgroundColor: theme.colors.primary,
-                    },
-                  ]}
-                  key={item.name}
-                  onPress={() => setCurrentFlight(item.name)}
-                >
-                  <Text
+          {flights.length > 0 && (
+            <View style={styles.filterSortContainer}>
+              <View style={styles.filterSortRow}>
+                {flightCategories.map((item: any) => (
+                  <TouchableOpacity
                     style={[
-                      styles.optionLabel,
+                      styles.optionContainer,
                       currentFlight === item.name && {
-                        color: theme.colors.white,
+                        backgroundColor: theme.colors.primary,
                       },
                     ]}
+                    key={item.name}
+                    onPress={() => setCurrentFlight(item.name)}
                   >
-                    {item.name}
-                  </Text>
-                  <Text
-                    style={[
-                      styles.optionValue,
-                      currentFlight === item.name && {
-                        color: theme.colors.white,
-                      },
-                    ]}
-                  >
-                    {item.price}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </View>
+                    <Text
+                      style={[
+                        styles.optionLabel,
+                        currentFlight === item.name && {
+                          color: theme.colors.white,
+                        },
+                      ]}
+                    >
+                      {item.name}
+                    </Text>
+                    <Text
+                      style={[
+                        styles.optionValue,
+                        currentFlight === item.name && {
+                          color: theme.colors.white,
+                        },
+                      ]}
+                    >
+                      {item.price}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
 
-            <View style={[styles.filterSortRow, { borderWidth: 0 }]}>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => navigation.navigate("FilterScreen")}
-              >
-                <Image
-                  source={ImageModule.filterIcon}
-                  style={styles.buttonIcon}
-                />
-                <Text style={styles.buttonText}>Filter</Text>
-                <Entypo
-                  name="chevron-down"
-                  size={20}
-                  color={theme.colors.black}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => navigation.navigate("SortScreen")}
-              >
-                <Image
-                  source={ImageModule.sortIcon}
-                  style={styles.buttonIcon}
-                />
-                <Text style={styles.buttonText}>Sort</Text>
-                <Entypo
-                  name="chevron-down"
-                  size={20}
-                  color={theme.colors.black}
-                />
-              </TouchableOpacity>
+              <View style={[styles.filterSortRow, { borderWidth: 0 }]}>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => navigation.navigate("FilterScreen")}
+                >
+                  <Image
+                    source={ImageModule.filterIcon}
+                    style={styles.buttonIcon}
+                  />
+                  <Text style={styles.buttonText}>Filter</Text>
+                  <Entypo
+                    name="chevron-down"
+                    size={20}
+                    color={theme.colors.black}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => navigation.navigate("SortScreen")}
+                >
+                  <Image
+                    source={ImageModule.sortIcon}
+                    style={styles.buttonIcon}
+                  />
+                  <Text style={styles.buttonText}>Sort</Text>
+                  <Entypo
+                    name="chevron-down"
+                    size={20}
+                    color={theme.colors.black}
+                  />
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
+          )}
 
           <FlatList
             data={flights}
@@ -178,6 +192,11 @@ const FlightResultScreen = ({ navigation, route }: any) => {
             keyExtractor={(item, index) => index.toString()}
             contentContainerStyle={styles.listContentContainer}
             showsVerticalScrollIndicator={false}
+            ListEmptyComponent={
+              <View style={styles.emptyBox}>
+                <Text style={styles.emptyText}>No Flights Found!</Text>
+              </View>
+            }
           />
         </>
       )}
@@ -238,6 +257,17 @@ const styles = StyleSheet.create({
   buttonText: {
     ...theme.font.fontMedium,
     fontSize: width * 0.04,
+  },
+  emptyBox: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    height: height * 0.7,
+  },
+  emptyText: {
+    ...theme.font.fontMedium,
+    color: theme.colors.primary,
+    fontSize: width * 0.05,
   },
 });
 
