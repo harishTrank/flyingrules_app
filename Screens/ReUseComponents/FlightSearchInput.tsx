@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     marginBottom: -5,
   },
   secondText: {
-    paddingLeft: width * 0.02,
+    paddingLeft: width * 0.01,
     color: theme.colors.basicGrey,
     ...theme.font.fontSemiBold,
     fontSize: width * 0.025,
