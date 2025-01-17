@@ -1,18 +1,11 @@
 import React, { useRef, useState, useEffect } from "react";
-import {
-  View,
-  StyleSheet,
-  ScrollView,
-  FlatList,
-  Platform,
-} from "react-native";
+import { View, StyleSheet, ScrollView, FlatList, Platform } from "react-native";
 import HeaderComp from "../../../ReUseComponents/HeaderComp";
 import DestinationCards from "../../../ReUseComponents/DestinationCards";
 import HeadingText from "./Components/HeadingText";
 import ChooseCard from "./Components/ChooseCard";
 import WhyImage from "./Components/WhyImage";
 import PopularDestination from "../../../ReUseComponents/PopularDestination";
-
 
 const chooseCardData = [
   {
@@ -79,7 +72,7 @@ const HomeScreen = ({ navigation }: any) => {
         style={[styles.mainContainer]}
         showsVerticalScrollIndicator={false}
       >
-        <PopularDestination/>
+        <PopularDestination />
 
         <HeadingText text="Why to choose us ?" />
         <FlatList
@@ -110,7 +103,6 @@ const HomeScreen = ({ navigation }: any) => {
           viewabilityConfig={{
             itemVisiblePercentThreshold: 50,
           }}
-          style={styles.flatList}
         />
       </ScrollView>
     </View>
@@ -129,6 +121,6 @@ const styles = StyleSheet.create({
   },
   flatList: {
     // Ensure FlatLists don't overflow their content
-    ...(Platform.OS === 'android' && { overflow: 'hidden' }),
-  }
+    ...(Platform.OS === "android" && { overflow: "hidden" }),
+  },
 });

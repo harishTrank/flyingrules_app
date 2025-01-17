@@ -12,7 +12,6 @@ const WhyImage = ({ path }: any) => {
 
 const styles = StyleSheet.create({
   containerCard: {
-    flexDirection: "row",
     width: width * 0.85,
     borderRadius: 15,
     marginRight: 15,
@@ -21,9 +20,10 @@ const styles = StyleSheet.create({
   },
   img: {
     width: width * 0.85,
-    height: 200,
+    height: height * 0.3,
     objectFit: "contain",
     borderRadius: 15,
+    flexShrink: 1,
   },
 });
 
