@@ -49,7 +49,9 @@ const AirportSearchModal = ({
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      listApiHandler();
+      if (searchText?.length > 0) {
+        listApiHandler();
+      }
     }, 300);
     return () => clearTimeout(timeout);
   }, [searchText]);

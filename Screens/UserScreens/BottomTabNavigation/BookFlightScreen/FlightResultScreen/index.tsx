@@ -67,31 +67,31 @@ const FlightResultScreen = ({ navigation, route }: any) => {
       currency: "USD",
     };
     console.log("body1", body);
-    axios
-      .post(`${AmadeusURL}/flight/flight-offer`, body)
-      .then((res: any) => {
-        setFlights(res?.data?.data?.data);
-        setLoading(false);
-        setdictionaries({
-          ...res?.data?.data?.dictionaries,
-          airportNames: getAirports(res?.data?.data?.dictionaries?.locations),
-        });
-      })
-      ?.catch((err: any) => console.log("err", err));
-
-    // flightListResultApiCaller
-    //   ?.mutateAsync({
-    //     body,
-    //   })
+    // axios
+    //   .post(`${AmadeusURL}/flight/flight-offer`, body)
     //   .then((res: any) => {
-    //     setFlights(res?.data?.data);
+    //     setFlights(res?.data?.data?.data);
     //     setLoading(false);
     //     setdictionaries({
-    //       ...res?.data?.dictionaries,
-    //       airportNames: getAirports(res?.data?.dictionaries?.locations),
+    //       ...res?.data?.data?.dictionaries,
+    //       airportNames: getAirports(res?.data?.data?.dictionaries?.locations),
     //     });
     //   })
-    //   .catch((err: any) => console.log("err", err));
+    //   ?.catch((err: any) => console.log("err", err));
+
+    flightListResultApiCaller
+      ?.mutateAsync({
+        body,
+      })
+      .then((res: any) => {
+        setFlights(res?.data?.data);
+        setLoading(false);
+        setdictionaries({
+          ...res?.data?.dictionaries,
+          airportNames: getAirports(res?.data?.dictionaries?.locations),
+        });
+      })
+      .catch((err: any) => console.log("err", err));
   };
 
   useEffect(() => {

@@ -65,8 +65,8 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: theme.colors.grey,
     borderRadius: 10,
-    paddingVertical: width * 0.025,
-    paddingHorizontal: width * 0.04,
+    paddingVertical: width * 0.01,
+    paddingHorizontal: width * 0.03,
     flexDirection: "row",
     alignItems: "center", // Align items vertically in the center
   },
@@ -84,15 +84,15 @@ const styles = StyleSheet.create({
   },
   firstText: {
     color: theme.colors.black,
-    fontSize: width * 0.05,
+    fontSize: width * 0.045,
     ...theme.font.fontBold,
     marginBottom: -5,
   },
   secondText: {
-    paddingLeft: width * 0.025,
+    paddingLeft: width * 0.02,
     color: theme.colors.basicGrey,
     ...theme.font.fontSemiBold,
-    fontSize: width * 0.035,
+    fontSize: width * 0.025,
   },
   thirdText: {
     color: theme.colors.basicGrey,
