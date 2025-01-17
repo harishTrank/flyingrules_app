@@ -113,6 +113,24 @@ const FlightResultScreen = ({ navigation, route }: any) => {
         )
       );
     }
+    if (selectedOptions?.Airport) {
+      // const currentAirport = getAirports(dictionaries?.locations);
+    }
+    if (selectedOptions?.Aircraft) {
+      const filterList = getCodesFromAirlines(
+        dictionaries?.aircraft,
+        selectedOptions?.Aircraft
+      );
+      setFlights((oldValue: any) => {
+        return oldValue.filter((flight: any) => {
+          return flight.itineraries.some((itinerary: any) => {
+            return itinerary.segments.some((segment: any) => {
+              return filterList.includes(segment.aircraft?.code);
+            });
+          });
+        });
+      });
+    }
   };
 
   useEffect(() => {
