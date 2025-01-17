@@ -1,10 +1,11 @@
 import React from "react";
-import { View, Text, StyleSheet, Dimensions } from "react-native";
+import { View, Text, StyleSheet, Dimensions, Image } from "react-native";
 import theme from "../../../../utils/theme";
 import { useAtom } from "jotai";
 import { globalDictionaries } from "../../../../JotaiStore";
 import dayjs from "dayjs";
 import { durationFormator, getAirportNames } from "../../../../utils/UserUtils";
+import ImageModule from "../../../../ImageModule";
 
 const { height, width } = Dimensions.get("window");
 
@@ -16,6 +17,10 @@ const FlightDetailsComp = ({ itineraryData }: any) => {
         <View key={index}>
           <View>
             <View style={styles.head}>
+              {/* <Image
+                source={ImageModule?.dummyLogo}
+                style={styles.flightLogo}
+              /> */}
               <Text style={styles.flightText}>{`${
                 dictionaries?.carriers?.[segment?.carrierCode]
               } ${segment?.carrierCode}-${segment?.number}`}</Text>
@@ -106,6 +111,7 @@ const styles = StyleSheet.create({
     width: width * 0.05,
     height: width * 0.05,
     objectFit: "contain",
+    marginRight: 5,
   },
   flightText: {
     color: theme.colors.black,
