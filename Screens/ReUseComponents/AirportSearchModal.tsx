@@ -19,6 +19,7 @@ import theme from "../../utils/theme";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import axios from "axios";
 import { AmadeusURL } from "../../utils/api/amadeus";
+import { ActivityIndicator } from "react-native-paper";
 
 const { width, height } = Dimensions.get("window");
 
@@ -30,15 +31,19 @@ const AirportSearchModal = ({
 }: any) => {
   const [searchText, setSearchText] = useState("");
   const [apiResponse, setApiResponse]: any = useState([]);
+  const [loader, setLoader]: any = useState(false);
 
   const listApiHandler = async () => {
+    setLoader(true);
     try {
       const response = await axios.post(`${AmadeusURL}/flight/search-airport`, {
         searchTerm: searchText,
       });
       setApiResponse(response?.data?.data);
+      setLoader(false);
     } catch (error: any) {
       console.error("Error:", error);
+      setLoader(false);
     }
   };
 
@@ -111,6 +116,13 @@ const AirportSearchModal = ({
             keyboardVerticalOffset={Platform.OS === "ios" ? 90 : 0}
           >
             <View style={styles.searchContainer}>
+              {loader && (
+                <ActivityIndicator
+                  style={styles.indicator}
+                  size={"small"}
+                  color={theme.colors.primary}
+                />
+              )}
               <TextInput
                 style={styles.searchInput}
                 placeholder="Search by city"
@@ -147,8 +159,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: theme.colors.white,
   },
+  indicator: {
+    position: "absolute",
+    right: width * 0.08,
+    top: height * 0.035,
+  },
   headerContainer: {
-    padding: width * 0.04,
+    paddingHorizontal: width * 0.03,
     borderBottomWidth: 1,
     borderBottomColor: theme.colors.basicGrey,
     alignItems: "center",
@@ -174,9 +191,8 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: theme.colors.grey,
     borderRadius: 10,
-    paddingVertical: width * 0.03,
-    paddingHorizontal: width * 0.04,
-    fontSize: width * 0.04,
+    padding: 10,
+    fontSize: width * 0.035,
     ...theme.font.fontMedium,
     color: theme.colors.black,
   },
@@ -184,10 +200,9 @@ const styles = StyleSheet.create({
     ...theme.font.fontRegular,
     fontSize: width * 0.035,
     color: theme.colors.basicGrey,
-    marginTop: width * 0.02,
   },
   airportItem: {
-    padding: width * 0.04,
+    padding: width * 0.02,
     borderBottomWidth: 1,
     borderBottomColor: theme.colors.basicGrey,
   },
@@ -201,18 +216,15 @@ const styles = StyleSheet.create({
   },
   airportCode: {
     ...theme.font.fontBold,
-    fontSize: width * 0.045,
+    fontSize: width * 0.04,
     color: theme.colors.primary,
   },
   airportName: {
     ...theme.font.fontRegular,
-    fontSize: width * 0.035,
+    fontSize: width * 0.03,
     color: theme.colors.basicGrey,
-    marginTop: width * 0.01,
   },
-  flatListContent: {
-    paddingBottom: height * 0.1,
-  },
+  flatListContent: {},
   keyboardAvoidingView: {
     flex: 1,
   },

@@ -37,7 +37,10 @@ const FlightDetailsComp = ({ itineraryData }: any) => {
               </View>
             </View>
             <Text style={styles.terminalText}>
-              {`${"ABC"}\nTerminal ${segment?.departure?.terminal || 0}`}
+              {`${getAirportNames(
+                segment?.departure?.iataCode,
+                dictionaries?.airportNames
+              )}\nTerminal ${segment?.departure?.terminal || 0}`}
             </Text>
           </View>
 
@@ -72,7 +75,10 @@ const FlightDetailsComp = ({ itineraryData }: any) => {
               </View>
             </View>
             <Text style={styles.terminalText}>
-              {`${"ABC"}\nTerminal ${segment?.arrival?.terminal || 0}`}
+              {`${getAirportNames(
+                segment?.arrival?.iataCode,
+                dictionaries?.airportNames
+              )}\nTerminal ${segment?.arrival?.terminal || 0}`}
             </Text>
           </View>
           <View style={styles.divider} />
@@ -116,12 +122,12 @@ const styles = StyleSheet.create({
   normalText: {
     color: theme.colors.black,
     ...theme.font.fontMedium,
-    fontSize: width * 0.038,
+    fontSize: width * 0.032,
   },
   terminalText: {
     color: theme.colors.basicGrey,
     ...theme.font.fontMedium,
-    fontSize: width * 0.037,
+    fontSize: width * 0.03,
   },
   flightmainRap: {
     marginVertical: 10,

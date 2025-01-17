@@ -85,6 +85,7 @@ const FlightResultScreen = ({ navigation, route }: any) => {
     //   })
     //   .then((res: any) => {
     //     setFlights(res?.data?.data);
+    //     setLoading(false);
     //     setdictionaries({
     //       ...res?.data?.dictionaries,
     //       airportNames: getAirports(res?.data?.dictionaries?.locations),
