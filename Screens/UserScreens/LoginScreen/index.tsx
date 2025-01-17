@@ -59,7 +59,7 @@ const LoginScreen: React.FC = ({ navigation }: any) => {
       style={[styles.container, { paddingTop: useSafeAreaInsets().top + 40 }]}
     >
       <FullScreenLoader loading={loginApiCaller?.isLoading} />
-      <StatusBar barStyle="dark-content" />
+      <StatusBar backgroundColor={theme.colors.primary} />
       <Text style={styles.title}>Login</Text>
       <Text style={styles.subtitle}>Welcome back to the app</Text>
 

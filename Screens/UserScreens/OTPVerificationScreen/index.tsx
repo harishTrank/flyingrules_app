@@ -122,7 +122,7 @@ const OTPVerificationScreen = ({ navigation, route }: any) => {
       <FullScreenLoader
         loading={varifyOTPAPiCaller?.isLoading || loginApiCaller?.isLoading}
       />
-      <StatusBar barStyle="dark-content" />
+      <StatusBar backgroundColor={theme.colors.primary} />
       <BackButtonComp navigation={navigation} />
       <Text style={styles.title}>OTP Verification</Text>
       <Text style={styles.subtitle}>

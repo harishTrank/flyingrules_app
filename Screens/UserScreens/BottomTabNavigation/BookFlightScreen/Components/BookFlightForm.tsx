@@ -81,7 +81,7 @@ export default BookFlightForm;
 
 const styles = StyleSheet.create({
   mainBox: {
-    padding: width * 0.04, // Use 4% of screen width for padding
+    padding: width * 0.03, // Use 4% of screen width for padding
     borderRadius: 15,
     backgroundColor: theme.colors.white,
     marginTop: 15,

@@ -11,6 +11,8 @@ import {
 import theme from "../../../../../utils/theme";
 import HeaderComp from "../../../../ReUseComponents/HeaderComp";
 import ImageModule from "../../../../../ImageModule";
+import { useAtom } from "jotai";
+import { globalDictionaries } from "../../../../../JotaiStore";
 
 const { width, height } = Dimensions.get("window");
 
@@ -20,7 +22,8 @@ interface FilterScreenProps {
 
 const FilterScreen: React.FC<FilterScreenProps> = ({ navigation }) => {
   const [activeTab, setActiveTab] = useState<string>("Stops");
-  const [selectedOptions, setSelectedOptions] = useState<any>({}); // State for selected options
+  const [selectedOptions, setSelectedOptions] = useState<any>({});
+  const [dictionaries]: any = useAtom(globalDictionaries);
 
   // Dummy data for filter options (replace with actual data from API)
   const filterOptions: any = {

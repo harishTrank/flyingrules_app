@@ -82,7 +82,7 @@ const CreateAccountScreen: React.FC = ({ navigation }: any) => {
           { paddingTop: useSafeAreaInsets().top + height * 0.05 },
         ]}
       >
-        <StatusBar barStyle="dark-content" />
+        <StatusBar backgroundColor={theme.colors.primary} />
 
         <Text style={styles.title}>Create an Account</Text>
 

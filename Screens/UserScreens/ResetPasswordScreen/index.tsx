@@ -37,7 +37,7 @@ const ResetPasswordScreen: React.FC = ({ navigation }: any) => {
     <View
       style={[styles.container, { paddingTop: useSafeAreaInsets().top + 40 }]}
     >
-      <StatusBar barStyle="dark-content" />
+      <StatusBar backgroundColor={theme.colors.primary} />
       <BackButtonComp navigation={navigation} />
 
       <Text style={styles.title}>Reset Password</Text>

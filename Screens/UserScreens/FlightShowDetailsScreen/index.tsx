@@ -25,7 +25,6 @@ const FlightShowDetailsScreen = ({ navigation, route }: any) => {
   const { flight } = route?.params;
   const [dictionaries]: any = useAtom(globalDictionaries);
   const [travellersGlobalData]: any = useAtom(travellersGlobal);
-  console.log("flight?.price)", flight?.price?.base);
   return (
     <View style={{ flex: 1, backgroundColor: theme.colors.white }}>
       <HeaderComp navigation={navigation} />

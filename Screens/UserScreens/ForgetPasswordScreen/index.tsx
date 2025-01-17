@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   StyleSheet,
   View,
@@ -6,18 +6,18 @@ import {
   TextInput,
   TouchableOpacity,
   StatusBar,
-} from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Formik } from 'formik';
-import * as Yup from 'yup';
-import theme from '../../../utils/theme';
-import BackButtonComp from '../../ReUseComponents/BackButtonComp';
+} from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Formik } from "formik";
+import * as Yup from "yup";
+import theme from "../../../utils/theme";
+import BackButtonComp from "../../ReUseComponents/BackButtonComp";
 
 // Validation Schema using Yup
 const validationSchema = Yup.object().shape({
   email: Yup.string()
-    .email('Invalid email address')
-    .required('Email is required'),
+    .email("Invalid email address")
+    .required("Email is required"),
 });
 
 const ForgotPasswordScreen: React.FC = ({ navigation }: any) => {
@@ -29,7 +29,7 @@ const ForgotPasswordScreen: React.FC = ({ navigation }: any) => {
     <View
       style={[styles.container, { paddingTop: useSafeAreaInsets().top + 40 }]}
     >
-      <StatusBar barStyle="dark-content" />
+      <StatusBar backgroundColor={theme.colors.primary} />
 
       <BackButtonComp navigation={navigation} />
 
@@ -39,7 +39,7 @@ const ForgotPasswordScreen: React.FC = ({ navigation }: any) => {
       </Text>
 
       <Formik
-        initialValues={{ email: '' }}
+        initialValues={{ email: "" }}
         validationSchema={validationSchema}
         onSubmit={handleResetPassword}
       >
@@ -56,18 +56,15 @@ const ForgotPasswordScreen: React.FC = ({ navigation }: any) => {
             <TextInput
               style={styles.input}
               placeholder="hello@example.com"
-              onChangeText={handleChange('email')}
-              onBlur={handleBlur('email')}
+              onChangeText={handleChange("email")}
+              onBlur={handleBlur("email")}
               value={values.email}
             />
             {touched.email && errors.email && (
               <Text style={styles.errorText}>{errors.email}</Text>
             )}
 
-            <TouchableOpacity
-              style={styles.resetButton}
-              onPress={handleSubmit}
-            >
+            <TouchableOpacity style={styles.resetButton} onPress={handleSubmit}>
               <Text style={styles.resetButtonText}>Password Reset</Text>
             </TouchableOpacity>
           </View>
@@ -89,7 +86,7 @@ const ForgotPasswordScreen: React.FC = ({ navigation }: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     padding: 20,
   },
   title: {
@@ -100,7 +97,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 18,
-    color: '#555',
+    color: "#555",
     marginBottom: 20,
     ...theme.font.fontMedium,
   },
@@ -112,7 +109,7 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     borderRadius: 5,
     padding: 12,
     marginBottom: 10,
@@ -121,7 +118,7 @@ const styles = StyleSheet.create({
     color: theme.colors.black,
   },
   errorText: {
-    color: 'red',
+    color: "red",
     fontSize: 12,
     marginBottom: 10,
   },
@@ -129,17 +126,17 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.primary,
     padding: 15,
     borderRadius: 5,
-    alignItems: 'center',
+    alignItems: "center",
     marginVertical: 20,
   },
   resetButtonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 17,
     ...theme.font.fontMedium,
   },
   createAccountButton: {
     padding: 15,
-    alignItems: 'center',
+    alignItems: "center",
   },
   createAccountButtonText: {
     color: theme.colors.primary,
