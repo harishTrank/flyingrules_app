@@ -42,6 +42,15 @@ export function createStringListFromObjectValues(obj: any) {
   return valueList;
 }
 
+export function getCodesFromAirlines(airlineObject: any, airlineList: any) {
+  const reverseLookup = Object.fromEntries(
+    Object.entries(airlineObject).map(([code, airline]) => [airline, code])
+  );
+  return airlineList
+    .map((airline: any) => reverseLookup[airline])
+    .filter((code: any) => code);
+}
+
 export function getNamesFromAirportObject(airportData: any) {
   const names = [];
 

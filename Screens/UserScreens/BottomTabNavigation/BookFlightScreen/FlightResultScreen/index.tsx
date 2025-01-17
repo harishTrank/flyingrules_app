@@ -22,7 +22,10 @@ import {
   selectedOptionsGlobal,
   travellersGlobal,
 } from "../../../../../JotaiStore";
-import { getAirports } from "../../../../../utils/UserUtils";
+import {
+  getAirports,
+  getCodesFromAirlines,
+} from "../../../../../utils/UserUtils";
 const { width, height } = Dimensions.get("window");
 
 const FlightResultScreen = ({ navigation, route }: any) => {
@@ -96,6 +99,17 @@ const FlightResultScreen = ({ navigation, route }: any) => {
           selectedOptions?.Stops?.map((item: any) =>
             Number(item === "NON-STOP" ? 0 : item?.split(" ")?.[0])
           ).includes(obj?.itineraries?.[0]?.segments?.length - 1)
+        )
+      );
+    }
+    if (selectedOptions?.Airlines) {
+      const filterList = getCodesFromAirlines(
+        dictionaries?.carriers,
+        selectedOptions?.Airlines
+      );
+      setFlights((oldValue: any) =>
+        oldValue.filter((item: any) =>
+          filterList.includes(item?.validatingAirlineCodes?.[0])
         )
       );
     }
