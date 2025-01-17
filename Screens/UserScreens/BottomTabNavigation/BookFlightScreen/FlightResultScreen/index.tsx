@@ -26,6 +26,7 @@ import { getAirports } from "../../../../../utils/UserUtils";
 const { width, height } = Dimensions.get("window");
 
 const FlightResultScreen = ({ navigation, route }: any) => {
+  const [apiResponse, setApiResponse] = useState([]);
   const [flights, setFlights] = useState([]);
   const [dictionaries, setdictionaries]: any = useAtom(globalDictionaries);
   const [, setTravellersGlobal]: any = useAtom(travellersGlobal);
@@ -74,6 +75,7 @@ const FlightResultScreen = ({ navigation, route }: any) => {
       })
       .then((res: any) => {
         setFlights(res?.data?.data);
+        setApiResponse(res?.data?.data);
         setLoading(false);
         setdictionaries({
           ...res?.data?.dictionaries,
@@ -89,15 +91,13 @@ const FlightResultScreen = ({ navigation, route }: any) => {
 
   const filterSearchManager = () => {
     if (selectedOptions?.Stops) {
-      setFlights((oldVal: any) => {
-        return oldVal.filter(
-          (obj: any) =>
-            obj?.itineraries?.[0]?.segments?.length - 1 ===
-            selectedOptions?.Stops?.map((item: any) =>
-              item === "NON-STOP" ? 0 : item?.split(" ")?.[0]
-            )
-        );
-      });
+      setFlights((oldValue: any) =>
+        oldValue.filter((obj: any) =>
+          selectedOptions?.Stops?.map((item: any) =>
+            Number(item === "NON-STOP" ? 0 : item?.split(" ")?.[0])
+          ).includes(obj?.itineraries?.[0]?.segments?.length - 1)
+        )
+      );
     }
   };
 
@@ -139,6 +139,7 @@ const FlightResultScreen = ({ navigation, route }: any) => {
 
   const handleClearAll = () => {
     setSelectedOptions({});
+    setFlights(apiResponse);
   };
 
   return (
