@@ -53,9 +53,11 @@ const FlightCard = ({ navigation, flight, dictionaries, onPress }: any) => {
                 <Text style={styles.durationText}>
                   {durationFormator(itiner?.duration)}
                 </Text>
-                <Text style={styles.stopsText}>{`${
-                  itiner?.segments?.length - 1
-                } Stop(s)`}</Text>
+                {itiner?.segments?.length - 1 !== 0 && (
+                  <Text style={styles.stopsText}>{`${
+                    itiner?.segments?.length - 1
+                  } Stop(s)`}</Text>
+                )}
               </View>
 
               <View style={styles.routeDetails}>

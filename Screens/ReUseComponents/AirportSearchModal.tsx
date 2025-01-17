@@ -16,10 +16,10 @@ import {
 } from "react-native";
 import ImageModule from "../../ImageModule";
 import theme from "../../utils/theme";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import axios from "axios";
 import { AmadeusURL } from "../../utils/api/amadeus";
 import { ActivityIndicator } from "react-native-paper";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const { width, height } = Dimensions.get("window");
 
@@ -32,6 +32,7 @@ const AirportSearchModal = ({
   const [searchText, setSearchText] = useState("");
   const [apiResponse, setApiResponse]: any = useState([]);
   const [loader, setLoader]: any = useState(false);
+  const textInputRef = useRef<TextInput>(null); // Add a ref for the TextInput
 
   const listApiHandler = async () => {
     setLoader(true);
@@ -59,6 +60,13 @@ const AirportSearchModal = ({
   useEffect(() => {
     if (isVisible) {
       setSearchText("");
+      // Focus the TextInput when the modal becomes visible
+      setTimeout(() => {
+        textInputRef.current?.focus();
+      }, 100);
+    } else {
+      // Dismiss the keyboard when the modal is closed
+      Keyboard.dismiss();
     }
   }, [isVisible]);
 
@@ -126,6 +134,7 @@ const AirportSearchModal = ({
                 />
               )}
               <TextInput
+                ref={textInputRef} // Assign the ref to the TextInput
                 style={styles.searchInput}
                 placeholder="Search by city"
                 value={searchText}
