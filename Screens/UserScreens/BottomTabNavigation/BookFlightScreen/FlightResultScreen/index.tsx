@@ -14,16 +14,15 @@ import HeaderComp from "../../../../ReUseComponents/HeaderComp";
 import ImageModule from "../../../../../ImageModule";
 import Entypo from "@expo/vector-icons/Entypo";
 import FlightSearchLoader from "./Component/FlightSearchLoader";
-import axios from "axios";
 import dayjs from "dayjs";
 import { useFlightOffersApi } from "../../../../../hooks/Travel/mutation";
 import { useAtom } from "jotai";
 import {
   globalDictionaries,
+  selectedOptionsGlobal,
   travellersGlobal,
 } from "../../../../../JotaiStore";
 import { getAirports } from "../../../../../utils/UserUtils";
-import { AmadeusURL } from "../../../../../utils/api/amadeus";
 const { width, height } = Dimensions.get("window");
 
 const FlightResultScreen = ({ navigation, route }: any) => {
@@ -32,10 +31,13 @@ const FlightResultScreen = ({ navigation, route }: any) => {
   const [, setTravellersGlobal]: any = useAtom(travellersGlobal);
   const { params }: any = route;
   const [loading, setLoading]: any = useState(true);
+  const [selectedOptions, setSelectedOptions] = useAtom(selectedOptionsGlobal);
+  console.log("selectedOptions", selectedOptions);
 
   const flightListResultApiCaller: any = useFlightOffersApi();
 
   const flightOfferApiHandler = async () => {
+    setSelectedOptions({});
     const travelData = [
       ...Array(Number(params?.travellers?.adult))
         .fill(null)
@@ -66,19 +68,6 @@ const FlightResultScreen = ({ navigation, route }: any) => {
       currencyCode: "USD",
       currency: "USD",
     };
-    console.log("body1", body);
-    // axios
-    //   .post(`${AmadeusURL}/flight/flight-offer`, body)
-    //   .then((res: any) => {
-    //     setFlights(res?.data?.data?.data);
-    //     setLoading(false);
-    //     setdictionaries({
-    //       ...res?.data?.data?.dictionaries,
-    //       airportNames: getAirports(res?.data?.data?.dictionaries?.locations),
-    //     });
-    //   })
-    //   ?.catch((err: any) => console.log("err", err));
-
     flightListResultApiCaller
       ?.mutateAsync({
         body,
@@ -97,6 +86,26 @@ const FlightResultScreen = ({ navigation, route }: any) => {
   useEffect(() => {
     flightOfferApiHandler();
   }, [params]);
+
+  const filterSearchManager = () => {
+    if (selectedOptions?.Stops) {
+      setFlights((oldVal: any) => {
+        return oldVal.filter(
+          (obj: any) =>
+            obj?.itineraries?.[0]?.segments?.length - 1 ===
+            selectedOptions?.Stops?.map((item: any) =>
+              item === "NON-STOP" ? 0 : item?.split(" ")?.[0]
+            )
+        );
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (Object.keys(selectedOptions).length !== 0) {
+      filterSearchManager();
+    }
+  }, [selectedOptions]);
 
   const handleBookNow = (flight: any) => {
     navigation.navigate("BookNowScreen", { trip: flight });
@@ -127,6 +136,10 @@ const FlightResultScreen = ({ navigation, route }: any) => {
       price: "$113.20 ⦿ 28H 45M",
     },
   ];
+
+  const handleClearAll = () => {
+    setSelectedOptions({});
+  };
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.colors.white }}>
@@ -218,6 +231,14 @@ const FlightResultScreen = ({ navigation, route }: any) => {
             ListEmptyComponent={
               <View style={styles.emptyBox}>
                 <Text style={styles.emptyText}>No Flights Found!</Text>
+                {Object.keys(selectedOptions).length !== 0 && (
+                  <TouchableOpacity
+                    style={styles.borderBtn}
+                    onPress={handleClearAll}
+                  >
+                    <Text style={styles.clearAllText}>Clear Filter</Text>
+                  </TouchableOpacity>
+                )}
               </View>
             }
           />
@@ -292,6 +313,16 @@ const styles = StyleSheet.create({
     ...theme.font.fontMedium,
     color: theme.colors.primary,
     fontSize: width * 0.05,
+  },
+  borderBtn: {
+    padding: 8,
+    backgroundColor: theme.colors.primary,
+    borderRadius: 5,
+  },
+  clearAllText: {
+    ...theme.font.fontMedium,
+    fontSize: width * 0.032,
+    color: theme.colors.white,
   },
 });
 

@@ -12,7 +12,10 @@ import theme from "../../../../../utils/theme";
 import HeaderComp from "../../../../ReUseComponents/HeaderComp";
 import ImageModule from "../../../../../ImageModule";
 import { useAtom } from "jotai";
-import { globalDictionaries } from "../../../../../JotaiStore";
+import {
+  globalDictionaries,
+  selectedOptionsGlobal,
+} from "../../../../../JotaiStore";
 import {
   createStringListFromObjectValues,
   getAirports,
@@ -27,9 +30,11 @@ interface FilterScreenProps {
 
 const FilterScreen: React.FC<FilterScreenProps> = ({ navigation }) => {
   const [activeTab, setActiveTab] = useState<string>("Stops");
+  const [, setSelectedOptionsGl] = useAtom(selectedOptionsGlobal);
   const [selectedOptions, setSelectedOptions] = useState<any>({});
   const [dictionaries]: any = useAtom(globalDictionaries);
   const [filterOptions, setFilterOptions]: any = useState({});
+
   useEffect(() => {
     if (dictionaries) {
       const currentAirport = getAirports(dictionaries?.locations);
@@ -42,19 +47,19 @@ const FilterScreen: React.FC<FilterScreenProps> = ({ navigation }) => {
     }
   }, [dictionaries]);
 
-  console.log("selectedOptions", selectedOptions);
-
   const handleTabPress = (tab: string) => {
     setActiveTab(tab);
   };
 
   const handleClearAll = () => {
-    setSelectedOptions({}); // Clear all selected options
+    setSelectedOptions({});
   };
 
-  const handleApple = () => {};
+  const handleApple = () => {
+    setSelectedOptionsGl(selectedOptions);
+    navigation.goBack();
+  };
 
-  // Function to handle option press (for toggling selection)
   const handleOptionPress = (tab: string, option: string) => {
     setSelectedOptions((prevOptions: any) => {
       const updatedOptions = { ...prevOptions };
@@ -63,9 +68,9 @@ const FilterScreen: React.FC<FilterScreenProps> = ({ navigation }) => {
       }
       const index = updatedOptions[tab].indexOf(option);
       if (index > -1) {
-        updatedOptions[tab].splice(index, 1); // Remove if already selected
+        updatedOptions[tab].splice(index, 1);
       } else {
-        updatedOptions[tab].push(option); // Add if not selected
+        updatedOptions[tab].push(option);
       }
       return updatedOptions;
     });
@@ -82,15 +87,10 @@ const FilterScreen: React.FC<FilterScreenProps> = ({ navigation }) => {
             backgroundColor: theme.colors.primarySecond,
           },
         ]}
-        onPress={() => handleOptionPress(activeTab, item)} // Pass tab and item to the handler
+        onPress={() => handleOptionPress(activeTab, item)}
       >
         <Text style={styles.optionText}>{item}</Text>
-        <View
-          style={[
-            styles.checkbox,
-            isSelected && styles.checkboxChecked, // Apply checked style if selected
-          ]}
-        >
+        <View style={[styles.checkbox, isSelected && styles.checkboxChecked]}>
           {isSelected && (
             <Image source={ImageModule.checkIcon} style={styles.checkIcon} />
           )}

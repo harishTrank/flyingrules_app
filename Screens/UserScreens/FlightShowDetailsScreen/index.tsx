@@ -176,6 +176,10 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: -15,
   },
+  headerRow: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
   iconImg: {
     width: width * 0.1,
     height: width * 0.1,
