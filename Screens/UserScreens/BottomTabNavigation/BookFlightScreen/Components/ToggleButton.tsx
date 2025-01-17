@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   toggleBox: {
     flexDirection: "row",
     marginTop: 10,
-    borderRadius: 25,
+    borderRadius: 50,
     alignItems: "center",
     justifyContent: "space-between",
     ...theme.elevationHeavy,
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     padding: 10,
-    borderRadius: 20,
+    borderRadius: 50,
   },
   toggleText: {
     color: theme.colors.black,

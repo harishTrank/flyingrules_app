@@ -12,7 +12,7 @@ import theme from "../../../utils/theme";
 import HeaderComp from "../../ReUseComponents/HeaderComp";
 import ImageModule from "../../../ImageModule";
 import FlightDetailsComp from "./Component/FlightDetailsComp";
-import { currenKeys, getAirportNames } from "../../../utils/UserUtils";
+import { getAirportNames } from "../../../utils/UserUtils";
 import { useAtom } from "jotai";
 import { globalDictionaries, travellersGlobal } from "../../../JotaiStore";
 

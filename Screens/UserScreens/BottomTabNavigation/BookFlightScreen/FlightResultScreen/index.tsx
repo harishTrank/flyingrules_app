@@ -275,7 +275,7 @@ const styles = StyleSheet.create({
   buttonIcon: {
     width: width * 0.05,
     height: width * 0.05,
-    marginRight: width * 0.02,
+    paddingRight: width * 0.02,
     objectFit: "contain",
   },
   buttonText: {

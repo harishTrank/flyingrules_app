@@ -23,10 +23,9 @@ const FlightDetailsComp = ({ itineraryData }: any) => {
             <View>
               <Text style={styles.normalText}>{`${dayjs(
                 segment?.departure?.at
-              )?.format("HH:mma")} ${getAirportNames(
-                segment?.departure?.iataCode,
-                dictionaries?.airportNames
-              )}`}</Text>
+              )?.format("HH:mma")} ${
+                dictionaries?.airportNames[segment?.departure?.iataCode].country
+              }`}</Text>
               <View style={styles.secondRow}>
                 <Text style={styles.normalText}>
                   {segment?.departure?.iataCode}
