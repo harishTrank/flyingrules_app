@@ -5,6 +5,12 @@ import HeadingText from "./Components/HeadingText";
 import ChooseCard from "./Components/ChooseCard";
 import WhyImage from "./Components/WhyImage";
 import PopularDestination from "../../../ReUseComponents/PopularDestination";
+import { createStackNavigator } from "@react-navigation/stack";
+import FlightResultScreen from "../BookFlightScreen/FlightResultScreen";
+import FilterScreen from "../BookFlightScreen/FilterScreen";
+import SortScreen from "../BookFlightScreen/SortScreen";
+
+const Stack = createStackNavigator<any>();
 
 const chooseCardData = [
   {
@@ -42,7 +48,7 @@ const whyCardData = [
   },
 ];
 
-const HomeScreen = ({ navigation }: any) => {
+const Home = ({ navigation }: any) => {
   const flatListRef = useRef<FlatList>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -71,7 +77,7 @@ const HomeScreen = ({ navigation }: any) => {
         style={[styles.mainContainer]}
         showsVerticalScrollIndicator={false}
       >
-        <PopularDestination />
+        <PopularDestination navigation={navigation} />
 
         <HeadingText text="Why to choose us ?" />
         <FlatList
@@ -105,6 +111,22 @@ const HomeScreen = ({ navigation }: any) => {
         />
       </ScrollView>
     </View>
+  );
+};
+
+const HomeScreen = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+      initialRouteName={"Home"}
+    >
+      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="FlightResult" component={FlightResultScreen} />
+      <Stack.Screen name="FilterScreen" component={FilterScreen} />
+      <Stack.Screen name="SortScreen" component={SortScreen} />
+    </Stack.Navigator>
   );
 };
 

@@ -105,7 +105,7 @@ const BookFlight = ({ navigation }: any) => {
           selectedToAirport={selectedToAirport}
           setIsToModalVisible={setIsToModalVisible}
         />
-        <PopularDestination />
+        <PopularDestination navigation={navigation} />
       </ScrollView>
       <Modalize
         ref={modalizeRefTravel}

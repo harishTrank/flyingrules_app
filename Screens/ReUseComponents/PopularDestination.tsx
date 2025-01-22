@@ -2,29 +2,55 @@ import React from "react";
 import HeadingText from "../UserScreens/BottomTabNavigation/HomeScreen/Components/HeadingText";
 import { FlatList, View, StyleSheet, Platform } from "react-native";
 import DestinationCards from "./DestinationCards";
+import dayjs from "dayjs";
 
 const destinationData = [
   {
     id: "1",
-    url: "https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    title: "Paris",
-    price: "400",
+    url: "https://media.istockphoto.com/id/1167975236/photo/the-statue-of-liberty-over-the-scene-of-new-york-cityscape-river-side-which-location-is-lower.webp?a=1&b=1&s=612x612&w=0&k=20&c=YGjmE6DoiytqYUk9CcWXl8bDA3VWGXzxyDT1IB1NUqY=",
+    title: "New York",
+    price: "399",
+    depart: "NYC",
+    arrival: "BOS",
   },
   {
     id: "2",
-    url: "https://plus.unsplash.com/premium_photo-1677829177642-30def98b0963?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    title: "Bali",
-    price: "499",
+    url: "https://media.istockphoto.com/id/148773996/photo/big-ben.webp?a=1&b=1&s=612x612&w=0&k=20&c=9uMoHKCh1iEqNQu1AfFFKCZP8M_mih20s-rhHdNXVaY=",
+    title: "London",
+    price: "299",
+    depart: "LON",
+    arrival: "NYC",
   },
   {
     id: "3",
-    url: "https://plus.unsplash.com/premium_photo-1661962958462-9e52fda9954d?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    title: "Thailand",
-    price: "450",
+    url: "https://media.istockphoto.com/id/911570904/photo/view-of-venices-grand-canal.webp?a=1&b=1&s=612x612&w=0&k=20&c=JKgltRdcvC-l6j88GlbyNz7ikY38P0zNJHrWhU3sHlQ=",
+    title: "Italy",
+    price: "599",
+    depart: "ROM",
+    arrival: "LGW",
+  },
+  {
+    id: "4",
+    url: "https://media.istockphoto.com/id/1301579230/photo/spanish-cities-the-sacred-barcelona-family.webp?a=1&b=1&s=612x612&w=0&k=20&c=-7CYv3b-Z62pNVEZYguL8Kk95rujATVBQyIaPTTE82M=",
+    title: "Spain",
+    price: "799",
+    depart: "POS",
+    arrival: "LGW",
   },
 ];
 
-const PopularDestination = () => {
+const PopularDestination = ({ navigation }: any) => {
+  const navigationWithBookData = (item: any) => {
+    navigation.navigate("FlightResult", {
+      locationDeparture: item?.depart,
+      locationArrival: item?.arrival,
+      departure: dayjs().add(1, "day").toDate(),
+      arrival: undefined,
+      travellers: { adult: 1, child: 0 },
+      flightClass: "ECONOMY",
+      tripType: "one-way",
+    });
+  };
   return (
     <View>
       <HeadingText text="Popular Destination" />
@@ -37,6 +63,7 @@ const PopularDestination = () => {
             url={item.url}
             title={item.title}
             price={item.price}
+            onPress={() => navigationWithBookData(item)}
           />
         )}
         keyExtractor={(item) => item.id}

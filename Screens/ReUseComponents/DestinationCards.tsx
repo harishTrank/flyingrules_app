@@ -1,11 +1,18 @@
 import React from "react";
-import { StyleSheet, Text, View, Image, Dimensions } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Dimensions,
+  TouchableOpacity,
+} from "react-native";
 import theme from "../../utils/theme";
 import { LinearGradient } from "expo-linear-gradient";
 
-const DestinationCards = ({ url, title, price }: any) => {
+const DestinationCards = ({ url, title, price, onPress }: any) => {
   return (
-    <View style={styles.card}>
+    <TouchableOpacity style={styles.card} onPress={onPress}>
       <Image
         source={{
           uri: url,
@@ -20,7 +27,7 @@ const DestinationCards = ({ url, title, price }: any) => {
         <Text style={styles.title}>{title} </Text>
         <Text style={styles.price}>${price}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -34,7 +41,7 @@ const styles = StyleSheet.create({
     elevation: 5,
     backgroundColor: theme.colors.black,
     marginVertical: 10,
-    marginHorizontal: 7
+    marginHorizontal: 7,
   },
   image: {
     width: "100%",
