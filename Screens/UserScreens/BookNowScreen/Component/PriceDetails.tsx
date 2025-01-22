@@ -5,13 +5,15 @@ import {
   StyleSheet,
   Dimensions,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import theme from "../../../../utils/theme";
 import Entypo from "@expo/vector-icons/Entypo";
+import { currenKeys } from "../../../../utils/UserUtils";
 
 const { width } = Dimensions.get("window");
 
-const PriceDetails = () => {
+const PriceDetails = ({ flight }: any) => {
   const [bottomOpen, setBottomOpen]: any = useState(false);
   return (
     <View style={styles.priceDetailsContainer}>
@@ -23,68 +25,42 @@ const PriceDetails = () => {
           <Text style={styles.headerText}>Price Details</Text>
           <Entypo name="chevron-down" size={20} color={theme.colors.white} />
         </View>
-        <Text style={styles.headerPrice}>$ 4704.07</Text>
+        <Text style={styles.headerPrice}>{`${
+          currenKeys?.[flight?.price?.currency]
+        }${flight?.price?.total}`}</Text>
       </TouchableOpacity>
 
       {bottomOpen && (
-        <>
-          <View style={styles.passengerRow}>
-            <Text style={styles.passengerLabel}>Passenger 1, Adult</Text>
-            <Text style={styles.passengerPrice}>$ 1373.45</Text>
-          </View>
-          <View style={styles.detailRow}>
-            <Text style={styles.detailLabel}>Price per adult</Text>
-            <Text style={styles.detailValue}>$ 1167.43</Text>
-          </View>
-          <View style={styles.detailRow}>
-            <Text style={styles.detailLabel}>Taxes & Fees</Text>
-            <Text style={styles.detailValue}>$ 206.02</Text>
-          </View>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          {flight?.travelerPricings?.map((travel: any) => (
+            <View key={travel?.travelerId}>
+              <View style={styles.passengerRow}>
+                <Text
+                  style={styles.passengerLabel}
+                >{`Passenger ${travel?.travelerId}, ${travel?.travelerType}`}</Text>
+                <Text style={styles.passengerPrice}>{`${
+                  currenKeys?.[travel?.price?.currency]
+                }${travel?.price?.total}`}</Text>
+              </View>
+              <View style={styles.detailRow}>
+                <Text style={styles.detailLabel}>
+                  Price per {travel?.travelerType?.toLowerCase()}
+                </Text>
+                <Text style={styles.detailValue}>{`${
+                  currenKeys?.[travel?.price?.currency]
+                }${travel?.price?.base}`}</Text>
+              </View>
+              <View style={styles.detailRow}>
+                <Text style={styles.detailLabel}>Taxes & Fees</Text>
+                <Text style={styles.detailValue}>{`${
+                  currenKeys?.[travel?.price?.currency]
+                }${travel?.price?.tax}`}</Text>
+              </View>
 
-          <View style={styles.divider} />
-
-          <View style={styles.passengerRow}>
-            <Text style={styles.passengerLabel}>Passenger 2, Adult</Text>
-            <Text style={styles.passengerPrice}>$ 1373.45</Text>
-          </View>
-          <View style={styles.detailRow}>
-            <Text style={styles.detailLabel}>Price per adult</Text>
-            <Text style={styles.detailValue}>$ 1167.43</Text>
-          </View>
-          <View style={styles.detailRow}>
-            <Text style={styles.detailLabel}>Taxes & Fees</Text>
-            <Text style={styles.detailValue}>$ 206.02</Text>
-          </View>
-
-          <View style={styles.divider} />
-
-          <View style={styles.passengerRow}>
-            <Text style={styles.passengerLabel}>Passenger 3, Child</Text>
-            <Text style={styles.passengerPrice}>$ 1373.45</Text>
-          </View>
-          <View style={styles.detailRow}>
-            <Text style={styles.detailLabel}>Price per adult</Text>
-            <Text style={styles.detailValue}>$ 1167.43</Text>
-          </View>
-          <View style={styles.detailRow}>
-            <Text style={styles.detailLabel}>Taxes & Fees</Text>
-            <Text style={styles.detailValue}>$ 206.02</Text>
-          </View>
-
-          <View style={styles.divider} />
-
-          <View style={styles.travelProtectionRow}>
-            <Text style={styles.travelProtectionLabel}>Travel Protection</Text>
-            <Text style={styles.travelProtectionPrice}>$ 583.72</Text>
-          </View>
-
-          <View style={styles.divider} />
-
-          <View style={styles.totalPriceRow}>
-            <Text style={styles.totalPriceLabel}>Total Price</Text>
-            <Text style={styles.totalPriceValue}>$ 4704.07</Text>
-          </View>
-        </>
+              <View style={styles.divider} />
+            </View>
+          ))}
+        </ScrollView>
       )}
     </View>
   );

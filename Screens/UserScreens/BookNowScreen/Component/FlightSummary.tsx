@@ -2,10 +2,16 @@ import React from "react";
 import { View, Text, StyleSheet, Image, Dimensions } from "react-native";
 import theme from "../../../../utils/theme";
 import ImageModule from "../../../../ImageModule";
+import { currenKeys, durationFormator } from "../../../../utils/UserUtils";
+import dayjs from "dayjs";
+import { useAtom } from "jotai";
+import { globalDictionaries } from "../../../../JotaiStore";
+import { getAirportNames } from "../../../../utils/UserUtils";
 
 const { width, height } = Dimensions.get("window");
-
 const FlightSummary = ({ navigation, flight }: any) => {
+  const [dictionaries]: any = useAtom(globalDictionaries);
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -13,21 +19,38 @@ const FlightSummary = ({ navigation, flight }: any) => {
       </View>
       <View style={styles.route}>
         <View style={styles.routeDetails}>
-          <Text style={styles.routeCode}>DEL</Text>
-          <Text style={styles.routeTime}>7:50 AM</Text>
-          <Text style={styles.routeDate}>JAN 17,2025</Text>
+          <Text style={styles.routeCode}>
+            {flight?.itineraries[0]?.segments[0]?.departure?.iataCode}
+          </Text>
+          <Text style={styles.routeTime}>
+            {dayjs(flight?.itineraries[0]?.segments[0]?.departure?.at).format(
+              "h:mma"
+            )}
+          </Text>
+          <Text style={styles.routeDate}>
+            {dayjs(flight?.itineraries[0]?.segments[0]?.departure?.at).format(
+              "MMM DD, YYYY"
+            )}
+          </Text>
           <Text style={styles.airportText}>
-            Indira Gandhi International Airport
+            {`${getAirportNames(
+              flight?.itineraries[0]?.segments[0]?.departure?.iataCode,
+              dictionaries?.airportNames
+            )}\nTerminal ${
+              flight?.itineraries[0]?.segments[0]?.departure?.terminal || 0
+            }`}
           </Text>
         </View>
 
         <View style={styles.flightInfo}>
           <Image style={styles.imageholder} source={ImageModule.planemid} />
           <View style={styles.durationStopsContainer}>
-            <Text style={styles.durationText}>{`13hrs 45min\n1 stop(s)`}</Text>
+            <Text style={styles.durationText}>
+              {durationFormator(flight?.itineraries[0]?.duration)}
+            </Text>
           </View>
           <Text
-            onPress={() => navigation.navigate("FlightShowDetails", { flight })}
+            onPress={() => navigation.navigate("FlightShowDetails")}
             style={styles.showDetailsText}
           >
             Show Details
@@ -35,11 +58,38 @@ const FlightSummary = ({ navigation, flight }: any) => {
         </View>
 
         <View style={styles.routeDetailsLast}>
-          <Text style={styles.routeCode}>JFK</Text>
-          <Text style={styles.routeTime}>7:05 PM</Text>
-          <Text style={styles.routeDate}>JAN 17,2025</Text>
+          <Text style={styles.routeCode}>
+            {
+              flight?.itineraries[0]?.segments[
+                flight?.itineraries[0]?.segments?.length - 1
+              ]?.arrival?.iataCode
+            }
+          </Text>
+          <Text style={styles.routeTime}>
+            {dayjs(
+              flight?.itineraries[0]?.segments[
+                flight?.itineraries[0]?.segments?.length - 1
+              ]?.arrival?.at
+            ).format("h:mma")}
+          </Text>
+          <Text style={styles.routeDate}>
+            {dayjs(
+              flight?.itineraries[0]?.segments[
+                flight?.itineraries[0]?.segments?.length - 1
+              ]?.arrival?.at
+            ).format("MMM DD, YYYY")}
+          </Text>
           <Text style={[styles.airportText, { textAlign: "right" }]}>
-            John F Kennedy International Airport
+            {`${getAirportNames(
+              flight.itineraries[0].segments[
+                flight?.itineraries[0]?.segments?.length - 1
+              ]?.arrival?.iataCode,
+              dictionaries?.airportNames
+            )}\nTerminal ${
+              flight.itineraries[0].segments[
+                flight?.itineraries[0]?.segments?.length - 1
+              ]?.arrival?.terminal || 0
+            }`}
           </Text>
         </View>
       </View>

@@ -15,7 +15,7 @@ const BookNowScreen = ({ navigation, route }: any) => {
   return (
     <View style={styles.container}>
       <HeaderComp navigation={navigation} />
-      <PriceDetails />
+      <PriceDetails flight={flight} />
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={{ marginBottom: useSafeAreaInsets().bottom }}
