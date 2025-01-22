@@ -30,6 +30,7 @@ import {
   replaceNamesWithCodes,
   shuffle,
 } from "../../../../../utils/UserUtils";
+import { calculateTotalDuration, categorizeFlights } from "./FlightUtils";
 const { width, height } = Dimensions.get("window");
 
 const FlightResultScreen = ({ navigation, route }: any) => {
@@ -211,20 +212,39 @@ const FlightResultScreen = ({ navigation, route }: any) => {
 
   // flight categories search
   const [currentFlight, setCurrentFlight]: any = useState("Cheapest");
-  const flightCategories: any = [
-    {
-      name: "Cheapest",
-      price: "$113.20 ⦿ 28H 45M",
-    },
-    {
-      name: "Best",
-      price: "$153.20 ⦿ 25H 45M",
-    },
-    {
-      name: "Quickest",
-      price: "$113.20 ⦿ 28H 45M",
-    },
-  ];
+  const [flightCategories, setFlightCategories]: any = useState([]);
+
+  useEffect(() => {
+    const flightCategories = categorizeFlights(flights);
+    setFlightCategories(flightCategories);
+  }, [flights]);
+
+  const filterArrayAccordingToCategories = () => {
+    if (apiResponse.length === 0) return;
+    let filteredFlights = [...apiResponse];
+    if (currentFlight === "Cheapest") {
+      filteredFlights.sort(
+        (a: any, b: any) =>
+          parseFloat(a.price.total) - parseFloat(b.price.total)
+      );
+    } else if (currentFlight === "Best") {
+      filteredFlights.sort(
+        (a: any, b: any) =>
+          parseFloat(b.price.total) - parseFloat(a.price.total)
+      );
+    } else if (currentFlight === "Quickest") {
+      filteredFlights.sort(
+        (a: any, b: any) =>
+          calculateTotalDuration(a.itineraries) -
+          calculateTotalDuration(b.itineraries)
+      );
+    }
+
+    setFlights(filteredFlights);
+  };
+  useEffect(() => {
+    filterArrayAccordingToCategories();
+  }, [currentFlight]);
 
   const handleClearAll = () => {
     setSelectedOptions({});
