@@ -42,7 +42,6 @@ const FlightResultScreen = ({ navigation, route }: any) => {
   const [loading, setLoading]: any = useState(true);
   const [selectedOptions, setSelectedOptions] = useAtom(selectedOptionsGlobal);
   const [currentSort]: any = useAtom(sortFilter);
-  console.log("params", params);
 
   const flightListResultApiCaller: any = useFlightOffersApi();
 
