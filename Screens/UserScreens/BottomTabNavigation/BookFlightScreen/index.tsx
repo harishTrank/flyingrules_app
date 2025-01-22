@@ -56,6 +56,8 @@ const BookFlight = ({ navigation }: any) => {
   const [travellers, setTravellers]: any = useState({
     adult: 1,
     child: 0,
+    held_infant: 0,
+    seated_infant: 0,
   });
   const [isFromModalVisible, setIsFromModalVisible]: any = useState(false);
   const [isToModalVisible, setIsToModalVisible]: any = useState(false);
@@ -109,7 +111,7 @@ const BookFlight = ({ navigation }: any) => {
       </ScrollView>
       <Modalize
         ref={modalizeRefTravel}
-        modalHeight={height * 0.25}
+        modalHeight={height * 0.4}
         handleStyle={styles.modalHandle}
         handlePosition="inside"
         modalStyle={styles.modalStyle}

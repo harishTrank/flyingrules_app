@@ -25,6 +25,7 @@ import {
 } from "../../../../../JotaiStore";
 import {
   convertToNumber,
+  formatTravellerData,
   getAirports,
   getCodesFromAirlines,
   replaceNamesWithCodes,
@@ -47,20 +48,7 @@ const FlightResultScreen = ({ navigation, route }: any) => {
 
   const flightOfferApiHandler = async () => {
     setSelectedOptions({});
-    const travelData = [
-      ...Array(Number(params?.travellers?.adult))
-        .fill(null)
-        .map((_, index) => ({
-          id: (index + 1).toString(),
-          travelerType: "ADULT",
-        })),
-      ...Array(Number(params?.travellers?.child))
-        .fill(null)
-        .map((_, index) => ({
-          id: (index + 1 + Number(params?.travellers?.adult)).toString(),
-          travelerType: "CHILD",
-        })),
-    ];
+    const travelData = formatTravellerData(params?.travellers);
     setTravellersGlobal(travelData);
     const body: any = {
       ...params,

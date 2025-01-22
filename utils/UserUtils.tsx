@@ -100,3 +100,34 @@ export function convertToNumber(priceString: any) {
   const number = parseFloat(numericString);
   return isNaN(number) ? NaN : number;
 }
+
+export function formatTravellerData(travellerData: any) {
+  const formattedData = [];
+  let idCounter = 1;
+  for (let i = 0; i < travellerData.adult; i++) {
+    formattedData.push({
+      id: (idCounter++).toString(),
+      travelerType: "ADULT",
+    });
+  }
+  for (let i = 0; i < travellerData.child; i++) {
+    formattedData.push({
+      id: (idCounter++).toString(),
+      travelerType: "CHILD",
+    });
+  }
+  for (let i = 0; i < travellerData.held_infant; i++) {
+    formattedData.push({
+      id: (idCounter++).toString(),
+      travelerType: "HELD_INFANT",
+      associatedAdultId: (i + 1).toString(),
+    });
+  }
+  for (let i = 0; i < travellerData.seated_infant; i++) {
+    formattedData.push({
+      id: (idCounter++).toString(),
+      travelerType: "SEATED_INFANT",
+    });
+  }
+  return formattedData;
+}

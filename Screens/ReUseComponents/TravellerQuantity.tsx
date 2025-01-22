@@ -7,49 +7,54 @@ import {
   Dimensions,
 } from "react-native";
 import theme from "../../utils/theme";
+import Toast from "react-native-toast-message";
 
 const { width } = Dimensions.get("window");
 
 const TravellerQuantity = ({ travellers, setTravellers }: any) => {
   const travelHandler = (sign: any, type: any) => {
-    if (type === "Adult") {
-      if (sign === "Add") {
-        setTravellers((oldVal: any) => {
-          return {
-            ...oldVal,
-            adult: oldVal.adult + 1,
-          };
-        });
-      } else {
-        if (travellers.adult !== 1) {
-          setTravellers((oldVal: any) => {
-            return {
-              ...oldVal,
-              adult: oldVal.adult - 1,
-            };
-          });
+    setTravellers((oldVal: any) => {
+      let newVal = { ...oldVal };
+
+      if (type === "Adult") {
+        if (sign === "Add") {
+          newVal.adult = oldVal.adult + 1;
+        } else if (oldVal.adult > 1) {
+          newVal.adult = oldVal.adult - 1;
+        }
+      } else if (type === "Child") {
+        if (sign === "Add") {
+          newVal.child = oldVal.child + 1;
+        } else if (oldVal.child > 0) {
+          newVal.child = oldVal.child - 1;
+        }
+      } else if (type === "HELD_INFANT") {
+        if (sign === "Add") {
+          newVal.held_infant = oldVal.held_infant + 1;
+        } else if (oldVal.held_infant > 0) {
+          newVal.held_infant = oldVal.held_infant - 1;
+        }
+      } else if (type === "SEATED_INFANT") {
+        if (sign === "Add") {
+          newVal.seated_infant = oldVal.seated_infant + 1;
+        } else if (oldVal.seated_infant > 0) {
+          newVal.seated_infant = oldVal.seated_infant - 1;
         }
       }
-    } else {
-      if (sign === "Add") {
-        setTravellers((oldVal: any) => {
-          return {
-            ...oldVal,
-            child: oldVal.child + 1,
-          };
+
+      // Check if total infants exceed adults
+      if (newVal.held_infant + newVal.seated_infant > newVal.adult) {
+        Toast.show({
+          type: "error",
+          text1: "Adult not enough for infant",
         });
-      } else {
-        if (travellers.child !== 0) {
-          setTravellers((oldVal: any) => {
-            return {
-              ...oldVal,
-              child: oldVal.child - 1,
-            };
-          });
-        }
+        return oldVal; // Return the old state to prevent the update
       }
-    }
+
+      return newVal;
+    });
   };
+
   return (
     <View style={styles.travelBox}>
       <View style={styles.travelComp}>
@@ -79,6 +84,42 @@ const TravellerQuantity = ({ travellers, setTravellers }: any) => {
         <TouchableOpacity
           style={styles.buttonStyle}
           onPress={() => travelHandler("Add", "Child")}
+        >
+          <Text style={styles.buttonText}>+</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.travelComp}>
+        <TouchableOpacity
+          style={styles.buttonStyle}
+          onPress={() => travelHandler("Sub", "HELD_INFANT")}
+        >
+          <Text style={styles.buttonText}>-</Text>
+        </TouchableOpacity>
+        <Text style={styles.resultText}>
+          {travellers.held_infant} Held Infant
+        </Text>
+        <TouchableOpacity
+          style={styles.buttonStyle}
+          onPress={() => travelHandler("Add", "HELD_INFANT")}
+        >
+          <Text style={styles.buttonText}>+</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.travelComp}>
+        <TouchableOpacity
+          style={styles.buttonStyle}
+          onPress={() => travelHandler("Sub", "SEATED_INFANT")}
+        >
+          <Text style={styles.buttonText}>-</Text>
+        </TouchableOpacity>
+        <Text style={styles.resultText}>
+          {travellers.seated_infant} Seated Infant
+        </Text>
+        <TouchableOpacity
+          style={styles.buttonStyle}
+          onPress={() => travelHandler("Add", "SEATED_INFANT")}
         >
           <Text style={styles.buttonText}>+</Text>
         </TouchableOpacity>

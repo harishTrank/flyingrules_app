@@ -106,7 +106,9 @@ const FlightShowDetailsScreen = ({ navigation, route }: any) => {
             {travellersGlobalData?.map((item: any) => (
               <View key={item?.id} style={styles.tableRow}>
                 <Text style={styles.tableCell}>{item?.id}</Text>
-                <Text style={styles.tableCell}>{item?.travelerType}</Text>
+                <Text style={styles.tableCell}>
+                  {item?.travelerType?.replace("_", " ")}
+                </Text>
                 <Text style={styles.tableCell}>
                   {(
                     Number(flight?.price?.base) / travellersGlobalData?.length
@@ -227,7 +229,7 @@ const styles = StyleSheet.create({
   },
   tableCell: {
     ...theme.font.fontMedium,
-    fontSize: width * 0.035,
+    fontSize: width * 0.033,
     color: theme.colors.black,
     flex: 1,
     textAlign: "center",
