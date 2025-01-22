@@ -8,6 +8,8 @@ import {
 } from "react-native";
 import theme from "../../../../../utils/theme";
 import HeaderComp from "../../../../ReUseComponents/HeaderComp";
+import { useAtom } from "jotai";
+import { sortFilter } from "../../../../../JotaiStore";
 
 const { width, height } = Dimensions.get("window");
 
@@ -16,7 +18,7 @@ interface SortScreenProps {
 }
 
 const SortScreen: React.FC<SortScreenProps> = ({ navigation }) => {
-  const [selectedOption, setSelectedOption] = useState<string>("Relevance"); // Initial selected option
+  const [selectedOption, setSelectedOption]: any = useAtom(sortFilter); // Initial selected option
 
   const sortOptions = [
     "Relevance",
@@ -26,6 +28,7 @@ const SortScreen: React.FC<SortScreenProps> = ({ navigation }) => {
 
   const handleOptionPress = (option: string) => {
     setSelectedOption(option);
+    navigation.goBack();
   };
 
   return (

@@ -83,3 +83,20 @@ export function replaceNamesWithCodes(airportData: any, namesList: any) {
   }
   return updatedList;
 }
+
+export function shuffle(array: any) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1)); // Get random index from 0 to i
+    [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+  }
+  return array;
+}
+
+export function convertToNumber(priceString: any) {
+  if (priceString == null) {
+    return NaN;
+  }
+  const numericString = priceString.replace(/[^0-9.-]+/g, "");
+  const number = parseFloat(numericString);
+  return isNaN(number) ? NaN : number;
+}

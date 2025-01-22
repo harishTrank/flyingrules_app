@@ -20,12 +20,15 @@ import { useAtom } from "jotai";
 import {
   globalDictionaries,
   selectedOptionsGlobal,
+  sortFilter,
   travellersGlobal,
 } from "../../../../../JotaiStore";
 import {
+  convertToNumber,
   getAirports,
   getCodesFromAirlines,
   replaceNamesWithCodes,
+  shuffle,
 } from "../../../../../utils/UserUtils";
 const { width, height } = Dimensions.get("window");
 
@@ -37,6 +40,7 @@ const FlightResultScreen = ({ navigation, route }: any) => {
   const { params }: any = route;
   const [loading, setLoading]: any = useState(true);
   const [selectedOptions, setSelectedOptions] = useAtom(selectedOptionsGlobal);
+  const [currentSort]: any = useAtom(sortFilter);
 
   const flightListResultApiCaller: any = useFlightOffersApi();
 
@@ -154,6 +158,43 @@ const FlightResultScreen = ({ navigation, route }: any) => {
       filterSearchManager();
     }
   }, [selectedOptions]);
+
+  const sortScreenDataHandler = () => {
+    setFlights((oldVal) => {
+      const newVal = [...oldVal];
+
+      if (currentSort === "Relevance") {
+        return shuffle(newVal);
+      } else if (currentSort === "Price : High to Low") {
+        newVal.sort((a: any, b: any) => {
+          const priceA = convertToNumber(a.price?.total);
+          const priceB = convertToNumber(b.price?.total);
+
+          if (isNaN(priceA) && isNaN(priceB)) return 0;
+          if (isNaN(priceA)) return 1;
+          if (isNaN(priceB)) return -1;
+
+          return priceB - priceA;
+        });
+      } else if (currentSort === "Price : Low to High") {
+        newVal.sort((a: any, b: any) => {
+          const priceA = convertToNumber(a.price?.total);
+          const priceB = convertToNumber(b.price?.total);
+
+          if (isNaN(priceA) && isNaN(priceB)) return 0;
+          if (isNaN(priceA)) return 1;
+          if (isNaN(priceB)) return -1;
+
+          return priceA - priceB;
+        });
+      }
+      return newVal;
+    });
+  };
+
+  useEffect(() => {
+    sortScreenDataHandler();
+  }, [currentSort]);
 
   const handleBookNow = (flight: any) => {
     navigation.navigate("BookNowScreen", { flight });
