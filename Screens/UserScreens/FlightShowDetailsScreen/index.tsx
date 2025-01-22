@@ -14,7 +14,7 @@ import ImageModule from "../../../ImageModule";
 import FlightDetailsComp from "./Component/FlightDetailsComp";
 import { getAirportNames } from "../../../utils/UserUtils";
 import { useAtom } from "jotai";
-import { globalDictionaries, travellersGlobal } from "../../../JotaiStore";
+import { globalDictionaries } from "../../../JotaiStore";
 
 const { width, height } = Dimensions.get("window");
 
@@ -24,7 +24,6 @@ const FlightShowDetailsScreen = ({ navigation, route }: any) => {
   );
   const { flight } = route?.params;
   const [dictionaries]: any = useAtom(globalDictionaries);
-  const [travellersGlobalData]: any = useAtom(travellersGlobal);
   return (
     <View style={{ flex: 1, backgroundColor: theme.colors.white }}>
       <HeaderComp navigation={navigation} />
@@ -103,22 +102,14 @@ const FlightShowDetailsScreen = ({ navigation, route }: any) => {
               </Text>
             </View>
 
-            {travellersGlobalData?.map((item: any) => (
-              <View key={item?.id} style={styles.tableRow}>
-                <Text style={styles.tableCell}>{item?.id}</Text>
+            {flight?.travelerPricings?.map((item: any) => (
+              <View key={item?.travelerId} style={styles.tableRow}>
+                <Text style={styles.tableCell}>{item?.travelerId}</Text>
                 <Text style={styles.tableCell}>
                   {item?.travelerType?.replace("_", " ")}
                 </Text>
-                <Text style={styles.tableCell}>
-                  {(
-                    Number(flight?.price?.base) / travellersGlobalData?.length
-                  )?.toFixed(2)}
-                </Text>
-                <Text style={styles.tableCell}>
-                  {(
-                    Number(flight?.price?.tax) / travellersGlobalData?.length
-                  )?.toFixed(2)}
-                </Text>
+                <Text style={styles.tableCell}>{item?.price?.base}</Text>
+                <Text style={styles.tableCell}>{item?.price?.tax}</Text>
               </View>
             ))}
 
