@@ -140,7 +140,7 @@ const FlightResultScreen = ({ navigation, route }: any) => {
   }, [selectedOptions]);
 
   const handleBookNow = (flight: any) => {
-    navigation.navigate("BookNowScreen", { trip: flight });
+    navigation.navigate("BookNowScreen", { flight });
   };
 
   const renderItem = ({ item }: { item: any }) => (

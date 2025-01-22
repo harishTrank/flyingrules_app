@@ -1,7 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { View, StyleSheet, ScrollView, FlatList, Platform } from "react-native";
 import HeaderComp from "../../../ReUseComponents/HeaderComp";
-import DestinationCards from "../../../ReUseComponents/DestinationCards";
 import HeadingText from "./Components/HeadingText";
 import ChooseCard from "./Components/ChooseCard";
 import WhyImage from "./Components/WhyImage";

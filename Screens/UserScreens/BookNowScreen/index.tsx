@@ -10,7 +10,8 @@ import TravelProtection from "./Component/TravelProtection";
 import TravelersTrustedProgram from "./Component/TravelersTrustedProgram";
 import BillingForm from "./Component/BillingForm";
 
-const BookNowScreen = ({ navigation }: any) => {
+const BookNowScreen = ({ navigation, route }: any) => {
+  const { flight } = route?.params;
   return (
     <View style={styles.container}>
       <HeaderComp navigation={navigation} />
@@ -19,7 +20,7 @@ const BookNowScreen = ({ navigation }: any) => {
         showsVerticalScrollIndicator={false}
         style={{ marginBottom: useSafeAreaInsets().bottom }}
       >
-        <FlightSummary navigation={navigation} />
+        <FlightSummary navigation={navigation} flight={flight} />
         <RefundableBooking />
         <TravelProtection />
         <TravelersTrustedProgram />

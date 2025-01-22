@@ -5,7 +5,7 @@ import ImageModule from "../../../../ImageModule";
 
 const { width, height } = Dimensions.get("window");
 
-const FlightSummary = ({ navigation }: any) => {
+const FlightSummary = ({ navigation, flight }: any) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -27,7 +27,7 @@ const FlightSummary = ({ navigation }: any) => {
             <Text style={styles.durationText}>{`13hrs 45min\n1 stop(s)`}</Text>
           </View>
           <Text
-            onPress={() => navigation.navigate("FlightShowDetails")}
+            onPress={() => navigation.navigate("FlightShowDetails", { flight })}
             style={styles.showDetailsText}
           >
             Show Details
