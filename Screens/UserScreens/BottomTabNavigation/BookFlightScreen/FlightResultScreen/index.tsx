@@ -25,6 +25,7 @@ import {
 import {
   getAirports,
   getCodesFromAirlines,
+  replaceNamesWithCodes,
 } from "../../../../../utils/UserUtils";
 const { width, height } = Dimensions.get("window");
 
@@ -36,7 +37,6 @@ const FlightResultScreen = ({ navigation, route }: any) => {
   const { params }: any = route;
   const [loading, setLoading]: any = useState(true);
   const [selectedOptions, setSelectedOptions] = useAtom(selectedOptionsGlobal);
-  console.log("selectedOptions", selectedOptions);
 
   const flightListResultApiCaller: any = useFlightOffersApi();
 
@@ -114,7 +114,23 @@ const FlightResultScreen = ({ navigation, route }: any) => {
       );
     }
     if (selectedOptions?.Airport) {
-      // const currentAirport = getAirports(dictionaries?.locations);
+      const currentAirport = getAirports(dictionaries?.locations);
+      const filterList = replaceNamesWithCodes(
+        currentAirport,
+        selectedOptions?.Airport
+      );
+      setFlights((oldValue: any) => {
+        return oldValue.filter((flight: any) => {
+          return flight.itineraries.some((itinerary: any) => {
+            return itinerary.segments.some((segment: any) => {
+              return (
+                filterList.includes(segment.departure?.iataCode) ||
+                filterList.includes(segment.arrival?.iataCode)
+              );
+            });
+          });
+        });
+      });
     }
     if (selectedOptions?.Aircraft) {
       const filterList = getCodesFromAirlines(

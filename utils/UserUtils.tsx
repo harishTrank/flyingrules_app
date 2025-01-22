@@ -65,3 +65,21 @@ export function getNamesFromAirportObject(airportData: any) {
 
   return names;
 }
+
+export function replaceNamesWithCodes(airportData: any, namesList: any) {
+  const updatedList = [];
+  for (const item of namesList) {
+    let codeFound = false;
+    for (const code in airportData) {
+      if (airportData[code].name === item) {
+        updatedList.push(code);
+        codeFound = true;
+        break;
+      }
+    }
+    if (!codeFound) {
+      updatedList.push(item);
+    }
+  }
+  return updatedList;
+}
