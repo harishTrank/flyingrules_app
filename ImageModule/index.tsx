@@ -40,6 +40,10 @@ const ImageModule = {
   protection: require("../assets/Icons/protection.png"),
   circleplane: require("../assets/Icons/circleplane.png"),
   placeanimation: require("../assets/Icons/placeanimation.gif"),
+  allember: require("../assets/Icons/allember.png"),
+  promise: require("../assets/Icons/promise.png"),
+  redefine: require("../assets/Icons/redefine.png"),
+  whiteclock: require("../assets/Icons/whiteclock.png"),
 };
 
 export default ImageModule;

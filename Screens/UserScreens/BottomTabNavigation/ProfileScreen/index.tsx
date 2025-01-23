@@ -46,7 +46,7 @@ const Profile: React.FC<ProfileScreenProps> = ({ navigation }) => {
     {
       name: "About us",
       icon: ImageModule.aboutus,
-      onPress: () => {},
+      onPress: () => navigation.navigate("AboutUsScreen"),
     },
   ];
 

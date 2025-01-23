@@ -9,6 +9,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import FlightResultScreen from "../BookFlightScreen/FlightResultScreen";
 import FilterScreen from "../BookFlightScreen/FilterScreen";
 import SortScreen from "../BookFlightScreen/SortScreen";
+import PassengerDetailScreen from "../BookFlightScreen/PassengerDetailScreen";
 
 const Stack = createStackNavigator<any>();
 
@@ -126,6 +127,7 @@ const HomeScreen = () => {
       <Stack.Screen name="FlightResult" component={FlightResultScreen} />
       <Stack.Screen name="FilterScreen" component={FilterScreen} />
       <Stack.Screen name="SortScreen" component={SortScreen} />
+      <Stack.Screen name="PassengerDetail" component={PassengerDetailScreen} />
     </Stack.Navigator>
   );
 };

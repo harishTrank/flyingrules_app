@@ -8,6 +8,7 @@ import ResetPasswordScreen from "./ResetPasswordScreen";
 import CreateAccountScreen from "./CreateAccountScreen";
 import FlightShowDetailsScreen from "./FlightShowDetailsScreen";
 import BookNowScreen from "./BookNowScreen";
+import AboutUsScreen from "./AboutUsScreen";
 
 const Stack = createStackNavigator<any>();
 
@@ -33,6 +34,7 @@ const UserScreens = () => {
         component={FlightShowDetailsScreen}
       />
       <Stack.Screen name="BookNowScreen" component={BookNowScreen} />
+      <Stack.Screen name="AboutUsScreen" component={AboutUsScreen} />
     </Stack.Navigator>
   );
 };
