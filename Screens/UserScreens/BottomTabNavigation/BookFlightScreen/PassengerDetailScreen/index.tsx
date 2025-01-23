@@ -30,9 +30,7 @@ const PassengerDetailScreen = ({ navigation, route }: any) => {
   const [currentTravelerIndex, setCurrentTravelerIndex]: any = useAtom(
     currentPassengerIndex
   );
-  const [passengerDetails, setPassengerDetails]: any = useAtom(
-    passengerDetailsGlobal
-  );
+  const [, setPassengerDetails]: any = useAtom(passengerDetailsGlobal);
 
   const onDismissSingle = useCallback(() => {
     setOpen(false);
@@ -65,18 +63,19 @@ const PassengerDetailScreen = ({ navigation, route }: any) => {
   });
 
   const handleSubmit = (values: any) => {
-    if (flight?.travelerPricings?.length > currentTravelerIndex) {
-      setPassengerDetails((oldVal: any) => {
-        return [
-          ...oldVal,
-          {
-            passenger: `${
-              flight?.travelerPricings?.[currentTravelerIndex]?.travelerType
-            } ${currentTravelerIndex + 1}`,
-            ...values,
-          },
-        ];
-      });
+    setPassengerDetails((oldVal: any) => {
+      const currentData = `${
+        flight?.travelerPricings?.[currentTravelerIndex]?.travelerType
+      } ${currentTravelerIndex + 1}`;
+      return [
+        ...oldVal.filter((item: any) => item.passenger !== currentData),
+        {
+          passenger: currentData,
+          ...values,
+        },
+      ];
+    });
+    if (flight?.travelerPricings?.length - 1 > currentTravelerIndex) {
       setCurrentTravelerIndex((oldVal: any) => oldVal + 2);
       navigation.push("PassengerDetail", { flight });
     } else {
