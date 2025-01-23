@@ -109,6 +109,7 @@ const Home = ({ navigation }: any) => {
           viewabilityConfig={{
             itemVisiblePercentThreshold: 50,
           }}
+          style={{ paddingBottom: Platform.OS === "ios" ? 0 : 15 }}
         />
       </ScrollView>
     </View>

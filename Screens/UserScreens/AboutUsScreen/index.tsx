@@ -141,10 +141,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginVertical: width * 0.05,
   },
-  logo: {
-    width: width * 0.5, // Adjust as needed
-    height: width * 0.2, // Adjust as needed based on your logo aspect ratio
-  },
   contentContainer: {
     paddingHorizontal: width * 0.05,
     paddingBottom: width * 0.05,
@@ -184,6 +180,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.primary,
     marginBottom: 7,
     padding: 2,
+    borderRadius: 3,
   },
   featureIcon: {
     width: width * 0.06,
