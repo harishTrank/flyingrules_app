@@ -5,7 +5,7 @@ import { useAtom } from "jotai";
 import { globalDictionaries } from "../../../../JotaiStore";
 import dayjs from "dayjs";
 import { durationFormator, getAirportNames } from "../../../../utils/UserUtils";
-import ImageModule from "../../../../ImageModule";
+import LayoverComp from "./LayoverComp";
 
 const { height, width } = Dimensions.get("window");
 
@@ -17,10 +17,6 @@ const FlightDetailsComp = ({ itineraryData }: any) => {
         <View key={index}>
           <View>
             <View style={styles.head}>
-              {/* <Image
-                source={ImageModule?.dummyLogo}
-                style={styles.flightLogo}
-              /> */}
               <Text style={styles.flightText}>{`${
                 dictionaries?.carriers?.[segment?.carrierCode]
               } ${segment?.carrierCode}-${segment?.number}`}</Text>
@@ -85,7 +81,18 @@ const FlightDetailsComp = ({ itineraryData }: any) => {
               )}\nTerminal ${segment?.arrival?.terminal || 0}`}
             </Text>
           </View>
-          <View style={styles.divider} />
+          {itineraryData?.segments?.length - 1 !== index && (
+            <>
+              <LayoverComp
+                first={segment?.layover}
+                second={`${getAirportNames(
+                  segment?.arrival?.iataCode,
+                  dictionaries?.airportNames
+                )} (${segment?.arrival?.iataCode})`}
+              />
+              <View style={styles.divider} />
+            </>
+          )}
         </View>
       ))}
     </View>

@@ -5,14 +5,14 @@ import theme from "../../../../utils/theme";
 
 const { height, width } = Dimensions.get("window");
 
-const LayoverComp = () => {
+const LayoverComp = ({ first, second }: any) => {
   return (
     <View style={[styles.section, styles.bottomTransit]}>
       <View style={styles.headerRow}>
         <Image source={ImageModule.transitIcon} style={styles.bottomiconImg} />
         <View>
-          <Text style={styles.sectionTitle}>111 transit in</Text>
-          <Text style={styles.airportText}>{`${"123"}, ${"123"}`}</Text>
+          <Text style={styles.sectionTitle}>{first} transit in</Text>
+          <Text style={styles.airportText}>{second}</Text>
         </View>
       </View>
     </View>
@@ -22,12 +22,11 @@ const LayoverComp = () => {
 export default LayoverComp;
 
 const styles = StyleSheet.create({
-  section: {
-    marginBottom: height * 0.01,
-  },
+  section: {},
   bottomTransit: {
     padding: 10,
     width: "100%",
+    paddingBottom: 0,
   },
   bottomiconImg: {
     width: width * 0.07,
@@ -47,7 +46,7 @@ const styles = StyleSheet.create({
   airportText: {
     ...theme.font.fontMedium,
     fontSize: width * 0.035,
-    color: theme.colors.black,
+    color: theme.colors.basicGrey,
     width: width * 0.85,
   },
 });
