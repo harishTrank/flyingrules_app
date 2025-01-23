@@ -16,6 +16,12 @@ const FlightDetailsComp = ({ itineraryData }: any) => {
       {itineraryData?.segments?.map((segment: any, index: any) => (
         <View key={index}>
           <View>
+            <Image
+              style={styles.flightLogo}
+              source={{
+                uri: `https://www.pnrconverter.com/images/airlines/png/150/${segment.carrierCode.toLowerCase()}.png`,
+              }}
+            />
             <View style={styles.head}>
               <Text style={styles.flightText}>{`${
                 dictionaries?.carriers?.[segment?.carrierCode]
@@ -83,6 +89,7 @@ const FlightDetailsComp = ({ itineraryData }: any) => {
           </View>
           {itineraryData?.segments?.length - 1 !== index && (
             <>
+              <View style={styles.divider} />
               <LayoverComp
                 first={segment?.layover}
                 second={`${getAirportNames(
@@ -115,7 +122,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   flightLogo: {
-    width: width * 0.05,
+    width: width * 0.3,
     height: width * 0.05,
     objectFit: "contain",
     marginRight: 5,

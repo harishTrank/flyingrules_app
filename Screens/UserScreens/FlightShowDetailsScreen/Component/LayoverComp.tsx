@@ -3,7 +3,7 @@ import { Image, Text, View, StyleSheet, Dimensions } from "react-native";
 import ImageModule from "../../../../ImageModule";
 import theme from "../../../../utils/theme";
 
-const { height, width } = Dimensions.get("window");
+const { width } = Dimensions.get("window");
 
 const LayoverComp = ({ first, second }: any) => {
   return (
@@ -24,9 +24,8 @@ export default LayoverComp;
 const styles = StyleSheet.create({
   section: {},
   bottomTransit: {
-    padding: 10,
+    paddingHorizontal: 10,
     width: "100%",
-    paddingBottom: 0,
   },
   bottomiconImg: {
     width: width * 0.07,
