@@ -396,7 +396,6 @@ const BillingForm = () => {
             </Text>
           </View>
 
-          {/* Book Now Button */}
           <TouchableOpacity style={styles.button} onPress={handleSubmit}>
             <Text style={styles.buttonText}>Book Now</Text>
           </TouchableOpacity>

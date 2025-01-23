@@ -18,6 +18,7 @@ import dayjs from "dayjs";
 import { useFlightOffersApi } from "../../../../../hooks/Travel/mutation";
 import { useAtom } from "jotai";
 import {
+  currentPassengerIndex,
   globalDictionaries,
   selectedOptionsGlobal,
   sortFilter,
@@ -43,11 +44,19 @@ const FlightResultScreen = ({ navigation, route }: any) => {
   const [loading, setLoading]: any = useState(true);
   const [selectedOptions, setSelectedOptions] = useAtom(selectedOptionsGlobal);
   const [currentSort]: any = useAtom(sortFilter);
+  const [, setCurrentTravelerIndex]: any = useAtom(currentPassengerIndex);
 
   const flightListResultApiCaller: any = useFlightOffersApi();
 
+  useEffect(() => {
+    return navigation.addListener("focus", () => {
+      setCurrentTravelerIndex(0);
+    });
+  }, [navigation]);
+
   const flightOfferApiHandler = async () => {
     setSelectedOptions({});
+    setCurrentTravelerIndex(0);
     const travelData = formatTravellerData(params?.travellers);
     setTravellersGlobal(travelData);
     const body: any = {
@@ -186,7 +195,7 @@ const FlightResultScreen = ({ navigation, route }: any) => {
   }, [currentSort]);
 
   const handleBookNow = (flight: any) => {
-    navigation.navigate("BookNowScreen", { flight });
+    navigation.navigate("PassengerDetail", { flight });
   };
 
   const renderItem = ({ item }: { item: any }) => (

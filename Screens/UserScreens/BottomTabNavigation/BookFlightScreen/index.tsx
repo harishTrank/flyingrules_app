@@ -20,6 +20,7 @@ import FlightResultScreen from "./FlightResultScreen";
 import FilterScreen from "./FilterScreen";
 import SortScreen from "./SortScreen";
 import AirportSearchModal from "../../../ReUseComponents/AirportSearchModal";
+import PassengerDetailScreen from "./PassengerDetailScreen";
 
 const Stack = createStackNavigator<any>();
 
@@ -165,6 +166,7 @@ const BookFlightScreen = () => {
       <Stack.Screen name="FlightResult" component={FlightResultScreen} />
       <Stack.Screen name="FilterScreen" component={FilterScreen} />
       <Stack.Screen name="SortScreen" component={SortScreen} />
+      <Stack.Screen name="PassengerDetail" component={PassengerDetailScreen} />
     </Stack.Navigator>
   );
 };
