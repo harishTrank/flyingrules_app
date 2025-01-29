@@ -5,7 +5,14 @@ export const travelEndpoints = {
     v1: {
       ...defaults.methods.POST,
       ...defaults.versions.v1,
-      uri: "/flight-offers",
+      uri: "/flight-offer",
+    },
+  },
+  addBooking: {
+    v1: {
+      ...defaults.methods.POST,
+      ...defaults.versions.v1,
+      uri: "/addbooking",
     },
   },
 };

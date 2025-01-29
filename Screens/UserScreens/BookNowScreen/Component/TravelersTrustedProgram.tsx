@@ -8,10 +8,15 @@ import {
 } from "react-native";
 import theme from "../../../../utils/theme";
 import Entypo from "@expo/vector-icons/Entypo";
+import { currenKeys } from "../../../../utils/UserUtils";
 
 const { width } = Dimensions.get("window");
 
-const TravelersTrustedProgram = () => {
+const TravelersTrustedProgram = ({
+  flight,
+  choiceManager,
+  setChoiceManager,
+}: any) => {
   const services = [
     {
       name: "Baggage Protection Get benefits of up to $1000 per bag",
@@ -34,6 +39,12 @@ const TravelersTrustedProgram = () => {
       premium: true,
     },
   ];
+
+  const trustedClickHandler = () => {
+    setChoiceManager((oldVal: any) => {
+      return { ...oldVal, trusted: !oldVal?.trusted };
+    });
+  };
 
   return (
     <View style={styles.container}>
@@ -79,8 +90,13 @@ const TravelersTrustedProgram = () => {
         ))}
       </View>
 
-      <TouchableOpacity style={styles.addButton}>
-        <Text style={styles.addButtonText}>Add for $59.68</Text>
+      <TouchableOpacity style={styles.addButton} onPress={trustedClickHandler}>
+        <Text style={styles.addButtonText}>
+          {choiceManager?.trusted ? "Remove" : "Add"} for{" "}
+          {`${currenKeys?.[flight?.price?.currency]}${(
+            flight?.price?.base * 0.07
+          )?.toFixed(2)} Per Person`}{" "}
+        </Text>
       </TouchableOpacity>
     </View>
   );

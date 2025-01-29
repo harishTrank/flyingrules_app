@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -13,8 +13,26 @@ import { currenKeys } from "../../../../utils/UserUtils";
 
 const { width } = Dimensions.get("window");
 
-const PriceDetails = ({ flight }: any) => {
+const PriceDetails = ({ flight, choiceManager }: any) => {
   const [bottomOpen, setBottomOpen]: any = useState(false);
+  const [totalPriceManager, setTotalPriceManager]: any = useState(
+    flight?.price?.total
+  );
+
+  useEffect(() => {
+    let newTotalPrice = Number(flight?.price?.total);
+    if (choiceManager?.refund) {
+      newTotalPrice += flight?.price?.grandTotal * 0.2;
+    }
+    if (choiceManager?.protection) {
+      newTotalPrice += flight?.price?.grandTotal * 0.1;
+    }
+    if (choiceManager?.trusted) {
+      newTotalPrice += flight?.price?.base * 0.07;
+    }
+    setTotalPriceManager(newTotalPrice.toFixed(2));
+  }, [choiceManager, flight]);
+
   return (
     <View style={styles.priceDetailsContainer}>
       <TouchableOpacity
@@ -27,7 +45,7 @@ const PriceDetails = ({ flight }: any) => {
         </View>
         <Text style={styles.headerPrice}>{`${
           currenKeys?.[flight?.price?.currency]
-        }${flight?.price?.total}`}</Text>
+        }${totalPriceManager}`}</Text>
       </TouchableOpacity>
 
       {bottomOpen && (
@@ -60,6 +78,30 @@ const PriceDetails = ({ flight }: any) => {
               <View style={styles.divider} />
             </View>
           ))}
+          {choiceManager?.refund && (
+            <View style={[styles.passengerRow, { paddingBottom: 5 }]}>
+              <Text style={styles.passengerLabel}>Refundable Booking</Text>
+              <Text style={styles.passengerPrice}>{`${
+                currenKeys?.[flight?.price?.currency]
+              }${(flight?.price?.grandTotal * 0.2)?.toFixed(2)}`}</Text>
+            </View>
+          )}
+          {choiceManager?.protection && (
+            <View style={[styles.passengerRow, { paddingBottom: 5 }]}>
+              <Text style={styles.passengerLabel}>Travel Protection</Text>
+              <Text style={styles.passengerPrice}>{`${
+                currenKeys?.[flight?.price?.currency]
+              }${(flight?.price?.grandTotal * 0.1)?.toFixed(2)}`}</Text>
+            </View>
+          )}
+          {choiceManager?.trusted && (
+            <View style={[styles.passengerRow, { paddingBottom: 5 }]}>
+              <Text style={styles.passengerLabel}>TTP</Text>
+              <Text style={styles.passengerPrice}>{`${
+                currenKeys?.[flight?.price?.currency]
+              }${(flight?.price?.base * 0.07)?.toFixed(2)}`}</Text>
+            </View>
+          )}
         </ScrollView>
       )}
     </View>

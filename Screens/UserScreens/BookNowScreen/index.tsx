@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { View, ScrollView, StyleSheet } from "react-native";
 import HeaderComp from "../../ReUseComponents/HeaderComp";
 import FlightSummary from "./Component/FlightSummary";
@@ -19,6 +19,12 @@ const BookNowScreen = ({ navigation, route }: any) => {
   const { flight } = route?.params;
   const [passengerDetails]: any = useAtom(passengerDetailsGlobal);
   const [, setCurrentTravelerIndex]: any = useAtom(currentPassengerIndex);
+  const [choiceManager, setChoiceManager]: any = useState({
+    refund: false,
+    protection: false,
+    trusted: false,
+  });
+  // const bookTicketApiHandler: any = useAddBookingApi();
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("blur", () => {
@@ -27,18 +33,31 @@ const BookNowScreen = ({ navigation, route }: any) => {
 
     return unsubscribe;
   }, [navigation]);
+
   return (
     <View style={styles.container}>
       <HeaderComp navigation={navigation} />
-      <PriceDetails flight={flight} />
+      <PriceDetails choiceManager={choiceManager} flight={flight} />
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={{ marginBottom: useSafeAreaInsets().bottom }}
       >
         <FlightSummary navigation={navigation} flight={flight} />
-        <RefundableBooking />
-        <TravelProtection />
-        <TravelersTrustedProgram />
+        <RefundableBooking
+          setChoiceManager={setChoiceManager}
+          choiceManager={choiceManager}
+          flight={flight}
+        />
+        <TravelProtection
+          choiceManager={choiceManager}
+          setChoiceManager={setChoiceManager}
+          flight={flight}
+        />
+        <TravelersTrustedProgram
+          choiceManager={choiceManager}
+          setChoiceManager={setChoiceManager}
+          flight={flight}
+        />
         <BillingForm />
       </ScrollView>
     </View>

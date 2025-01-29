@@ -8,12 +8,15 @@ import {
 } from "react-native";
 import theme from "../../../../utils/theme";
 import Entypo from "@expo/vector-icons/Entypo";
+import { currenKeys } from "../../../../utils/UserUtils";
 
 const { width } = Dimensions.get("window");
 
-const RefundableBooking = () => {
-  const [yesNoSelected, setYesNoSelected] = useState(false);
-
+const RefundableBooking = ({
+  flight,
+  choiceManager,
+  setChoiceManager,
+}: any) => {
   const coveredItems = [
     { text: "Flight refund: ($38.54)" },
     { text: "Public Transport Failure" },
@@ -47,25 +50,32 @@ const RefundableBooking = () => {
           advisories or fear of travel is not covered.
         </Text>
 
-        <Text style={styles.price}>$188.83 per person</Text>
+        <Text style={styles.price}>
+          {`${currenKeys?.[flight?.price?.currency]}${(
+            flight?.price?.grandTotal * 0.2
+          )?.toFixed(2)}`}{" "}
+          per person
+        </Text>
 
         <TouchableOpacity
           style={[
             styles.option,
-            yesNoSelected && styles.selectedOption,
+            choiceManager?.refund && styles.selectedOption,
             { marginTop: 10 },
           ]}
           onPress={() => {
-            setYesNoSelected(true);
+            setChoiceManager((oldVal: any) => {
+              return { ...oldVal, refund: true };
+            });
           }}
         >
           <View
             style={[
               styles.circle,
-              yesNoSelected && { borderColor: theme.colors.black },
+              choiceManager?.refund && { borderColor: theme.colors.black },
             ]}
           >
-            {yesNoSelected && (
+            {choiceManager?.refund && (
               <View style={styles.innerCircle}>
                 <View style={styles.innerSmallCircle} />
               </View>
@@ -75,18 +85,23 @@ const RefundableBooking = () => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={[styles.option, !yesNoSelected && styles.selectedOption]}
+          style={[
+            styles.option,
+            !choiceManager?.refund && styles.selectedOption,
+          ]}
           onPress={() => {
-            setYesNoSelected(false);
+            setChoiceManager((oldVal: any) => {
+              return { ...oldVal, refund: false };
+            });
           }}
         >
           <View
             style={[
               styles.circle,
-              !yesNoSelected && { borderColor: theme.colors.black },
+              !choiceManager?.refund && { borderColor: theme.colors.black },
             ]}
           >
-            {!yesNoSelected && (
+            {!choiceManager?.refund && (
               <View style={styles.innerCircle}>
                 <View style={styles.innerSmallCircle} />
               </View>

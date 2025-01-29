@@ -46,6 +46,6 @@ const styles = StyleSheet.create({
     ...theme.font.fontMedium,
     fontSize: width * 0.035,
     color: theme.colors.basicGrey,
-    width: width * 0.85,
+    width: width * 0.75,
   },
 });

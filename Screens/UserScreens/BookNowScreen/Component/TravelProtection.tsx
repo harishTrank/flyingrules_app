@@ -10,12 +10,11 @@ import {
 import theme from "../../../../utils/theme"; // Your theme file
 import Entypo from "@expo/vector-icons/Entypo";
 import ImageModule from "../../../../ImageModule";
+import { currenKeys } from "../../../../utils/UserUtils";
 
 const { width } = Dimensions.get("window");
 
-const TravelProtection = () => {
-  const [yesNoSelected, setYesNoSelected] = useState(false);
-
+const TravelProtection = ({ flight, choiceManager, setChoiceManager }: any) => {
   const protectionItems = [
     {
       text: "Airfare covered if the trip is canceled due to a companion's illness or other covered reasons.",
@@ -52,25 +51,32 @@ const TravelProtection = () => {
           </View>
         ))}
 
-        <Text style={styles.price}>$ 94.41 per person</Text>
+        <Text style={styles.price}>
+          {`${currenKeys?.[flight?.price?.currency]}${(
+            flight?.price?.grandTotal * 0.1
+          )?.toFixed(2)}`}{" "}
+          per person
+        </Text>
 
         <TouchableOpacity
           style={[
             styles.option,
-            yesNoSelected && styles.selectedOption,
+            choiceManager?.protection && styles.selectedOption,
             { marginTop: 10 },
           ]}
           onPress={() => {
-            setYesNoSelected(true);
+            setChoiceManager((oldVal: any) => {
+              return { ...oldVal, protection: true };
+            });
           }}
         >
           <View
             style={[
               styles.circle,
-              yesNoSelected && { borderColor: theme.colors.black },
+              choiceManager?.protection && { borderColor: theme.colors.black },
             ]}
           >
-            {yesNoSelected && (
+            {choiceManager?.protection && (
               <View style={styles.innerCircle}>
                 <View style={styles.innerSmallCircle} />
               </View>
@@ -80,18 +86,23 @@ const TravelProtection = () => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={[styles.option, !yesNoSelected && styles.selectedOption]}
+          style={[
+            styles.option,
+            !choiceManager?.protection && styles.selectedOption,
+          ]}
           onPress={() => {
-            setYesNoSelected(false);
+            setChoiceManager((oldVal: any) => {
+              return { ...oldVal, protection: false };
+            });
           }}
         >
           <View
             style={[
               styles.circle,
-              !yesNoSelected && { borderColor: theme.colors.black },
+              !choiceManager?.protection && { borderColor: theme.colors.black },
             ]}
           >
-            {!yesNoSelected && (
+            {!choiceManager?.protection && (
               <View style={styles.innerCircle}>
                 <View style={styles.innerSmallCircle} />
               </View>

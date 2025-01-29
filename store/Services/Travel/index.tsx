@@ -6,3 +6,9 @@ export const flightOffersApi = ({ body }: any) =>
     uriEndPoint: travelEndpoints.flightOffers.v1,
     body,
   });
+
+export const addBookingApi = ({ body }: any) =>
+  callApi({
+    uriEndPoint: travelEndpoints.addBooking.v1,
+    body,
+  });
