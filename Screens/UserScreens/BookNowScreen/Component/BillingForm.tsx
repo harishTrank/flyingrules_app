@@ -12,6 +12,12 @@ import * as Yup from "yup";
 import RNPickerSelect from "react-native-picker-select";
 import theme from "../../../../utils/theme";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import ImageModule from "../../../../ImageModule";
+import { useAtom } from "jotai";
+import { passengerDetailsGlobal } from "../../../../JotaiStore";
+import { useAddBookingApi } from "../../../../hooks/Travel/mutation";
+import FullScreenLoader from "../../../ReUseComponents/FullScreenLoader";
+import Toast from "react-native-toast-message";
 // import ImageModule from "../../../../ImageModule";
 
 const { width } = Dimensions.get("window");
@@ -35,24 +41,73 @@ const validationSchema = Yup.object().shape({
     .required("Required"),
 });
 
-const BillingForm = () => {
+const BillingForm = ({ flight }: any) => {
+  const [passengerDetails]: any = useAtom(passengerDetailsGlobal);
+  const bookTicketApiHandler: any = useAddBookingApi();
   const initialValues = {
     address: "",
     country: "",
     zipCode: "",
     city: "",
     state: "",
-    payment_method: "credit_card", // Initial value for radio buttons
+    payment_method: "credit_card",
     card_number: "",
     name_on_card: "",
     expiry_date: "",
     cvc: "",
-    agree_terms: false, // Initial value for checkbox
+    agree_terms: false,
   };
 
   const handleSubmit = (values: any) => {
-    // Handle form submission here
     console.log(values);
+    // bookTicketApiHandler
+    //   ?.mutateAsync({
+    //     body: {
+    //       email: "mailto:k@gmail.com",
+    //       phonenumber: "7678978767",
+    //       alternateNumber: "",
+    //       country: "Algeria",
+    //       address: "hrher",
+    //       state: "'Ayn Tamushanat",
+    //       city: "tgerg",
+    //       zipCode: "560060",
+    //       cardNumber: "6666 6666 6666 6666",
+    //       nameOnCard: "gregergerg",
+    //       expiryDate: "09/33",
+    //       cvc: "121",
+    //       passInfo: passengerDetails,
+    //       travelers: passengerDetails,
+    //       flightSummary: flight,
+    //       phoneNumCode: "+91",
+    //       flight_name: "TAP PORTUGAL",
+    //       paymentMethod: "Credit Card",
+    //       adult: 1,
+    //       child: 0,
+    //       grandTotal: 310.2,
+    //       airlines: "TAP PORTUGAL",
+    //       travelProtection: "no",
+    //       acceptTnc: "True",
+    //       price: "46.53",
+    //       totalPrice: 263.67,
+    //       from_travel: "LIS",
+    //       to_travel: "JFK",
+    //       travel_date: "2025-01-28",
+    //     },
+    //   })
+    //   ?.then((res: any) => {
+    //     console.log("res", res);
+    //     Toast?.show({
+    //       type: "success",
+    //       text1: "Book flight successfully.",
+    //     });
+    //   })
+    //   ?.catch((err: any) => {
+    //     console.log("err", err);
+    //     Toast?.show({
+    //       type: "error",
+    //       text1: "Something went wrong!",
+    //     });
+    //   });
   };
 
   return (
@@ -71,6 +126,7 @@ const BillingForm = () => {
         handleChange,
       }: any) => (
         <View style={styles.container}>
+          <FullScreenLoader loading={bookTicketApiHandler?.isLoading} />
           <View style={styles.section}>
             <View style={styles.header}>
               <Text style={styles.headerText}>Billing Information</Text>
@@ -362,7 +418,7 @@ const BillingForm = () => {
               <View style={styles.checkbox}>
                 {values.agree_terms && (
                   <Image
-                    // source={ImageModule.checkIcon}
+                    source={ImageModule.checkIcon}
                     style={styles.checkboxChecked}
                   />
                 )}

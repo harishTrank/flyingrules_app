@@ -10,21 +10,16 @@ import TravelProtection from "./Component/TravelProtection";
 import TravelersTrustedProgram from "./Component/TravelersTrustedProgram";
 import BillingForm from "./Component/BillingForm";
 import { useAtom } from "jotai";
-import {
-  currentPassengerIndex,
-  passengerDetailsGlobal,
-} from "../../../JotaiStore";
+import { currentPassengerIndex } from "../../../JotaiStore";
 
 const BookNowScreen = ({ navigation, route }: any) => {
   const { flight } = route?.params;
-  const [passengerDetails]: any = useAtom(passengerDetailsGlobal);
   const [, setCurrentTravelerIndex]: any = useAtom(currentPassengerIndex);
   const [choiceManager, setChoiceManager]: any = useState({
     refund: false,
     protection: false,
     trusted: false,
   });
-  // const bookTicketApiHandler: any = useAddBookingApi();
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("blur", () => {
@@ -58,7 +53,7 @@ const BookNowScreen = ({ navigation, route }: any) => {
           setChoiceManager={setChoiceManager}
           flight={flight}
         />
-        <BillingForm />
+        <BillingForm flight={flight} />
       </ScrollView>
     </View>
   );
